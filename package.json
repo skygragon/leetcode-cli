@@ -1,0 +1,31 @@
+{
+  "name": "leetcode-cli",
+  "version": "0.1.0",
+  "description": "A cli tool to enjoy leetcode!",
+  "preferGlobal": "true",
+  "bin": {
+      "lc": "./bin/lc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/skygragon/leetcode-cli.git"
+  },
+  "keywords": [
+    "leetcode",
+    "cli",
+    "command",
+    "tool"
+  ],
+  "author": {
+    "name": "Eric  Wang",
+    "email": "skygragon@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skygragon/leetcode-cli/issues"
+  },
+  "homepage": "https://github.com/skygragon/leetcode-cli#readme"
+}
