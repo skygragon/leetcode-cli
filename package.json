@@ -29,6 +29,9 @@
   },
   "homepage": "https://github.com/skygragon/leetcode-cli#readme",
   "dependencies": {
+    "cheerio": "^0.20.0",
+    "request": "^2.74.0",
+    "underscore.string": "^3.3.4",
     "yargs": "^5.0.0"
   }
 }
