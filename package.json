@@ -4,7 +4,7 @@
   "description": "A cli tool to enjoy leetcode!",
   "preferGlobal": "true",
   "bin": {
-      "lc": "./bin/lc"
+    "lc": "./bin/lc"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/skygragon/leetcode-cli/issues"
   },
-  "homepage": "https://github.com/skygragon/leetcode-cli#readme"
+  "homepage": "https://github.com/skygragon/leetcode-cli#readme",
+  "dependencies": {
+    "yargs": "^5.0.0"
+  }
 }
