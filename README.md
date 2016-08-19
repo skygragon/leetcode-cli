@@ -5,15 +5,15 @@ A cli tool to enjoy leetcode!
 Thanks leetcode.com, an really awesome website!
 
 * [Install](#install)
-* [Quick Start](#quick_start)
-	* [Login](#login)
-	* [List](#list)
-	* [Analyse](#analyse)
-	* [Coding](#coding)
-	* [Test](#test)
-	* [Submit](#submit)
+* [Quick Start](#quick-start)
+	* [Login](#1-login)
+	* [List](#2-list)
+	* [Analyse](#3-analyse)
+	* [Coding](#4-coding)
+	* [Test](#5-test)
+	* [Submit](#6-submit)
 
-## [Install](id:install)
+## Install
 
 From source code:
 
@@ -21,7 +21,7 @@ From source code:
     $ cd leetcode-cli/
     $ sudo npm install -g .
 
-## [Quick Start](id:quick_start)
+## Quick Start
 
 ### 1. Login
 
@@ -36,7 +36,7 @@ Login with your leetcode account (username or email).
 * `-L` to logout.
 * `lc user` to show current account.
 
-### 2. [List](id:list)
+### 2. List
 
 Navigate all the problems. The heading `✔` means you have AC-ed the problem.
 
@@ -54,7 +54,7 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
 
 * `-D` to only show undone problems.
 
-### 3. [Analyse](id:analyse)
+### 3. Analyse
 
 Select one problem to fight. With `-g`+`-l`, the code template could be auto generated for you.
 
@@ -97,15 +97,15 @@ Select one problem to fight. With `-g`+`-l`, the code template could be auto gen
 	* `lc show "Two Sum"`
 	* `lc show two-sum`
 
-### 4. [Coding](id:coding)
+### 4. Coding
 
 No trick, it's all your showtime!
 
-### 5. [Test](id:test)
+### 5. Test
 
 TBD
 
-### 6. [Submit](id:submit)
+### 6. Submit
 
 TBD
 
