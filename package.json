@@ -30,6 +30,7 @@
   "homepage": "https://github.com/skygragon/leetcode-cli#readme",
   "dependencies": {
     "cheerio": "^0.20.0",
+    "prompt": "^1.0.0",
     "request": "^2.74.0",
     "sprintf-js": "^1.0.3",
     "underscore": "^1.8.3",
