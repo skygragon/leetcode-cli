@@ -8,7 +8,7 @@ Thanks leetcode.com, an really awesome website!
 * [Quick Start](#quick-start)
 	* [Login](#1-login)
 	* [List](#2-list)
-	* [Analyse](#3-analyse)
+	* [Prepare](#3-prepare)
 	* [Coding](#4-coding)
 	* [Test](#5-test)
 	* [Submit](#6-submit)
@@ -54,7 +54,7 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
 
 * `-D` to only show undone problems.
 
-### 3. Analyse
+### 3. Prepare
 
 Select one problem to fight. With `-g`+`-l`, the code template could be auto generated for you.
 
