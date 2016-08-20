@@ -6,7 +6,8 @@ module.exports = {
       "no-multi-spaces": [2, { exceptions: { "SwitchCase": true }}],
       "no-unused-expressions": 1,
       "no-unused-vars": 1,
+      "no-warning-comments": 0,
       "quote-props": 1,
-      "require-jsdoc": 0,  // currently we don't need JSDoc
+      "require-jsdoc": 0,
     }
 };
