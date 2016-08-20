@@ -55,6 +55,9 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
     ✔ [  1] Two Sum                                                      Easy   (25.6%)
 
 * `-D` to only show undone problems.
+* `-l` to filter by level.
+* `-s` to show statistic counters.
+* `lc list <keyword>` to search by keyword.
 
 ### 3. Prepare
 
