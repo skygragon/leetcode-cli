@@ -7,7 +7,8 @@
     "lc": "./bin/lc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint",
+    "lint": "eslint lib/"
   },
   "repository": {
     "type": "git",
@@ -35,5 +36,9 @@
     "sprintf-js": "^1.0.3",
     "underscore": "^1.8.3",
     "yargs": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.3.1",
+    "eslint-config-google": "^0.6.0"
   }
 }
