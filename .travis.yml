@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - stable
 install:
-  - npm install -g eslint-cli
+  - npm install -g eslint-cli mocha
   - npm install
