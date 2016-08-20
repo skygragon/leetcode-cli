@@ -126,5 +126,7 @@ Customize your testcase and run it against leetcode.
 
 ### 6. Submit
 
-TBD
+	$ lc submit ./two-sum.cpp
+		✔ Accepted
+		✔ 16/16 cases passed (12 ms)
 
