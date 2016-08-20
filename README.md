@@ -103,7 +103,26 @@ No trick, it's all your showtime!
 
 ### 5. Test
 
-TBD
+Customize your testcase and run it against leetcode.
+
+	$ lc test ./two-sum.cpp -t '[3,2,4]\n7'
+
+	Input data:
+	[3,2,4]
+	7
+
+	Your
+		✔ runtime: 0 ms
+		✘ answer: [1,2]
+		✔ output:
+
+	Expected
+		✔ runtime: 0 ms
+		✔ answer: [0,2]
+		✔ output:
+
+* `-t` to provide test case in command line.
+* `-i` to provide test case in interactive mode.
 
 ### 6. Submit
 
