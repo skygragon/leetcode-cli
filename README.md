@@ -1,8 +1,13 @@
 # leetcode-cli
 
+[![npm version](https://img.shields.io/npm/v/leetcode-cli.svg?style=flat)](https://www.npmjs.com/package/leetcode-cli)
+[![license](https://img.shields.io/npm/l/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/blob/master/LICENSE)
+
 A cli tool to enjoy leetcode!
 
-Thanks leetcode.com, an really awesome website!
+Great thanks to leetcode.com, an really awesome website!
+
+## Table of Contents
 
 * [Install](#install)
 * [Quick Start](#quick-start)
@@ -15,11 +20,7 @@ Thanks leetcode.com, an really awesome website!
 
 ## Install
 
-From source code:
-
-    $ git clone http://github.com/skygragon/leetcode-cli
-    $ cd leetcode-cli/
-    $ sudo npm install -g .
+    $ sudo npm install -g leetcode-cli
 
 ## Quick Start
 
