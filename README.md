@@ -58,6 +58,7 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
 * `-l` to filter by level.
 * `-s` to show statistic counters.
 * `lc list <keyword>` to search by keyword.
+* `--no-color` to disable colorful output.
 
 ### 3. Prepare
 
