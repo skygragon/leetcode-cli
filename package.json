@@ -7,8 +7,8 @@
     "lc": "./bin/lc"
   },
   "scripts": {
-    "test": "npm run lint && mocha test/",
-    "lint": "eslint lib/"
+    "lint": "eslint lib/",
+    "test": "npm run lint && nyc mocha test/"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.3.1",
     "eslint-config-google": "^0.6.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "nyc": "^8.1.0"
   }
 }
