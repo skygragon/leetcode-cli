@@ -12,12 +12,16 @@ Great thanks to leetcode.com, an really awesome website!
 
 * [Install](#install)
 * [Quick Start](#quick-start)
-	* [Login](#1-login)
-	* [List](#2-list)
-	* [Prepare](#3-prepare)
-	* [Coding](#4-coding)
-	* [Test](#5-test)
-	* [Submit](#6-submit)
+	* [1. Login](#1-login)
+	* [2. List](#2-list)
+	* [3. Prepare](#3-prepare)
+	* [4. Coding](#4-coding)
+	* [5. Test](#5-test)
+	* [6. Submit](#6-submit)
+* [Tips](#tips)
+	* [Bash Completion](#bash-completion)
+	* [Colorful Output](#colorful-output)
+	* [Configuration](#configuration)
 
 ## Install
 
@@ -58,7 +62,6 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
 * `-l` to filter by level.
 * `-s` to show statistic counters.
 * `lc list <keyword>` to search by keyword.
-* `--no-color` to disable colorful output.
 
 ### 3. Prepare
 
@@ -136,3 +139,32 @@ Customize your testcase and run it against leetcode.
 		✔ Accepted
 		✔ 16/16 cases passed (12 ms)
 
+## Tips
+
+### Bash Completion
+
+Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Linux) or .bash_profile (MacOS).
+
+	$ cp .lc-completion.bash ~
+	$ echo "source ~/.lc-completion.bash" >> ~/.bashrc
+	$ source ~/.bashrc
+
+	$ lc list --<tab>
+	--help     --keyword  --level    --stat     --undone
+
+### Colorful Output
+
+* `--color` to enable color.
+* `--no-color` to disable it.
+
+Or use configuration setting, see below.
+
+
+### Configuration
+
+Create a file named `.lcconfig` in your home directory. Here is an example:
+
+	{
+		"LANG": "java",
+		"USE_COLOR": true
+	}
