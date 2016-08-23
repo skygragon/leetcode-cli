@@ -58,8 +58,7 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
     ✔ [  2] Add Two Numbers                                              Medium (24.5%)
     ✔ [  1] Two Sum                                                      Easy   (25.6%)
 
-* `-D` to only show undone problems.
-* `-l` to filter by level.
+* `-q` to filter by query conditions.
 * `-s` to show statistic counters.
 * `lc list <keyword>` to search by keyword.
 
@@ -150,7 +149,7 @@ Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Lin
 	$ source ~/.bashrc
 
 	$ lc list --<tab>
-	--help     --keyword  --level    --stat     --undone
+	--help     --keyword  --query    --stat
 
 ### Colorful Output
 
