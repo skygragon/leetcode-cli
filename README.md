@@ -11,13 +11,15 @@ Great thanks to leetcode.com, an really awesome website!
 ## Table of Contents
 
 * [Install](#install)
-* [Quick Start](#quick-start)
-	* [1. Login](#1-login)
-	* [2. List](#2-list)
-	* [3. Prepare](#3-prepare)
-	* [4. Coding](#4-coding)
-	* [5. Test](#5-test)
-	* [6. Submit](#6-submit)
+* [Best Practics](#best-practice)
+* [Commands](#commands)
+	* [help](#help)
+	* [list](#list)
+	* [show](#show)
+	* [submit](#submit)
+	* [test](#test)
+	* [user](#user)
+	* [version](#version)
 * [Tips](#tips)
 	* [Bash Completion](#bash-completion)
 	* [Colorful Output](#colorful-output)
@@ -27,22 +29,31 @@ Great thanks to leetcode.com, an really awesome website!
 
     $ sudo npm install -g leetcode-cli
 
-## Quick Start
+## Best Practice
 
-### 1. Login
+	Read help first						$ lc help
+	Login with your leetcoe account		$ lc user -l
+	Browse all problems					$ lc list
+	Select one problem 					$ lc show 1 -g -l cpp
+	Coding it!
+	Run test(s) and pray				$ lc test ./two-sum.cpp -t '[3,2,4]\n7'
+	Submit final solution!				$ lc submit ./two-sum.cpp
 
-Login with your leetcode account (username or email).
+## Commands
 
-	$ lc user -l
-	login: <account>
-	pass:
-	Successfully login as <account>
+### help
 
-* `-l` to login
-* `-L` to logout.
-* `lc user` to show current account.
+	list [keyword]     list problems
+	show <keyword>     show problem by name or index
+	submit <filename>  submit final solution to leetcode
+	test <filename>    send solution to leetcode and run test
+	user               login/logout with leetcode account
+	version            show version info
 
-### 2. List
+* `lc help <command>` to see help on sub command.
+* `lc <command> --help` also works.
+
+### list
 
 Navigate all the problems. The heading `✔` means you have AC-ed the problem.
 
@@ -59,12 +70,23 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem.
     ✔ [  1] Two Sum                                                      Easy   (25.6%)
 
 * `-q` to filter by query conditions.
+	* `e` = easy, `E` = m + h.
+	* `m` = medium, `M` = e + h.
+	* `h` = hard, `H` = e + m.
+	* `d` = done = AC-ed, `D` = not AC-ed.
+	* `l` = locked, `L` = not locked.
 * `-s` to show statistic counters.
 * `lc list <keyword>` to search by keyword.
 
-### 3. Prepare
+*Example*
 
-Select one problem to fight. With `-g`+`-l`, the code template could be auto generated for you.
+	$ lc list -q Dml array
+	  🔒 [360] Sort Transformed Array                                       Medium (41.0%)
+	  🔒 [325] Maximum Size Subarray Sum Equals k                           Medium (40.9%)
+
+### show
+
+Select a problem to fight. With `-g`+`-l`, the code template could be auto generated for you.
 
     $ lc show 1 -g -l cpp
 
@@ -101,15 +123,17 @@ Select one problem to fight. With `-g`+`-l`, the code template could be auto gen
 	* python
 	* ruby
 	* swift
-* Instead of index, you can use name to select one problem.
+* Instead of index number, you can use name to select a problem.
 	* `lc show "Two Sum"`
 	* `lc show two-sum`
 
-### 4. Coding
+### submit
 
-No trick, it's all your showtime!
+	$ lc submit ./two-sum.cpp
+		✔ Accepted
+		✔ 16/16 cases passed (12 ms)
 
-### 5. Test
+### test
 
 Customize your testcase and run it against leetcode.
 
@@ -132,11 +156,52 @@ Customize your testcase and run it against leetcode.
 * `-t` to provide test case in command line.
 * `-i` to provide test case in interactive mode.
 
-### 6. Submit
+### user
 
-	$ lc submit ./two-sum.cpp
-		✔ Accepted
-		✔ 16/16 cases passed (12 ms)
+Login with your leetcode account (username or email).
+
+	$ lc user -l
+	login: <account>
+	pass:
+	Successfully login as <account>
+
+* `-l` to login
+* `-L` to logout.
+* `-s` to show user statistics.
+* `lc user` to show current account.
+
+*Eaxmple*
+
+	$ lc user -s
+	You are now login as skygragon
+
+	Easy      72/95  (75.79%)      	[+++++++++++++++++++++++.......]
+	Medium    97/194 (50.00%)      	[+++++++++++++++...............]
+	Hard      27/82  (32.93%)      	[++++++++++....................]
+
+### version
+
+	$ lc version
+	0.1.1
+
+* `-v` to show verbose info, e.g. config, cache dir.
+
+*Example*
+
+	$ lc version -v
+	leetcode-cli 0.1.1
+
+	Cache: /Users/skygragon/.lc/
+	Config: /Users/skygragon/.lcconfig
+
+	BASE_URL = https://leetcode.com
+	LOGIN_URL = https://leetcode.com/accounts/login/
+	PROBLEMS_URL = https://leetcode.com/problems/
+	TEST_URL = https://leetcode.com/problems/$key/interpret_solution/
+	SUBMIT_URL = https://leetcode.com/problems/$key/submit/
+	VERIFY_URL = https://leetcode.com/submissions/detail/$id/check/
+	LANG = cpp
+	USE_COLOR = true
 
 ## Tips
 
@@ -158,10 +223,11 @@ Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Lin
 
 Or use configuration setting, see below.
 
-
 ### Configuration
 
-Create a file named `.lcconfig` in your home directory. Here is an example:
+Create a file named `.lcconfig` in your home directory.
+
+*Example*
 
 	{
 		"LANG": "java",
