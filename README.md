@@ -11,7 +11,7 @@ Great thanks to leetcode.com, an really awesome website!
 ## Table of Contents
 
 * [Install](#install)
-* [Best Practics](#best-practice)
+* [Best Practice](#best-practice)
 * [Commands](#commands)
 	* [help](#help)
 	* [list](#list)
