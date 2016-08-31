@@ -27,7 +27,14 @@ Great thanks to leetcode.com, an really awesome website!
 
 ## Install
 
+From npm repo:
+
     $ sudo npm install -g leetcode-cli
+
+From source code:
+
+    $ git clone http://github.com/skygragon/leetcode-cli
+    $ cd leetcode-cli && npm install && sudo npm install -g .
 
 ## Best Practice
 
