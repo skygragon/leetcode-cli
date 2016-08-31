@@ -10,6 +10,7 @@ Great thanks to leetcode.com, an really awesome website!
 
 ## Table of Contents
 
+* [Prerequisites](#prerequisites)
 * [Install](#install)
 * [Best Practice](#best-practice)
 * [Commands](#commands)
@@ -24,6 +25,13 @@ Great thanks to leetcode.com, an really awesome website!
 	* [Bash Completion](#bash-completion)
 	* [Colorful Output](#colorful-output)
 	* [Configuration](#configuration)
+
+## Prerequisites
+
+node.js (npm included), please follow the installation guide below:
+
+* https://nodejs.org/en/download/
+* https://nodejs.org/en/download/package-manager/
 
 ## Install
 
