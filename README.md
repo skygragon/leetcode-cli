@@ -197,14 +197,14 @@ Login with your leetcode account (username or email).
 ### version
 
 	$ lc version
-	0.1.1
+	0.3.0
 
 * `-v` to show verbose info, e.g. config, cache dir.
 
 *Example*
 
 	$ lc version -v
-	leetcode-cli 0.1.1
+	leetcode-cli 0.3.0
 
 	Cache: /Users/skygragon/.lc/
 	Config: /Users/skygragon/.lcconfig
