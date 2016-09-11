@@ -149,4 +149,68 @@ describe('leetcode_client', function() {
       });
     });
   }); // #getProblem
+
+  describe('#testProblem', function() {
+    it('should ok', function(done) {
+      var problem = {
+        id:     389,
+        name:   'Find the Difference',
+        key:    'find-the-difference',
+        link:   'https://leetcode.com/problems/find-the-difference',
+        locked: false,
+        file:   '/dev/null'
+      };
+
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/interpret_solution/')
+        .reply(200, '{"interpret_expected_id": "id1", "interpret_id": "id2"}');
+
+      nock('https://leetcode.com')
+        .get('/submissions/detail/id1/check/')
+        .reply(200, '{"state": "SUCCESS"}');
+
+      nock('https://leetcode.com')
+        .get('/submissions/detail/id2/check/')
+        .reply(200, '{"state": "SUCCESS"}');
+
+      client.testProblem(problem, function(e, results) {
+        assert.equal(e, null);
+        assert.deepEqual(results,
+          [
+            {name: 'Your', state: 'SUCCESS'},
+            {name: 'Expected', state: 'SUCCESS'}
+          ]);
+
+        done();
+      });
+    });
+  }); // #testProblem
+
+  describe('#submitProblem', function() {
+    it('should ok', function(done) {
+      var problem = {
+        id:     389,
+        name:   'Find the Difference',
+        key:    'find-the-difference',
+        link:   'https://leetcode.com/problems/find-the-difference',
+        locked: false,
+        file:   '/dev/null'
+      };
+
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/submit/')
+        .reply(200, '{"submission_id": "id1"}');
+
+      nock('https://leetcode.com')
+        .get('/submissions/detail/id1/check/')
+        .reply(200, '{"state": "SUCCESS"}');
+
+      client.submitProblem(problem, function(e, results) {
+        assert.equal(e, null);
+        assert.deepEqual(results, [{name: 'Your', state: 'SUCCESS'}]);
+
+        done();
+      });
+    });
+  }); // #submitProblem
 });
