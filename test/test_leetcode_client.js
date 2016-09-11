@@ -13,7 +13,7 @@ describe('leetcode_client', function() {
 
       client.getProblems(function(e, problems) {
         assert.equal(e, null);
-        assert.equal(problems.length, 382);
+        assert.equal(problems.length, 377);
         done();
       });
     });
