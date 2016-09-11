@@ -9,7 +9,7 @@ describe('leetcode_client', function() {
     it('should ok', function(done) {
       nock(config.PROBLEMS_URL)
         .get('/')
-        .replyWithFile(200, './test/mock/problems.json');
+        .replyWithFile(200, './test/mock/problems.json.20160911');
 
       client.getProblems(function(e, problems) {
         assert.equal(e, null);
@@ -32,7 +32,7 @@ describe('leetcode_client', function() {
 
       nock('https://leetcode.com')
         .get('/problems/find-the-difference')
-        .replyWithFile(200, './test/mock/find-the-difference.html');
+        .replyWithFile(200, './test/mock/find-the-difference.html.20160911');
 
       client.getProblem(problem, function(e, problem) {
         assert.equal(e, null);
