@@ -1,4 +1,9 @@
 module.exports = {
+    "env": {
+      "browser": false,
+      "node": true,
+      "mocha": true
+    },
     "extends": "google",
     "rules": {
       "key-spacing": [2, { "align": "value" }],

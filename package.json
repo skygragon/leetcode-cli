@@ -7,7 +7,7 @@
     "lc": "./bin/lc"
   },
   "scripts": {
-    "lint": "eslint lib/",
+    "lint": "eslint lib/ test/",
     "test": "npm run lint && nyc mocha test/"
   },
   "repository": {
@@ -21,7 +21,7 @@
     "tool"
   ],
   "author": {
-    "name": "Eric  Wang",
+    "name": "Eric Wang",
     "email": "skygragon@gmail.com"
   },
   "license": "MIT",
