@@ -11,7 +11,7 @@ describe('leetcode_client', function() {
 
   describe('#getProblems', function() {
     it('should ok', function(done) {
-      nock(config.PROBLEMS_URL)
+      nock(config.URL_PROBLEMS)
         .get('/')
         .replyWithFile(200, './test/mock/problems.json.20160911');
 
