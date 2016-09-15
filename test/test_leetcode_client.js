@@ -5,6 +5,10 @@ var client = require('../lib/leetcode_client');
 var config = require('../lib/config');
 
 describe('leetcode_client', function() {
+  before(function() {
+    config.init();
+  });
+
   describe('#getProblems', function() {
     it('should ok', function(done) {
       nock(config.PROBLEMS_URL)
