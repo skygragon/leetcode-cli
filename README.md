@@ -10,12 +10,12 @@ Great thanks to leetcode.com, an really awesome website!
 
 ## What can it do?
 
-* A very **EFFICIENT** way to fight problems, see [Best Practice](#best-practice).
+* A very [**EFFICIENT**](#best-practice) way to fight problems.
 * **CACHING** problems locally thus you can easily scan & think it offline.
-* Do everything in CLI, no one even knows you are doing leetcode :p
-* Auto **GENERATING** source code template for you.
-* Support case **TEST** and **SUBMIT** to leetcode.com.
-* **AUTO LOGIN** among multiple sessions with single leetcode account.
+* Do everything in **CLI**, no one even knows you are doing leetcode :p
+* Auto [**GENERATING**](#show) source code template for you.
+* Support case [**TEST**](#test) and [**SUBMIT**](#submit) to leetcode.com.
+* [**AUTO LOGIN**](#auto-login) among multiple sessions with single leetcode account.
 
 ## Table of Contents
 
@@ -34,6 +34,7 @@ Great thanks to leetcode.com, an really awesome website!
 	* [Bash Completion](#bash-completion)
 	* [Colorful Output](#colorful-output)
 	* [Configuration](#configuration)
+	* [Auto Login](#auto-login)
 
 ## Prerequisites
 
