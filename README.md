@@ -8,6 +8,15 @@ A cli tool to enjoy leetcode!
 
 Great thanks to leetcode.com, an really awesome website!
 
+## What can it do?
+
+* A very **EFFICIENT** way to fight problems, see [Best Practice](#best-practice).
+* **CACHING** problems locally thus you can easily scan & think it offline.
+* Do everything in CLI, no one even knows you are doing leetcode :p
+* Auto **GENERATING** source code template for you.
+* Support case **TEST** and **SUBMIT** to leetcode.com.
+* **AUTO LOGIN** among multiple sessions with single leetcode account.
+
 ## Table of Contents
 
 * [Prerequisites](#prerequisites)
@@ -197,26 +206,35 @@ Login with your leetcode account (username or email).
 ### version
 
 	$ lc version
-	0.3.0
+	0.4.0
 
 * `-v` to show verbose info, e.g. config, cache dir.
 
 *Example*
 
 	$ lc version -v
-	leetcode-cli 0.3.0
+	 _           _                  _
+	| |         | |                | |
+	| | ___  ___| |_  ___  ___   __| | ___
+	| |/ _ \/ _ \ __|/ __|/ _ \ / _` |/ _ \
+	| |  __/  __/ |_  (__| (_) | (_| |  __/
+	|_|\___|\___|\__|\___|\___/ \__,_|\___|  CLI v0.4.0
 
-	Cache: /Users/skygragon/.lc/
+	[Environment]
+	Cache:  /Users/skygragon/.lc/
 	Config: /Users/skygragon/.lcconfig
 
-	BASE_URL = https://leetcode.com
-	LOGIN_URL = https://leetcode.com/accounts/login/
-	PROBLEMS_URL = https://leetcode.com/problems/
-	TEST_URL = https://leetcode.com/problems/$key/interpret_solution/
-	SUBMIT_URL = https://leetcode.com/problems/$key/submit/
-	VERIFY_URL = https://leetcode.com/submissions/detail/$id/check/
-	LANG = cpp
-	USE_COLOR = true
+	[Configuration]
+	BASE_URL:     https://leetcode.com
+	LOGIN_URL:    https://leetcode.com/accounts/login/
+	PROBLEMS_URL: https://leetcode.com/api/problems/algorithms/
+	PROBLEM_URL:  https://leetcode.com/problems/$id
+	TEST_URL:     https://leetcode.com/problems/$key/interpret_solution/
+	SUBMIT_URL:   https://leetcode.com/problems/$key/submit/
+	VERIFY_URL:   https://leetcode.com/submissions/detail/$id/check/
+	LANG:         java
+	USE_COLOR:    true
+	AUTO_LOGIN:   true
 
 ## Tips
 
@@ -246,5 +264,16 @@ Create a file named `.lcconfig` in your home directory.
 
 	{
 		"LANG": "java",
-		"USE_COLOR": true
+		"USE_COLOR": true,
+		"AUTO_LOGIN": false
 	}
+
+### Auto login
+
+Leetcode.com is restricting one session only in the same time, which means if you have login same account otherwhere, the existing login session will be expired immediately. This will greatly harm your experience since you have to re-login again and again among different sessions.
+
+However leetcode-cli will help some one this.It will try to save you from this trial and re-login transparently without interrupting your current work whenever it notices the session is already expired. To enable this in your config:
+
+	"AUTO_LOGIN": true
+
+**NOTE: if enabled, your PASSWORD will be persisted locally to achieve auto login, so PLEASE be careful to ONLY enable this on your OWN computer for the sake of security!**
