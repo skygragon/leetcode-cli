@@ -290,4 +290,38 @@ describe('leetcode_client', function() {
       });
     });
   }); // #getSubmission
+
+  describe('#login', function() {
+    it('should ok', function(done) {
+      nock('https://leetcode.com')
+        .get('/accounts/login/')
+        .reply(200, '', {
+          'Set-Cookie': [
+            'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+          ]
+        });
+
+      nock('https://leetcode.com')
+        .post('/accounts/login/')
+        .reply(302, '', {
+          'Set-Cookie': [
+            'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
+            'PHPSESSID=SESSION_ID; Max-Age=31449600; Path=/; secure',
+            "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
+          ]
+        });
+
+      var user = {};
+      client.login(user, function(e, user) {
+        assert.equal(e, null);
+
+        assert.equal(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
+        assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
+        assert.equal(user.sessionId, 'SESSION_ID');
+        assert.equal(user.name, 'Eric');
+
+        done();
+      });
+    });
+  }); // #login
 });
