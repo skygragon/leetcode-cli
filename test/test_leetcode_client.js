@@ -217,4 +217,77 @@ describe('leetcode_client', function() {
       });
     });
   }); // #submitProblem
+
+  describe('#getSubmissions', function() {
+    it('should ok', function(done) {
+      var problem = {
+        id:     1,
+        name:   'Two Sum',
+        key:    'two-sum',
+        link:   'https://leetcode.com/problems/two-sum',
+        locked: false
+      };
+
+      nock('https://leetcode.com')
+        .get('/problems/two-sum/submissions/')
+        .replyWithFile(200, './test/mock/two-sum.submissions.html.20161006');
+
+      client.getSubmissions(problem, function(e, submissions) {
+        assert.equal(e, null);
+
+        assert.equal(submissions.length, 2);
+
+        assert.deepEqual(submissions[0], {
+          id:      '73790064',
+          lang:    'cpp',
+          runtime: '9 ms',
+          path:    '/submissions/detail/73790064/',
+          state:   'Accepted'
+        });
+
+        assert.deepEqual(submissions[1], {
+          id:      '73489296',
+          lang:    'cpp',
+          runtime: 'N/A',
+          path:    '/submissions/detail/73489296/',
+          state:   'Wrong Answer'
+        });
+
+        done();
+      });
+    });
+  }); // #getSubmissions
+
+  describe('#getSubmission', function() {
+    it('should ok', function(done) {
+      var submission = {
+        id:      '73790064',
+        lang:    'cpp',
+        runtime: '9 ms',
+        path:    '/submissions/detail/73790064/',
+        state:   'Accepted'
+      };
+
+      nock('https://leetcode.com')
+        .get('/submissions/detail/73790064/')
+        .replyWithFile(200, './test/mock/two-sum.submission.73790064.html.20161006');
+
+      client.getSubmission(submission, function(e, submission) {
+        assert.equal(e, null);
+
+        assert.deepEqual(submission.code,
+          [
+            'class Solution {',
+            'public:',
+            '    vector<int> twoSum(vector<int>& nums, int target) {',
+            '        return res;',
+            '    }',
+            '};',
+            ''
+          ].join('\r\n'));
+
+        done();
+      });
+    });
+  }); // #getSubmission
 });
