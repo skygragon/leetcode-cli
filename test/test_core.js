@@ -208,4 +208,38 @@ describe('core', function() {
       });
     });
   }); // #problems
+
+  describe('#submission', function() {
+    var SUBMISSIONS = [
+      {id: 1234, state: 'Accepted'}
+    ];
+
+    // dummy test
+    it('should getSubmissions ok', function(done) {
+      client.getSubmissions = function(problem, cb) {
+        return cb(null, SUBMISSIONS);
+      };
+
+      core.getSubmissions({}, function(e, submissions) {
+        assert.equal(e, null);
+        assert.deepEqual(submissions, SUBMISSIONS);
+
+        done();
+      });
+    });
+
+    // dummy test
+    it('should getSubmission ok', function(done) {
+      client.getSubmission = function(submission, cb) {
+        return cb(null, SUBMISSIONS[0]);
+      };
+
+      core.getSubmission({}, function(e, submission) {
+        assert.equal(e, null);
+        assert.deepEqual(submission, SUBMISSIONS[0]);
+
+        done();
+      });
+    });
+  }); // #submission
 });
