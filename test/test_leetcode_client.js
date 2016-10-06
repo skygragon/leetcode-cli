@@ -1,12 +1,47 @@
+var _ = require('underscore');
 var assert = require('chai').assert;
 var nock = require('nock');
 
 var client = require('../lib/leetcode_client');
 var config = require('../lib/config');
+var core = require('../lib/core');
 
 describe('leetcode_client', function() {
   before(function() {
     config.init();
+  });
+
+  describe('#autologin', function() {
+    var _core;
+
+    before(function() {
+      config.AUTO_LOGIN = true;
+      _core = _.clone(core);
+
+      core.getUser = function() {
+        return {};
+      };
+      core.login = function(user, cb) {
+        return cb(null, user);
+      };
+    });
+
+    // restore to original 'core'
+    after(function() {
+      _.extendOwn(core, _core);
+    });
+
+    it('should ok', function(done) {
+      nock(config.URL_PROBLEMS).get('/').reply(403);
+      nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
+
+      client.getProblems(function(e, problems) {
+        assert.equal(e, null);
+        assert.equal(problems.length, 377);
+
+        done();
+      });
+    });
   });
 
   describe('#getProblems', function() {
@@ -293,23 +328,19 @@ describe('leetcode_client', function() {
 
   describe('#login', function() {
     it('should ok', function(done) {
-      nock('https://leetcode.com')
-        .get('/accounts/login/')
-        .reply(200, '', {
-          'Set-Cookie': [
-            'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
-          ]
-        });
+      nock(config.URL_LOGIN).get('/').reply(200, '', {
+        'Set-Cookie': [
+          'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+        ]
+      });
 
-      nock('https://leetcode.com')
-        .post('/accounts/login/')
-        .reply(302, '', {
-          'Set-Cookie': [
-            'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
-            'PHPSESSID=SESSION_ID; Max-Age=31449600; Path=/; secure',
-            "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
-          ]
-        });
+      nock(config.URL_LOGIN).post('/').reply(302, '', {
+        'Set-Cookie': [
+          'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
+          'PHPSESSID=SESSION_ID; Max-Age=31449600; Path=/; secure',
+          "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
+        ]
+      });
 
       var user = {};
       client.login(user, function(e, user) {
