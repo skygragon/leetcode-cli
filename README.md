@@ -10,16 +10,16 @@ Great thanks to leetcode.com, an really awesome website!
 
 ## What can it do?
 
-* A very [**EFFICIENT**](#best-practice) way to fight problems.
-* **CACHING** problems locally thus you can easily scan & think it offline.
+* A very [**EFFICIENT**](#quick-start) way to fight problems.
+* [**CACHING**](https://github.com/skygragon/leetcode-cli/blob/master/doc/advanced.md#cache) problems locally thus you can easily navigate & think it offline.
 * Do everything in **CLI**, no one even knows you are doing leetcode :p
-* Auto [**GENERATING**](#show) source code template for you.
-* Support case [**TEST**](#test) and [**SUBMIT**](#submit) to leetcode.com.
-* [**AUTO LOGIN**](#auto-login) among multiple sessions with single leetcode account.
+* [**GENERATING**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#show) source code template for further coding.
+* Support live [**TEST**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#test) and [**SUBMIT**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#submit) againts leetcode.com.
+* [**AUTO LOGIN**](https://github.com/skygragon/leetcode-cli/blob/master/doc/advanced.md#auto-login) among multiple sessions with single leetcode account.
 
 ## Prerequisites
 
-node.js (npm included), please follow the installation guide below:
+node.js (npm included) required, please follow the installation guide:
 
 * https://nodejs.org/en/download/
 * https://nodejs.org/en/download/package-manager/
@@ -35,12 +35,17 @@ From source code:
     $ git clone http://github.com/skygragon/leetcode-cli
     $ cd leetcode-cli && npm install && sudo npm install -g .
 
-## Best Practice
+## Quick Start
 
-	Read help first						$ lc help
-	Login with your leetcoe account		$ lc user -l
-	Browse all problems					$ lc list
-	Select one problem 					$ lc show 1 -g -l cpp
+	Read help first                         $ lc help
+	Login with your leetcode account        $ lc user -l
+	Browse all problems                     $ lc list
+	Choose one problem                      $ lc show 1 -g -l cpp
 	Coding it!
-	Run test(s) and pray				$ lc test ./two-sum.cpp -t '[3,2,4]\n7'
-	Submit final solution!				$ lc submit ./two-sum.cpp
+	Run test(s) and pray...                 $ lc test ./two-sum.cpp -t '[3,2,4]\n7'
+	Submit final solution!                  $ lc submit ./two-sum.cpp
+
+## There is More...
+
+* [Commands Tutorial](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md)
+* [Advanced Tips](https://github.com/skygragon/leetcode-cli/blob/master/doc/advanced.md)
