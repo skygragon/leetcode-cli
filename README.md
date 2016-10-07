@@ -16,6 +16,7 @@ Great thanks to leetcode.com, an really awesome website!
 * [**GENERATING**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#show) source code template for further coding.
 * Support live [**TEST**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#test) and [**SUBMIT**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#submit) againts leetcode.com.
 * [**AUTO LOGIN**](https://github.com/skygragon/leetcode-cli/blob/master/doc/advanced.md#auto-login) among multiple sessions with single leetcode account.
+* Retrieve your previous [**SUBMISSION**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#submission) thus you can easily backup and manage your code.
 
 ## Prerequisites
 

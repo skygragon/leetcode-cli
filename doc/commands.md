@@ -3,6 +3,7 @@
 * [help](#help)
 * [list](#list)
 * [show](#show)
+* [submission](#submission)
 * [submit](#submit)
 * [test](#test)
 * [user](#user)
@@ -125,6 +126,33 @@ Display problem details. With `-g`+`-l`, the code template could be auto generat
 
     UPDATE (2016/2/13):
     The return format had been changed to zero-based indices. Please read the above updated description carefully.
+
+## submission
+
+Retrieve your existing submissions from leetcode.com and save to local files.
+
+* For AC-ed problem, the last accepted submission will be retrieved, which output in green color.
+* For non AC-ed problem, the last non-accepted submission will be retrieved, which output in yellow.
+* If the submission file already exists in local, it will skip retrieving and output in white.
+
+Available options:
+
+* `-o` to specify the output folder.
+* `-a` to work against all problems.
+* Or work against specfic problem only.
+	* `lc submission 1`
+	* `lc submission two-sum`
+
+
+*Examples*
+
+	$ lc submission -a -o tmp
+
+	[303] Range Sum Query - Immutable          tmp/range-sum-query-immutable.52178990.ac.cpp
+	[319] Bulb Switcher                        tmp/bulb-switcher.52257927.ac.cpp
+	[313] Super Ugly Number                    tmp/super-ugly-number.52256965.ac.cpp
+	......
+	[  1] Two Sum                              tmp/two-sum.73790064.ac.cpp
 
 ## submit
 
