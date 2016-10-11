@@ -253,6 +253,28 @@ describe('leetcode_client', function() {
     });
   }); // #submitProblem
 
+  describe('#starProblem', function() {
+    it('should ok', function(done) {
+      var problem = {
+        id:     389,
+        name:   'Find the Difference',
+        key:    'find-the-difference',
+        link:   'https://leetcode.com/problems/find-the-difference',
+        locked: false,
+        file:   '/dev/null'
+      };
+
+      nock('https://leetcode.com')
+        .post('/problems/favor/')
+        .reply(200, '{"is_favor": true}');
+
+      client.starProblem(problem, function(e) {
+        assert.equal(e, null);
+        done();
+      });
+    });
+  }); // #starProblem
+
   describe('#getSubmissions', function() {
     it('should ok', function(done) {
       var problem = {
