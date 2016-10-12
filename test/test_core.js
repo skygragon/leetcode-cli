@@ -180,6 +180,17 @@ describe('core', function() {
       });
     });
 
+    it('should starProblem ok', function(done) {
+      client.starProblem = function(problem, cb) {
+        return cb(null);
+      };
+
+      core.starProblem(PROBLEMS[0], function(e) {
+        assert.equal(e, null);
+        done();
+      });
+    });
+
     // dummy test
     it('should testProblem ok', function(done) {
       client.testProblem = function(problem, cb) {
