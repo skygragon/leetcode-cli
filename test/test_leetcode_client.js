@@ -268,8 +268,9 @@ describe('leetcode_client', function() {
         .post('/problems/favor/')
         .reply(200, '{"is_favor": true}');
 
-      client.starProblem(problem, function(e) {
+      client.starProblem(problem, true, function(e, starred) {
         assert.equal(e, null);
+        assert.equal(starred, true);
         done();
       });
     });
