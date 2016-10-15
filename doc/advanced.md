@@ -2,6 +2,7 @@
 
 * [Bash Completion](#bash-completion)
 * [Colorful Output](#colorful-output)
+* [Debug Output](#debug-output)
 * [Configuration](#configuration)
 * [Cache](#cache)
 * [Auto Login](#auto-login)
@@ -26,6 +27,11 @@ Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Lin
 * `--no-color` to disable it.
 
 Or use configuration setting to avoid typing it repeatedly, see [below](#configuration).
+
+## Debug Output
+
+* `-v` to enable debug output.
+* `-vv` to enable trace output.
 
 ## Configuration
 

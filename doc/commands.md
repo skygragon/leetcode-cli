@@ -3,6 +3,7 @@
 * [help](#help)
 * [list](#list)
 * [show](#show)
+* [star](#star)
 * [submission](#submission)
 * [submit](#submit)
 * [test](#test)
@@ -51,6 +52,7 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem, `
 	* `h` = hard, `H` = e + m.
 	* `d` = done = AC-ed, `D` = not AC-ed.
 	* `l` = locked, `L` = not locked.
+	* `s` = starred, `S` = unstarred.
 * `-s` to show statistic counters.
 * `lc list <keyword>` to search by keyword matching.
 
@@ -59,20 +61,20 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem, `
 Show statistcis:
 
 	$ lc list -s
+	      [385] Mini Parser                                                  Medium (26.5%)
+	    ✘ [384] Shuffle an Array                                             Medium (45.7%)
+	    ✔ [383] Ransom Note                                                  Easy   (44.5%)
+	    ✔ [382] Linked List Random Node                                      Medium (46.6%)
+	    ......
+	    ✔ [  4] Median of Two Sorted Arrays                                  Hard   (19.6%)
+	    ✔ [  3] Longest Substring Without Repeating Characters               Medium (22.9%)
+	★   ✔ [  2] Add Two Numbers                                              Medium (25.37 %)
+	★   ✔ [  1] Two Sum                                                      Easy   (27.61 %)
 
-      [385] Mini Parser                                                  Medium (26.5%)
-    ✘ [384] Shuffle an Array                                             Medium (45.7%)
-    ✔ [383] Ransom Note                                                  Easy   (44.5%)
-    ✔ [382] Linked List Random Node                                      Medium (46.6%)
-    ......
-    ✔ [  4] Median of Two Sorted Arrays                                  Hard   (19.6%)
-    ✔ [  3] Longest Substring Without Repeating Characters               Medium (22.9%)
-    ✔ [  2] Add Two Numbers                                              Medium (24.5%)
-    ✔ [  1] Two Sum                                                      Easy   (25.6%)
-
-      All:  394       Listed: 394       Lock: 72
-      AC:   196       Not-AC: 15        New:  183
-      Easy: 105       Medium: 202       Hard: 87
+	    All:    400       Listed:  400
+	    Locked: 73        Starred: 3
+	    Accept: 196       Not-AC:  15        New:  189
+	    Easy:   106       Medium:  207       Hard: 87
 
 Use keyword search and query:
 
@@ -86,6 +88,7 @@ Use keyword search and query:
 Display problem details. With `-g`+`-l`, the code template could be auto generated for you.
 
 * `-g` to generate source file.
+* `-x` to add problem details in the generated source file.
 * `-l` to choose programming language. (Depends on which langs are provided on leetcode)
 	* c
 	* cpp
@@ -127,6 +130,23 @@ Display problem details. With `-g`+`-l`, the code template could be auto generat
     UPDATE (2016/2/13):
     The return format had been changed to zero-based indices. Please read the above updated description carefully.
 
+## star
+
+Mark your favorite problems. The starred problem will be shown with a `★`.
+
+* `-d` to unstar.
+* Instead of index number, you can use name to star a problem.
+	* `lc star "Two Sum"`
+	* `lc star two-sum`
+
+*Example*
+
+	$ lc star 1
+	[1] Two Sum ★
+
+	$ lc star 1 -d
+	[1] Two Sum ☆
+
 ## submission
 
 Retrieve your existing submissions from leetcode.com and save to local files.
@@ -139,6 +159,7 @@ Available options:
 
 * `-o` to specify the output folder.
 * `-a` to work against all problems.
+* `-x` to add problem details in the output file.
 * Or work against specfic problem only.
 	* `lc submission 1`
 	* `lc submission two-sum`
@@ -228,7 +249,7 @@ Display version information.
 Short:
 
 	$ lc version
-	0.5.0
+	0.6.0
 
 Verbose:
 
@@ -238,7 +259,7 @@ Verbose:
 	| | ___  ___| |_  ___  ___   __| | ___
 	| |/ _ \/ _ \ __|/ __|/ _ \ / _` |/ _ \
 	| |  __/  __/ |_  (__| (_) | (_| |  __/
-	|_|\___|\___|\__|\___|\___/ \__,_|\___|  CLI v0.5.0
+	|_|\___|\___|\__|\___|\___/ \__,_|\___|  CLI v0.6.0
 
 	[Environment]
 	Cache:  /Users/skygragon/.lc/
