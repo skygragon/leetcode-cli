@@ -99,6 +99,31 @@ describe('helper', function() {
     });
   }); // #extToLang
 
+  describe('#langToCommentStyle', function() {
+    it('should ok', function() {
+      var C_STYLE = {
+        commentHeader: '/*',
+        commentLine:   ' *',
+        commentFooter: ' */'
+      };
+      var RUBY_STYLE = {
+        commentHeader: '#',
+        commentLine:   '#',
+        commentFooter: '#'
+      };
+
+      assert.deepEqual(h.langToCommentStyle('c'), C_STYLE);
+      assert.deepEqual(h.langToCommentStyle('cpp'), C_STYLE);
+      assert.deepEqual(h.langToCommentStyle('csharp'), C_STYLE);
+      assert.deepEqual(h.langToCommentStyle('golang'), C_STYLE);
+      assert.deepEqual(h.langToCommentStyle('java'), C_STYLE);
+      assert.deepEqual(h.langToCommentStyle('javascript'), C_STYLE);
+      assert.deepEqual(h.langToCommentStyle('python'), RUBY_STYLE);
+      assert.deepEqual(h.langToCommentStyle('ruby'), RUBY_STYLE);
+      assert.deepEqual(h.langToCommentStyle('swift'), C_STYLE);
+    });
+  }); // #langToCommentStyle
+
   describe('#dirAndFiles', function() {
     it('should ok', function() {
       process.env.HOME = '/home/skygragon';

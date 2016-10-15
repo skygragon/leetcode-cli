@@ -7,6 +7,15 @@ var config = require('../lib/config');
 var core = require('../lib/core');
 
 describe('leetcode_client', function() {
+  var PROBLEM = {
+    id:     389,
+    name:   'Find the Difference',
+    key:    'find-the-difference',
+    link:   'https://leetcode.com/problems/find-the-difference',
+    locked: false,
+    file:   '/dev/null'
+  };
+
   before(function() {
     config.init();
   });
@@ -15,7 +24,6 @@ describe('leetcode_client', function() {
     var _core;
 
     before(function() {
-      config.AUTO_LOGIN = true;
       _core = _.clone(core);
 
       core.getUser = function() {
@@ -32,13 +40,41 @@ describe('leetcode_client', function() {
     });
 
     it('should ok', function(done) {
+      config.AUTO_LOGIN = true;
       nock(config.URL_PROBLEMS).get('/').reply(403);
       nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
 
       client.getProblems(function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
+        done();
+      });
+    });
 
+    it('should fail if no auto login', function(done) {
+      config.AUTO_LOGIN = false;
+      nock(config.URL_PROBLEMS).get('/').reply(403);
+
+      client.getProblems(function(e, problems) {
+        var expected = {
+          msg:        'session expired, please login again',
+          statusCode: 403
+        };
+        assert.deepEqual(e, expected);
+        done();
+      });
+    });
+
+    it('should fail if other error', function(done) {
+      config.AUTO_LOGIN = true;
+      nock(config.URL_PROBLEMS).get('/').reply(503);
+
+      client.getProblems(function(e, problems) {
+        var expected = {
+          msg:        'http error',
+          statusCode: 503
+        };
+        assert.deepEqual(e, expected);
         done();
       });
     });
@@ -46,14 +82,20 @@ describe('leetcode_client', function() {
 
   describe('#getProblems', function() {
     it('should ok', function(done) {
-      nock(config.URL_PROBLEMS)
-        .get('/')
-        .replyWithFile(200, './test/mock/problems.json.20160911');
+      nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
 
       client.getProblems(function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
+        done();
+      });
+    });
 
+    it('should fail if not login', function(done) {
+      nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.nologin.json.20161015');
+
+      client.getProblems(function(e, problems) {
+        assert.equal(e, 'session expired, please login again');
         done();
       });
     });
@@ -61,19 +103,11 @@ describe('leetcode_client', function() {
 
   describe('#getProblem', function() {
     it('should ok', function(done) {
-      var problem = {
-        id:     389,
-        name:   'Find the Difference',
-        key:    'find-the-difference',
-        link:   'https://leetcode.com/problems/find-the-difference',
-        locked: false
-      };
-
       nock('https://leetcode.com')
         .get('/problems/find-the-difference')
         .replyWithFile(200, './test/mock/find-the-difference.html.20160911');
 
-      client.getProblem(problem, function(e, problem) {
+      client.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, null);
         assert.equal(problem.totalAC, 15674);
         assert.equal(problem.totalSubmit, 32141);
@@ -183,7 +217,18 @@ describe('leetcode_client', function() {
             '    ',
             'end'
           ].join('\r\n'));
+        done();
+      });
+    });
 
+    it('should fail if no permission for locked', function(done) {
+      PROBLEM.locked = true;
+      nock('https://leetcode.com')
+        .get('/problems/find-the-difference')
+        .replyWithFile(200, './test/mock/locked.html.20161015');
+
+      client.getProblem(PROBLEM, function(e, problem) {
+        assert.equal(e, 'failed to load locked problem!');
         done();
       });
     });
@@ -191,15 +236,6 @@ describe('leetcode_client', function() {
 
   describe('#testProblem', function() {
     it('should ok', function(done) {
-      var problem = {
-        id:     389,
-        name:   'Find the Difference',
-        key:    'find-the-difference',
-        link:   'https://leetcode.com/problems/find-the-difference',
-        locked: false,
-        file:   '/dev/null'
-      };
-
       nock('https://leetcode.com')
         .post('/problems/find-the-difference/interpret_solution/')
         .reply(200, '{"interpret_expected_id": "id1", "interpret_id": "id2"}');
@@ -212,14 +248,24 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/id2/check/')
         .reply(200, '{"state": "SUCCESS"}');
 
-      client.testProblem(problem, function(e, results) {
+      client.testProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results,
           [
             {name: 'Your', state: 'SUCCESS'},
             {name: 'Expected', state: 'SUCCESS'}
           ]);
+        done();
+      });
+    });
 
+    it('should fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/interpret_solution/')
+        .replyWithError('unknown error!');
+
+      client.testProblem(PROBLEM, function(e, results) {
+        assert.equal(e.message, 'unknown error!');
         done();
       });
     });
@@ -227,15 +273,6 @@ describe('leetcode_client', function() {
 
   describe('#submitProblem', function() {
     it('should ok', function(done) {
-      var problem = {
-        id:     389,
-        name:   'Find the Difference',
-        key:    'find-the-difference',
-        link:   'https://leetcode.com/problems/find-the-difference',
-        locked: false,
-        file:   '/dev/null'
-      };
-
       nock('https://leetcode.com')
         .post('/problems/find-the-difference/submit/')
         .reply(200, '{"submission_id": "id1"}');
@@ -244,33 +281,67 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/id1/check/')
         .reply(200, '{"state": "SUCCESS"}');
 
-      client.submitProblem(problem, function(e, results) {
+      client.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results, [{name: 'Your', state: 'SUCCESS'}]);
+        done();
+      });
+    });
 
+    it('should ok after delay', function(done) {
+      this.timeout(5000);
+
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/submit/')
+        .reply(200, '{"error": "You run code too soon"}');
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/submit/')
+        .reply(200, '{"submission_id": "id1"}');
+
+      nock('https://leetcode.com')
+        .get('/submissions/detail/id1/check/')
+        .reply(200, '{"state": "SUCCESS"}');
+
+      client.submitProblem(PROBLEM, function(e, results) {
+        assert.equal(e, null);
+        assert.deepEqual(results, [{name: 'Your', state: 'SUCCESS'}]);
+        done();
+      });
+    });
+
+    it('should fail if server error', function(done) {
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/submit/')
+        .reply(200, '{"error": "maybe internal error?"}');
+
+      client.submitProblem(PROBLEM, function(e, results) {
+        assert.equal(e, 'maybe internal error?');
         done();
       });
     });
   }); // #submitProblem
 
   describe('#starProblem', function() {
-    it('should ok', function(done) {
-      var problem = {
-        id:     389,
-        name:   'Find the Difference',
-        key:    'find-the-difference',
-        link:   'https://leetcode.com/problems/find-the-difference',
-        locked: false,
-        file:   '/dev/null'
-      };
-
+    it('should star ok', function(done) {
       nock('https://leetcode.com')
         .post('/problems/favor/')
         .reply(200, '{"is_favor": true}');
 
-      client.starProblem(problem, true, function(e, starred) {
+      client.starProblem(PROBLEM, true, function(e, starred) {
         assert.equal(e, null);
         assert.equal(starred, true);
+        done();
+      });
+    });
+
+    it('should unstar ok', function(done) {
+      nock('https://leetcode.com')
+        .delete('/problems/favor/')
+        .reply(200, '{"is_favor": false}');
+
+      client.starProblem(PROBLEM, false, function(e, starred) {
+        assert.equal(e, null);
+        assert.equal(starred, false);
         done();
       });
     });
@@ -292,7 +363,6 @@ describe('leetcode_client', function() {
 
       client.getSubmissions(problem, function(e, submissions) {
         assert.equal(e, null);
-
         assert.equal(submissions.length, 2);
 
         assert.deepEqual(submissions[0], {
@@ -310,7 +380,6 @@ describe('leetcode_client', function() {
           path:    '/submissions/detail/73489296/',
           state:   'Wrong Answer'
         });
-
         done();
       });
     });
@@ -332,7 +401,6 @@ describe('leetcode_client', function() {
 
       client.getSubmission(submission, function(e, submission) {
         assert.equal(e, null);
-
         assert.deepEqual(submission.code,
           [
             'class Solution {',
@@ -343,7 +411,6 @@ describe('leetcode_client', function() {
             '};',
             ''
           ].join('\r\n'));
-
         done();
       });
     });
@@ -373,7 +440,6 @@ describe('leetcode_client', function() {
         assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
         assert.equal(user.sessionId, 'SESSION_ID');
         assert.equal(user.name, 'Eric');
-
         done();
       });
     });

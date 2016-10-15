@@ -2,17 +2,16 @@ var assert = require('chai').assert;
 var fs = require('fs');
 var rewire = require('rewire');
 
-var core = rewire('../lib/core');
-
 // mock depedencies
-var h = rewire('../lib/helper');
 var cache = rewire('../lib/cache');
 var client = rewire('../lib/leetcode_client');
+var config = rewire('../lib/config');
+var core = rewire('../lib/core');
+var h = rewire('../lib/helper');
 
 describe('core', function() {
-  var home = './tmp';
-
   before(function() {
+    var home = './tmp';
     if (!fs.existsSync(home)) fs.mkdirSync(home);
 
     h.getHomeDir = function() {
@@ -22,12 +21,15 @@ describe('core', function() {
     cache.__set__('h', h);
     core.__set__('cache', cache);
     core.__set__('client', client);
+    core.__set__('config', config);
   });
 
   describe('#user', function() {
-    var USER = {name: 'test-user'};
+    var USER = {name: 'test-user', pass: 'password'};
+    var SAFE_USER = {name: 'test-user'};
 
     it('should login ok', function(done) {
+      config.AUTO_LOGIN = true;
       // before login
       cache.del('.user');
       assert.equal(core.getUser(), null);
@@ -44,7 +46,34 @@ describe('core', function() {
         // after login
         assert.deepEqual(core.getUser(), user);
         assert.equal(core.isLogin(), true);
+        done();
+      });
+    });
 
+    it('should login ok w/ auto login', function(done) {
+      config.AUTO_LOGIN = false;
+      cache.del('.user');
+
+      client.login = function(user, cb) {
+        return cb(null, user);
+      };
+
+      core.login(USER, function(e, user) {
+        assert.equal(e, null);
+        assert.deepEqual(USER, user);
+        assert.deepEqual(SAFE_USER, core.getUser());
+        assert.equal(core.isLogin(), true);
+        done();
+      });
+    });
+
+    it('should login fail if client login error', function(done) {
+      client.login = function(user, cb) {
+        return cb('client login error');
+      };
+
+      core.login(USER, function(e, user) {
+        assert.equal(e, 'client login error');
         done();
       });
     });
@@ -59,137 +88,197 @@ describe('core', function() {
       core.logout(USER);
       assert.equal(core.getUser(), null);
       assert.equal(core.isLogin(), false);
-
       done();
     });
   }); // #user
 
   describe('#problems', function() {
     var PROBLEMS = [
-      {id: 0, name: 'name0', key: 'key0'},
-      {id: 1, name: 'name1', key: 'key1'}
+      {id: 0, name: 'name0', key: 'key0', starred: false},
+      {id: 1, name: 'name1', key: 'key1', starred: true}
     ];
     var RESULTS = [
       {name: 'result0'},
       {name: 'result1'}
     ];
 
-    it('should getProblems w/ cache ok', function(done) {
-      cache.set('all', PROBLEMS);
+    describe('#getProblems', function() {
+      it('should getProblems w/ cache ok', function(done) {
+        cache.set('all', PROBLEMS);
 
-      core.getProblems(function(e, problems) {
-        assert.equal(e, null);
-        assert.deepEqual(problems, PROBLEMS);
-
-        done();
+        core.getProblems(function(e, problems) {
+          assert.equal(e, null);
+          assert.deepEqual(problems, PROBLEMS);
+          done();
+        });
       });
-    });
 
-    it('should getProblems w/o cache ok', function(done) {
-      cache.del('all');
+      it('should getProblems w/o cache ok', function(done) {
+        cache.del('all');
 
-      client.getProblems = function(cb) {
-        return cb(null, PROBLEMS);
-      };
+        client.getProblems = function(cb) {
+          return cb(null, PROBLEMS);
+        };
 
-      core.getProblems(function(e, problems) {
-        assert.equal(e, null);
-        assert.deepEqual(problems, PROBLEMS);
-
-        done();
+        core.getProblems(function(e, problems) {
+          assert.equal(e, null);
+          assert.deepEqual(problems, PROBLEMS);
+          done();
+        });
       });
-    });
 
-    it('should getProblem by id w/ cache ok', function(done) {
-      cache.set('all', PROBLEMS);
-      cache.set('key0', PROBLEMS[0]);
+      it('should getProblems w/o cache fail if client error', function(done) {
+        cache.del('all');
 
-      core.getProblem(0, function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem, PROBLEMS[0]);
+        client.getProblems = function(cb) {
+          return cb('client getProblems error');
+        };
 
-        done();
+        core.getProblems(function(e, problems) {
+          assert.equal(e, 'client getProblems error');
+          done();
+        });
       });
-    });
+    }); // #getProblems
 
-    it('should getProblem by name w/ cache ok', function(done) {
-      cache.set('all', PROBLEMS);
-      cache.set('key0', PROBLEMS[0]);
+    describe('#getProblem', function() {
+      it('should getProblem by id w/ cache ok', function(done) {
+        cache.set('all', PROBLEMS);
+        cache.set('key0', PROBLEMS[0]);
 
-      core.getProblem('name0', function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem, PROBLEMS[0]);
-
-        done();
+        core.getProblem(0, function(e, problem) {
+          assert.equal(e, null);
+          assert.deepEqual(problem, PROBLEMS[0]);
+          done();
+        });
       });
-    });
 
-    it('should getProblem by key w/ cache ok', function(done) {
-      cache.set('all', PROBLEMS);
-      cache.set('key0', PROBLEMS[0]);
+      it('should getProblem by name w/ cache ok', function(done) {
+        cache.set('all', PROBLEMS);
+        cache.set('key0', PROBLEMS[0]);
 
-      core.getProblem('key0', function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem, PROBLEMS[0]);
-
-        done();
+        core.getProblem('name0', function(e, problem) {
+          assert.equal(e, null);
+          assert.deepEqual(problem, PROBLEMS[0]);
+          done();
+        });
       });
-    });
 
-    it('should getProblem by id w/o cache ok', function(done) {
-      cache.set('all', PROBLEMS);
-      cache.del('key0');
+      it('should getProblem by key w/ cache ok', function(done) {
+        cache.set('all', PROBLEMS);
+        cache.set('key0', PROBLEMS[0]);
 
-      client.getProblem = function(problem, cb) {
-        return cb(null, problem);
-      };
-
-      core.getProblem(0, function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem, PROBLEMS[0]);
-
-        done();
+        core.getProblem('key0', function(e, problem) {
+          assert.equal(e, null);
+          assert.deepEqual(problem, PROBLEMS[0]);
+          done();
+        });
       });
-    });
 
-    it('should getProblem error if not found', function(done) {
-      cache.set('all', PROBLEMS);
+      it('should getProblem by id w/o cache ok', function(done) {
+        cache.set('all', PROBLEMS);
+        cache.del('key0');
 
-      core.getProblem(3, function(e, problem) {
-        assert.equal(e, 'Problem not found!');
-        assert.equal(problem, null);
+        client.getProblem = function(problem, cb) {
+          return cb(null, problem);
+        };
 
-        done();
+        core.getProblem(0, function(e, problem) {
+          assert.equal(e, null);
+          assert.deepEqual(problem, PROBLEMS[0]);
+          done();
+        });
       });
-    });
 
-    it('should updateProblem ok', function(done) {
-      cache.set('all', PROBLEMS);
-      cache.del('key0');
+      it('should getProblem error if not found', function(done) {
+        cache.set('all', PROBLEMS);
 
-      var kv = {name: 'name00', value: 'value0'};
-      var ret = core.updateProblem(PROBLEMS[0], kv);
-      assert.equal(ret, true);
-
-      core.getProblem(0, function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem,
-          {id: 0, name: 'name00', key: 'key0', value: 'value0'});
-
-        done();
+        core.getProblem(3, function(e, problem) {
+          assert.equal(e, 'Problem not found!');
+          done();
+        });
       });
-    });
 
-    it('should starProblem ok', function(done) {
-      client.starProblem = function(problem, cb) {
-        return cb(null);
-      };
+      it('should getProblem fail if client error', function(done) {
+        cache.set('all', PROBLEMS);
+        cache.del('key0');
 
-      core.starProblem(PROBLEMS[0], function(e) {
-        assert.equal(e, null);
-        done();
+        client.getProblem = function(problem, cb) {
+          return cb('client getProblem error');
+        };
+
+        core.getProblem(0, function(e, problem) {
+          assert.equal(e, 'client getProblem error');
+          done();
+        });
       });
-    });
+
+      it('should getProblem fail if getProblems error', function(done) {
+        cache.del('all');
+        client.getProblems = function(cb) {
+          return cb('getProblems error');
+        };
+
+        core.getProblem(0, function(e, problem) {
+          assert.equal(e, 'getProblems error');
+          done();
+        });
+      });
+    }); // #getProblem
+
+    describe('#updateProblem', function() {
+      it('should updateProblem ok', function(done) {
+        cache.set('all', PROBLEMS);
+        cache.del('key0');
+
+        var kv = {value: 'value00'};
+        var ret = core.updateProblem(PROBLEMS[0], kv);
+        assert.equal(ret, true);
+
+        core.getProblem(0, function(e, problem) {
+          assert.equal(e, null);
+          assert.deepEqual(problem,
+            {id: 0, name: 'name0', key: 'key0', value: 'value00', starred: false});
+          done();
+        });
+      });
+
+      it('should updateProblem fail if no problems found', function() {
+        cache.del('all');
+        var ret = core.updateProblem(PROBLEMS[0], {});
+        assert.equal(ret, false);
+      });
+
+      it('should updateProblem fail if unknown problem', function() {
+        cache.set('all', [PROBLEMS[1]]);
+        var ret = core.updateProblem(PROBLEMS[0], {});
+        assert.equal(ret, false);
+      });
+    }); // #updateProblem
+
+    describe('#starProblem', function() {
+      it('should starProblem ok', function(done) {
+        client.starProblem = function(problem, starred, cb) {
+          return cb(null, starred);
+        };
+
+        assert.equal(PROBLEMS[0].starred, false);
+        core.starProblem(PROBLEMS[0], true, function(e, starred) {
+          assert.equal(e, null);
+          assert.equal(starred, true);
+          done();
+        });
+      });
+
+      it('should starProblem ok if already starred', function(done) {
+        assert.equal(PROBLEMS[1].starred, true);
+        core.starProblem(PROBLEMS[1], true, function(e, starred) {
+          assert.equal(e, null);
+          assert.equal(starred, true);
+          done();
+        });
+      });
+    }); // #starProblem
 
     // dummy test
     it('should testProblem ok', function(done) {
@@ -200,7 +289,6 @@ describe('core', function() {
       core.testProblem(PROBLEMS[0], function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results, RESULTS);
-
         done();
       });
     });
@@ -214,10 +302,71 @@ describe('core', function() {
       core.submitProblem(PROBLEMS[1], function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results, RESULTS);
-
         done();
       });
     });
+
+    describe('#exportProblem', function() {
+      function injectVerify(expected, done) {
+        core.__set__('fs', {
+          writeFileSync: function(f, data) {
+            assert.equal(data, expected);
+            done();
+          },
+          readFileSync: fs.readFileSync
+        });
+      }
+
+      it('should ok w/ code only', function(done) {
+        var expected = [
+          'class Solution {',
+          'public:',
+          '    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {',
+          '',
+          '    }',
+          '};'
+        ].join('\r\n');
+
+        injectVerify(expected, done);
+
+        var problem = require('./mock/add-two-numbers.20161015.json');
+        core.exportProblem(problem, 'test.cpp', true);
+      });
+
+      it('should ok w/ detailed comments', function(done) {
+        var expected = [
+          '/*',
+          ' * [2] Add Two Numbers',
+          ' *',
+          ' * https://leetcode.com/problems/add-two-numbers',
+          ' *',
+          ' * Medium (25.37%)',
+          ' * Total Accepted:    195263',
+          ' * Total Submissions: 769711',
+          ' * Testcase Example:  \'[2,4,3]\\n[5,6,4]\'',
+          ' *',
+          ' * You are given two linked lists representing two non-negative numbers. The',
+          ' * digits are stored in reverse order and each of their nodes contain a single',
+          ' * digit. Add the two numbers and return it as a linked list.',
+          ' * ',
+          ' * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)',
+          ' * Output: 7 -> 0 -> 8',
+          ' */',
+          'class Solution {',
+          'public:',
+          '    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {',
+          '',
+          '    }',
+          '};',
+          ''
+        ].join('\r\n');
+
+        injectVerify(expected, done);
+
+        var problem = require('./mock/add-two-numbers.20161015.json');
+        core.exportProblem(problem, 'test.cpp', false);
+      });
+    }); // #exportProblem
   }); // #problems
 
   describe('#submission', function() {
@@ -234,7 +383,6 @@ describe('core', function() {
       core.getSubmissions({}, function(e, submissions) {
         assert.equal(e, null);
         assert.deepEqual(submissions, SUBMISSIONS);
-
         done();
       });
     });
@@ -248,7 +396,6 @@ describe('core', function() {
       core.getSubmission({}, function(e, submission) {
         assert.equal(e, null);
         assert.deepEqual(submission, SUBMISSIONS[0]);
-
         done();
       });
     });
