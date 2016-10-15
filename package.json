@@ -37,6 +37,7 @@
     "request": "^2.74.0",
     "sprintf-js": "^1.0.3",
     "underscore": "^1.8.3",
+    "wordwrap": "^1.0.0",
     "yargs": "^5.0.0"
   },
   "devDependencies": {
@@ -46,7 +47,6 @@
     "mocha": "^3.0.2",
     "nock": "^8.0.0",
     "nyc": "^8.1.0",
-    "rewire": "^2.5.2",
-    "wordwrap": "^1.0.0"
+    "rewire": "^2.5.2"
   }
 }
