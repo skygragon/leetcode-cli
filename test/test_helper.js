@@ -144,10 +144,34 @@ describe('helper', function() {
           'key2=value2; path=/; Httponly']
         }
       };
+      var respNoSetCookie = {
+        headers: {}
+      };
 
       assert.equal(h.getSetCookieValue(resp, 'key1'), 'value1');
       assert.equal(h.getSetCookieValue(resp, 'key2'), 'value2');
       assert.equal(h.getSetCookieValue(resp, 'key3'), null);
+      assert.equal(h.getSetCookieValue(respNoSetCookie, 'key1'), null);
     });
   }); // #getSetCookieValue
+
+  describe('#readStdin', function() {
+    function hijackStdin(data) {
+      var stream = require('stream');
+      var rs = new stream.Readable();
+      rs.push(data);
+      rs.push(null);
+
+      Object.defineProperty(process, 'stdin', {value: rs});
+    }
+
+    it('should ok', function(done) {
+      hijackStdin('[1,2]\n3');
+
+      h.readStdin(function(e, data) {
+        assert.equal(data, '[1,2]\n3');
+        done();
+      });
+    });
+  }); // #readStdin
 });
