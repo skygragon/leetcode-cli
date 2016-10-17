@@ -78,6 +78,24 @@ describe('leetcode_client', function() {
         done();
       });
     });
+
+    it('should fail if http error in relogin', function(done) {
+      config.AUTO_LOGIN = true;
+      nock(config.URL_PROBLEMS).get('/').reply(403);
+      core.login = function(user, cb) {
+        return cb('unknown error!');
+      };
+
+      // the original error will be returned instead
+      var expected = {
+        msg:        'session expired, please login again',
+        statusCode: 403
+      };
+      client.getProblems(function(e, problems) {
+        assert.deepEqual(e, expected);
+        done();
+      });
+    });
   });
 
   describe('#getProblems', function() {
@@ -232,6 +250,17 @@ describe('leetcode_client', function() {
         done();
       });
     });
+
+    it('should fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .get('/problems/find-the-difference')
+        .replyWithError('unknown error!');
+
+      client.getProblem(PROBLEM, function(e, problem) {
+        assert.equal(e.message, 'unknown error!');
+        done();
+      });
+    });
   }); // #getProblem
 
   describe('#testProblem', function() {
@@ -300,6 +329,9 @@ describe('leetcode_client', function() {
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
+        .reply(200, '{"state": "STARTED"}');
+      nock('https://leetcode.com')
+        .get('/submissions/detail/id1/check/')
         .reply(200, '{"state": "SUCCESS"}');
 
       client.submitProblem(PROBLEM, function(e, results) {
@@ -316,6 +348,21 @@ describe('leetcode_client', function() {
 
       client.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, 'maybe internal error?');
+        done();
+      });
+    });
+
+    it('should fail if server error in check result', function(done) {
+      nock('https://leetcode.com')
+        .post('/problems/find-the-difference/submit/')
+        .reply(200, '{"submission_id": "id1"}');
+
+      nock('https://leetcode.com')
+        .get('/submissions/detail/id1/check/')
+        .replyWithError('unknown error!');
+
+      client.submitProblem(PROBLEM, function(e, results) {
+        assert.equal(e.message, 'unknown error!');
         done();
       });
     });
@@ -342,6 +389,17 @@ describe('leetcode_client', function() {
       client.starProblem(PROBLEM, false, function(e, starred) {
         assert.equal(e, null);
         assert.equal(starred, false);
+        done();
+      });
+    });
+
+    it('should star fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .post('/problems/favor/')
+        .replyWithError('unknown error!');
+
+      client.starProblem(PROBLEM, true, function(e, starred) {
+        assert.equal(e.message, 'unknown error!');
         done();
       });
     });
@@ -383,23 +441,38 @@ describe('leetcode_client', function() {
         done();
       });
     });
+
+    it('should fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .get('/problems/find-the-difference/submissions/')
+        .replyWithError('unknown error!');
+
+      client.getSubmissions(PROBLEM, function(e, submissions) {
+        assert.equal(e.message, 'unknown error!');
+        done();
+      });
+    });
   }); // #getSubmissions
 
   describe('#getSubmission', function() {
-    it('should ok', function(done) {
-      var submission = {
+    var SUBMISSION;
+
+    beforeEach(function() {
+      SUBMISSION = {
         id:      '73790064',
         lang:    'cpp',
         runtime: '9 ms',
         path:    '/submissions/detail/73790064/',
         state:   'Accepted'
       };
+    });
 
+    it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/submissions/detail/73790064/')
         .replyWithFile(200, './test/mock/two-sum.submission.73790064.html.20161006');
 
-      client.getSubmission(submission, function(e, submission) {
+      client.getSubmission(SUBMISSION, function(e, submission) {
         assert.equal(e, null);
         assert.deepEqual(submission.code,
           [
@@ -411,6 +484,29 @@ describe('leetcode_client', function() {
             '};',
             ''
           ].join('\r\n'));
+        done();
+      });
+    });
+
+    it('should fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .get('/submissions/detail/73790064/')
+        .replyWithError('unknown error!');
+
+      client.getSubmission(SUBMISSION, function(e, submission) {
+        assert.equal(e.message, 'unknown error!');
+        done();
+      });
+    });
+
+    it('should fail if no matching submission', function(done) {
+      nock('https://leetcode.com')
+        .get('/submissions/detail/73790064/')
+        .replyWithFile(200, './test/mock/locked.html.20161015');
+
+      client.getSubmission(SUBMISSION, function(e, submission) {
+        assert.equal(e, null);
+        assert.equal(submission.code, null);
         done();
       });
     });
@@ -440,6 +536,31 @@ describe('leetcode_client', function() {
         assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
         assert.equal(user.sessionId, 'SESSION_ID');
         assert.equal(user.name, 'Eric');
+        done();
+      });
+    });
+
+    it('should fail if http error', function(done) {
+      nock(config.URL_LOGIN).get('/').reply(200, '', {
+        'Set-Cookie': [
+          'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+        ]
+      });
+      nock(config.URL_LOGIN).post('/').replyWithError('unknown error!');
+
+      var user = {};
+      client.login(user, function(e, user) {
+        assert.equal(e.message, 'unknown error!');
+        done();
+      });
+    });
+
+    it('should fail if http error, 2nd', function(done) {
+      nock(config.URL_LOGIN).get('/').replyWithError('unknown error!');
+
+      var user = {};
+      client.login(user, function(e, user) {
+        assert.equal(e.message, 'unknown error!');
         done();
       });
     });

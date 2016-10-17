@@ -133,6 +133,10 @@ describe('helper', function() {
       assert.equal(h.getCacheFile('xxx'), '/home/skygragon/.lc/xxx.json');
       assert.equal(h.getConfigFile(), '/home/skygragon/.lcconfig');
       assert.equal(h.getFilename('/home/skygragon/.lc/xxx.json'), 'xxx');
+
+      process.env.HOME = '';
+      process.env.USERPROFILE = 'C:\\Users\\skygragon';
+      assert.equal(h.getHomeDir(), 'C:\\Users\\skygragon');
     });
   }); // #dirAndFiles
 
@@ -170,6 +174,15 @@ describe('helper', function() {
 
       h.readStdin(function(e, data) {
         assert.equal(data, '[1,2]\n3');
+        done();
+      });
+    });
+
+    it('should ok w/ empty input', function(done) {
+      hijackStdin('');
+
+      h.readStdin(function(e, data) {
+        assert.equal(data, '');
         done();
       });
     });

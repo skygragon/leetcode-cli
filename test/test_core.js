@@ -1,5 +1,8 @@
-var assert = require('chai').assert;
+var execSync = require('child_process').execSync;
 var fs = require('fs');
+
+var _ = require('underscore');
+var assert = require('chai').assert;
 var rewire = require('rewire');
 
 // mock depedencies
@@ -12,7 +15,8 @@ var h = rewire('../lib/helper');
 describe('core', function() {
   before(function() {
     var home = './tmp';
-    if (!fs.existsSync(home)) fs.mkdirSync(home);
+    execSync('rm -rf ' + home);
+    fs.mkdirSync(home);
 
     h.getHomeDir = function() {
       return home;
@@ -278,6 +282,15 @@ describe('core', function() {
           done();
         });
       });
+
+      it('should starProblem ok if already unstarred', function(done) {
+        assert.equal(PROBLEMS[0].starred, false);
+        core.starProblem(PROBLEMS[0], false, function(e, starred) {
+          assert.equal(e, null);
+          assert.equal(starred, false);
+          done();
+        });
+      });
     }); // #starProblem
 
     // dummy test
@@ -365,6 +378,53 @@ describe('core', function() {
 
         var problem = require('./mock/add-two-numbers.20161015.json');
         core.exportProblem(problem, 'test.cpp', false);
+      });
+
+      it('should ok w/ detailed comments, 2nd', function(done) {
+        var expected = [
+          '#',
+          '# [2] Add Two Numbers',
+          '#',
+          '# https://leetcode.com/problems/add-two-numbers',
+          '#',
+          '# Medium (25.37%)',
+          '# Total Accepted:    195263',
+          '# Total Submissions: 769711',
+          '# Testcase Example:  \'\'',
+          '#',
+          '# You are given two linked lists representing two non-negative numbers. The',
+          '# digits are stored in reverse order and each of their nodes contain a single',
+          '# digit. Add the two numbers and return it as a linked list.',
+          '# ',
+          '# Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)',
+          '# Output: 7 -> 0 -> 8',
+          '#',
+          '# Definition for singly-linked list.',
+          '# class ListNode',
+          '#     attr_accessor :val, :next',
+          '#     def initialize(val)',
+          '#         @val = val',
+          '#         @next = nil',
+          '#     end',
+          '# end',
+          '',
+          '# @param {ListNode} l1',
+          '# @param {ListNode} l2',
+          '# @return {ListNode}',
+          'def add_two_numbers(l1, l2)',
+          '    ',
+          'end',
+          ''
+        ].join('\r\n');
+
+        injectVerify(expected, done);
+
+        var problem = require('./mock/add-two-numbers.20161015.json');
+        problem.testcase = null;
+        problem.code = _.find(problem.templates, function(template) {
+          return template.value === 'ruby';
+        }).defaultCode;
+        core.exportProblem(problem, 'test.rb', false);
       });
     }); // #exportProblem
   }); // #problems
