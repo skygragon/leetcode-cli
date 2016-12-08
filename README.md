@@ -39,13 +39,13 @@ From source code:
 
 ## Quick Start
 
-	Read help first                         $ lc help
-	Login with your leetcode account        $ lc user -l
-	Browse all problems                     $ lc list
-	Choose one problem                      $ lc show 1 -g -l cpp
+	Read help first                         $ leetcode help
+	Login with your leetcode account        $ leetcode user -l
+	Browse all problems                     $ leetcode list
+	Choose one problem                      $ leetcode show 1 -g -l cpp
 	Coding it!
-	Run test(s) and pray...                 $ lc test ./two-sum.cpp -t '[3,2,4]\n7'
-	Submit final solution!                  $ lc submit ./two-sum.cpp
+	Run test(s) and pray...                 $ leetcode test ./two-sum.cpp -t '[3,2,4]\n7'
+	Submit final solution!                  $ leetcode submit ./two-sum.cpp
 
 ## There is More...
 

@@ -14,12 +14,12 @@
 
 Display help message.
 
-* `lc help <command>` to see help on sub command.
-* `lc <command> --help` also works.
+* `leetcode help <command>` to see help on sub command.
+* `leetcode <command> --help` also works.
 
 *Examples*
 
-	$ lc help
+	$ leetcode help
 
 	list [keyword]     list problems
 	show <keyword>     show problem by name or index
@@ -30,9 +30,9 @@ Display help message.
 
 Show help on sub command:
 
-	$ lc help list
+	$ leetcode help list
 
-	lc list [keyword]
+	leetcode list [keyword]
 
 	Options:
       --help       Show help                                               [boolean]
@@ -54,13 +54,13 @@ Navigate all the problems. The heading `✔` means you have AC-ed the problem, `
 	* `l` = locked, `L` = not locked.
 	* `s` = starred, `S` = unstarred.
 * `-s` to show statistic counters.
-* `lc list <keyword>` to search by keyword matching.
+* `leetcode list <keyword>` to search by keyword matching.
 
 *Examples*
 
 Show statistcis:
 
-	$ lc list -s
+	$ leetcode list -s
 	      [385] Mini Parser                                                  Medium (26.5%)
 	    ✘ [384] Shuffle an Array                                             Medium (45.7%)
 	    ✔ [383] Ransom Note                                                  Easy   (44.5%)
@@ -78,7 +78,7 @@ Show statistcis:
 
 Use keyword search and query:
 
-	$ lc list -q Dml array
+	$ leetcode list -q Dml array
 
 	  🔒 [360] Sort Transformed Array                                       Medium (41.0%)
 	  🔒 [325] Maximum Size Subarray Sum Equals k                           Medium (40.9%)
@@ -100,12 +100,12 @@ Display problem details. With `-g`+`-l`, the code template could be auto generat
 	* ruby
 	* swift
 * Instead of index number, you can use name to select a problem.
-	* `lc show "Two Sum"`
-	* `lc show two-sum`
+	* `leetcode show "Two Sum"`
+	* `leetcode show two-sum`
 
 *Examples*
 
-	$ lc show 1 -g -l cpp
+	$ leetcode show 1 -g -l cpp
 
     [1] Two Sum    	(File: two-sum.cpp)
 
@@ -136,15 +136,15 @@ Mark your favorite problems. The starred problem will be shown with a `★`.
 
 * `-d` to unstar.
 * Instead of index number, you can use name to star a problem.
-	* `lc star "Two Sum"`
-	* `lc star two-sum`
+	* `leetcode star "Two Sum"`
+	* `leetcode star two-sum`
 
 *Example*
 
-	$ lc star 1
+	$ leetcode star 1
 	[1] Two Sum ★
 
-	$ lc star 1 -d
+	$ leetcode star 1 -d
 	[1] Two Sum ☆
 
 ## submission
@@ -161,13 +161,13 @@ Available options:
 * `-a` to work against all problems.
 * `-x` to add problem details in the output file.
 * Or work against specfic problem only.
-	* `lc submission 1`
-	* `lc submission two-sum`
+	* `leetcode submission 1`
+	* `leetcode submission two-sum`
 
 
 *Examples*
 
-	$ lc submission -a -o tmp
+	$ leetcode submission -a -o tmp
 
 	[303] Range Sum Query - Immutable          tmp/range-sum-query-immutable.52178990.ac.cpp
 	[319] Bulb Switcher                        tmp/bulb-switcher.52257927.ac.cpp
@@ -181,7 +181,7 @@ Submit code to leetcode.com.
 
 *Examples*
 
-	$ lc submit ./two-sum.cpp
+	$ leetcode submit ./two-sum.cpp
 
 	  ✔ Accepted
 	  ✔ 16/16 cases passed (12 ms)
@@ -195,7 +195,7 @@ Customize your testcase and run it against leetcode. If no testcase provided, a 
 
 *Examples*
 
-	$ lc test ./two-sum.cpp -t '[3,2,4]\n7'
+	$ leetcode test ./two-sum.cpp -t '[3,2,4]\n7'
 
 	Input data:
 	[3,2,4]
@@ -218,20 +218,20 @@ Login with your leetcode account (username or email).
 * `-l` to login
 * `-L` to logout.
 * `-s` to show user statistics.
-* `lc user` to show current account.
+* `leetcode user` to show current account.
 
 *Examples*
 
 Login:
 
-	$ lc user -l
+	$ leetcode user -l
 	login: <account>
 	pass:
 	Successfully login as <account>
 
 Show user statistics:
 
-	$ lc user -s
+	$ leetcode user -s
 	You are now login as <account>
 
 	Easy      72/95  (75.79%)      	[+++++++++++++++++++++++.......]
@@ -248,12 +248,12 @@ Display version information.
 
 Short:
 
-	$ lc version
+	$ leetcode version
 	0.6.0
 
 Verbose:
 
-	$ lc version -v
+	$ leetcode version -v
 	 _           _                  _
 	| |         | |                | |
 	| | ___  ___| |_  ___  ___   __| | ___

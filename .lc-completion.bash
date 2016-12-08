@@ -2,8 +2,8 @@
 #
 # yargs command completion script
 #
-# Installation: bin/lc completion >> ~/.bashrc
-#    or bin/lc completion >> ~/.bash_profile on OSX.
+# Installation: bin/leetcode completion >> ~/.bashrc
+#    or bin/leetcode completion >> ~/.bash_profile on OSX.
 #
 _yargs_completions()
 {
@@ -13,7 +13,7 @@ _yargs_completions()
     args=("${COMP_WORDS[@]}")
 
     # ask yargs to generate completions.
-    type_list=$(lc --get-yargs-completions "${args[@]}")
+    type_list=$(leetcode --get-yargs-completions "${args[@]}")
 
     COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
 
@@ -24,5 +24,5 @@ _yargs_completions()
 
     return 0
 }
-complete -F _yargs_completions lc
+complete -F _yargs_completions leetcode
 ###-end-lc-completions-###

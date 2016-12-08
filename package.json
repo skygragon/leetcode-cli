@@ -4,7 +4,7 @@
   "description": "A cli tool to enjoy leetcode!",
   "preferGlobal": "true",
   "bin": {
-    "lc": "./bin/lc"
+    "leetcode": "./bin/leetcode"
   },
   "scripts": {
     "lint": "eslint lib/ test/",

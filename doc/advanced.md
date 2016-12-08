@@ -16,7 +16,7 @@ Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Lin
 	$ echo "source ~/.lc-completion.bash" >> ~/.bashrc
 	$ source ~/.bashrc
 
-	$ lc list --<tab>
+	$ leetcode list --<tab>
 	--help     --keyword  --query    --stat
 
 **NOTE: it might become slower in bash with this enabled, personally I would NOT suggest to use it...**
