@@ -123,12 +123,12 @@ describe('leetcode_client', function() {
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/problems/find-the-difference')
-        .replyWithFile(200, './test/mock/find-the-difference.html.20160911');
+        .replyWithFile(200, './test/mock/find-the-difference.html.20170424');
 
       client.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, null);
-        assert.equal(problem.totalAC, 15674);
-        assert.equal(problem.totalSubmit, 32141);
+        assert.equal(problem.totalAC, 63380);
+        assert.equal(problem.totalSubmit, 123178);
         assert.equal(problem.desc,
           [
             '',
@@ -187,7 +187,8 @@ describe('leetcode_client', function() {
             '        :type s: str',
             '        :type t: str',
             '        :rtype: str',
-            '        """'
+            '        """',
+            '        '
           ].join('\r\n'));
 
         assert.equal(problem.templates[3].value, 'c');
@@ -566,3 +567,4 @@ describe('leetcode_client', function() {
     });
   }); // #login
 });
+
