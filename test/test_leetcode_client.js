@@ -417,27 +417,33 @@ describe('leetcode_client', function() {
       };
 
       nock('https://leetcode.com')
-        .get('/problems/two-sum/submissions/')
-        .replyWithFile(200, './test/mock/two-sum.submissions.html.20161006');
+        .get('/api/submissions/two-sum')
+        .replyWithFile(200, './test/mock/two-sum.submissions.json.20170425');
 
       client.getSubmissions(problem, function(e, submissions) {
         assert.equal(e, null);
-        assert.equal(submissions.length, 2);
+        assert.equal(submissions.length, 20);
 
         assert.deepEqual(submissions[0], {
-          id:      '73790064',
-          lang:    'cpp',
-          runtime: '9 ms',
-          path:    '/submissions/detail/73790064/',
-          state:   'Accepted'
+          id:               '95464136',
+          title:            'Two Sum',
+          'is_pending':     false,
+          lang:             'cpp',
+          time:             '1 month, 3 weeks',
+          runtime:          '12 ms',
+          url:              '/submissions/detail/95464136/',
+          'status_display': 'Accepted'
         });
 
         assert.deepEqual(submissions[1], {
-          id:      '73489296',
-          lang:    'cpp',
-          runtime: 'N/A',
-          path:    '/submissions/detail/73489296/',
-          state:   'Wrong Answer'
+          id:               '78502271',
+          title:            'Two Sum',
+          'is_pending':     false,
+          lang:             'cpp',
+          time:             '6 months, 1 week',
+          runtime:          '13 ms',
+          url:              '/submissions/detail/78502271/',
+          'status_display': 'Accepted'
         });
         done();
       });
@@ -445,7 +451,7 @@ describe('leetcode_client', function() {
 
     it('should fail if http error', function(done) {
       nock('https://leetcode.com')
-        .get('/problems/find-the-difference/submissions/')
+        .get('/api/submissions/find-the-difference')
         .replyWithError('unknown error!');
 
       client.getSubmissions(PROBLEM, function(e, submissions) {
