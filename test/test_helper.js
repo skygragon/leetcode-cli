@@ -1,6 +1,6 @@
 var assert = require('chai').assert;
-var chalk = require('chalk');
 
+var chalk = require('../lib/chalk');
 var h = require('../lib/helper');
 
 describe('helper', function() {

@@ -11,6 +11,7 @@ module.exports = {
       "no-eval": 1, // we use it on purpose
       "no-loop-func": 1,
       "no-multi-spaces": [2, { exceptions: { "SwitchCase": true }}],
+      "no-proto": 1,
       "no-unused-expressions": 1,
       "no-unused-vars": 1,
       "no-warning-comments": 0,
