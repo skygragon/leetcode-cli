@@ -19,6 +19,16 @@ Great thanks to leetcode.com, an really awesome website!
 * [**AUTO LOGIN**](https://github.com/skygragon/leetcode-cli/blob/master/doc/advanced.md#auto-login) among multiple sessions with single leetcode account.
 * Retrieve your previous [**SUBMISSION**](https://github.com/skygragon/leetcode-cli/blob/master/doc/commands.md#submission) thus you can easily backup and manage your code.
 
+## Demo
+
+`help`/`user`/`list`/`show`/`test`
+
+<img src="https://github.com/skygragon/leetcode-cli/blob/master/screenshots/intro.gif" />
+
+`test`/`submit`/`stat`/`submission`
+
+<img src="https://github.com/skygragon/leetcode-cli/blob/master/screenshots/intro2.gif" />
+
 ## Prerequisites
 
 node.js (npm included) required, please follow the installation guide:
