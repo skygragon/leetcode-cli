@@ -30,24 +30,6 @@ Great thanks to leetcode.com, a really awesome website!
 
 <img src="https://github.com/skygragon/leetcode-cli/blob/master/screenshots/intro2.gif" />
 
-## Prerequisites
-
-node.js (npm included) required, please follow the installation guide:
-
-* https://nodejs.org/en/download/
-* https://nodejs.org/en/download/package-manager/
-
-## Install
-
-From npm repo:
-
-    $ sudo npm install -g leetcode-cli
-
-From source code:
-
-    $ git clone http://github.com/skygragon/leetcode-cli
-    $ cd leetcode-cli && npm install && sudo npm install -g .
-
 ## Quick Start
 
 	Read help first                         $ leetcode help
@@ -58,6 +40,7 @@ From source code:
 	Run test(s) and pray...                 $ leetcode test ./two-sum.cpp -t '[3,2,4]\n7'
 	Submit final solution!                  $ leetcode submit ./two-sum.cpp
 
-## Documentation
+## More Readings
 
-* https://skygragon.github.io/leetcode-cli/
+* [Install](https://skygragon.github.io/leetcode-cli/install)
+* [User Guide](https://skygragon.github.io/leetcode-cli/)
