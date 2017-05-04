@@ -1,8 +1,7 @@
 ---
 layout: default
+title: Commands Help
 ---
-
-# Table of Contents
 
 * [help](#help)
 * [list](#list)
@@ -14,7 +13,7 @@ layout: default
 * [user](#user)
 * [version](#version)
 
-## help
+# help
 
 Display help message.
 
@@ -46,7 +45,7 @@ Show help on sub command:
                    Uppercase means negative, e.g. D(not done)               [string]
       --stat, -s   Show problems statistics                                [boolean]
 
-## list
+# list
 
 Navigate all the problems. The heading `✔` means you have AC-ed the problem, `✘` means not AC-ed.
 
@@ -87,7 +86,7 @@ Use keyword search and query:
 	  🔒 [360] Sort Transformed Array                                       Medium (41.0%)
 	  🔒 [325] Maximum Size Subarray Sum Equals k                           Medium (40.9%)
 
-## show
+# show
 
 Display problem details. With `-g`+`-l`, the code template could be auto generated for you.
 
@@ -134,7 +133,7 @@ Display problem details. With `-g`+`-l`, the code template could be auto generat
     UPDATE (2016/2/13):
     The return format had been changed to zero-based indices. Please read the above updated description carefully.
 
-## star
+# star
 
 Mark your favorite problems. The starred problem will be shown with a `★`.
 
@@ -151,7 +150,7 @@ Mark your favorite problems. The starred problem will be shown with a `★`.
 	$ leetcode star 1 -d
 	[1] Two Sum ☆
 
-## submission
+# submission
 
 Retrieve your existing submissions from leetcode.com and save to local files.
 
@@ -179,7 +178,7 @@ Available options:
 	......
 	[  1] Two Sum                              tmp/two-sum.73790064.ac.cpp
 
-## submit
+# submit
 
 Submit code to leetcode.com.
 
@@ -190,7 +189,7 @@ Submit code to leetcode.com.
 	  ✔ Accepted
 	  ✔ 16/16 cases passed (12 ms)
 
-## test
+# test
 
 Customize your testcase and run it against leetcode. If no testcase provided, a default testcase will be used.
 
@@ -215,7 +214,7 @@ Customize your testcase and run it against leetcode. If no testcase provided, a 
 		✔ answer: [0,2]
 		✔ output:
 
-## user
+# user
 
 Login with your leetcode account (username or email).
 
@@ -242,7 +241,7 @@ Show user statistics:
 	Medium    97/194 (50.00%)      	[+++++++++++++++...............]
 	Hard      27/82  (32.93%)      	[++++++++++....................]
 
-## version
+# version
 
 Display version information.
 

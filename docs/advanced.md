@@ -1,8 +1,7 @@
 ---
 layout: default
+title: Advanced Topic
 ---
-
-# Table of Contents
 
 * [Bash Completion](#bash-completion)
 * [Colorful Output](#colorful-output)
@@ -12,7 +11,7 @@ layout: default
 * [Auto Login](#auto-login)
 
 
-## Bash Completion
+# Bash Completion
 
 Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Linux) or .bash_profile (MacOS).
 
@@ -25,19 +24,19 @@ Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Lin
 
 **NOTE: it might become slower in bash with this enabled, personally I would NOT suggest to use it...**
 
-## Colorful Output
+# Colorful Output
 
 * `--color` to enable color.
 * `--no-color` to disable it.
 
 Or use configuration setting to avoid typing it repeatedly, see [below](#configuration).
 
-## Debug Output
+# Debug Output
 
 * `-v` to enable debug output.
 * `-vv` to enable trace output.
 
-## Configuration
+# Configuration
 
 Create a JSON file named `.lcconfig` in your home directory, e.g.
 
@@ -55,7 +54,7 @@ Here are some useful settings:
 * `LANG` to set default language in coding.
 * `USE_COLOR` to set colorful output or not by default.
 
-## Cache
+# Cache
 
 The local cache folder (`.lc/`) is in your home directory, e.g.
 
@@ -66,7 +65,7 @@ The local cache folder (`.lc/`) is in your home directory, e.g.
 	two-sum.json       # specific problem info
 
 
-## Auto login
+# Auto login
 
 Leetcode.com is restricting only one session alive in the same time, which means if you login same account otherwhere, the existing login session will be expired immediately. This will greatly harm your experience since you have to re-login again and again among different sessions.
 
