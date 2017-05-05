@@ -23,15 +23,15 @@ Great thanks to leetcode.com, a really awesome website!
 * [**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login) among multiple sessions with single leetcode account.
 * Retrieve your previous [**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission) thus you can easily backup and manage your code.
 
-## Demo
+## Showcases
 
 `help`/`user`/`list`/`show`/`test`
 
-<img src="https://skygragon.github.io/leetcode-cli/screenshots/intro.gif" />
+![screenshot1](https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.gif)
 
 `test`/`submit`/`stat`/`submission`
 
-<img src="https://skygragon.github.io/leetcode-cli/screenshots/intro2.gif" />
+![screenshot2](https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro2.gif)
 
 ## Quick Start
 
