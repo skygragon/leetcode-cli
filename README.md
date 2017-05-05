@@ -27,11 +27,11 @@ Great thanks to leetcode.com, a really awesome website!
 
 `help`/`user`/`list`/`show`/`test`
 
-<img src="https://github.com/skygragon/leetcode-cli/blob/master/screenshots/intro.gif" />
+<img src="https://skygragon.github.io/leetcode-cli/screenshots/intro.gif" />
 
 `test`/`submit`/`stat`/`submission`
 
-<img src="https://github.com/skygragon/leetcode-cli/blob/master/screenshots/intro2.gif" />
+<img src="https://skygragon.github.io/leetcode-cli/screenshots/intro2.gif" />
 
 ## Quick Start
 
