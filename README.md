@@ -10,7 +10,10 @@ A cli tool to enjoy leetcode!
 
 Great thanks to leetcode.com, a really awesome website!
 
-## What can it do?
+⦙ [Installation Guide](https://skygragon.github.io/leetcode-cli/install) ⦙
+[Documentations](https://skygragon.github.io/leetcode-cli/) ⦙
+[Commands](https://skygragon.github.io/leetcode-cli/commands) ⦙
+[Advanced Tips](https://skygragon.github.io/leetcode-cli/advanced) ⦙
 
 * A very [**EFFICIENT**](#quick-start) way to fight problems.
 * [**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache) problems locally thus you can easily navigate & think it offline.
@@ -39,8 +42,3 @@ Great thanks to leetcode.com, a really awesome website!
 	Coding it!
 	Run test(s) and pray...                 $ leetcode test ./two-sum.cpp -t '[3,2,4]\n7'
 	Submit final solution!                  $ leetcode submit ./two-sum.cpp
-
-## More Readings
-
-* [Install](https://skygragon.github.io/leetcode-cli/install)
-* [User Guide](https://skygragon.github.io/leetcode-cli/)

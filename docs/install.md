@@ -5,18 +5,29 @@ title: Installation
 
 # Prerequisites
 
-node.js (npm included) required, please follow the installation guide:
+`node.js` (`npm` included) required, please follow the installation guide:
 
 * https://nodejs.org/en/download/package-manager/
 * https://nodejs.org/en/download/
 
-# Install
+Then verify the result:
 
-From npm repo:
+	$ node -v
+	$ npm -v
+
+# Installation
+
+Choose one of the following ways to install leetcode-cli:
+
+**From npm repo**
 
     $ sudo npm install -g leetcode-cli
 
-From source code:
+**From source code**
 
     $ git clone http://github.com/skygragon/leetcode-cli
     $ cd leetcode-cli && npm install && sudo npm install -g .
+
+Then verify the result:
+
+	$ leetcode version

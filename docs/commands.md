@@ -7,6 +7,7 @@ title: Commands Help
 * [list](#list)
 * [show](#show)
 * [star](#star)
+* [stat](#stat)
 * [submission](#submission)
 * [submit](#submit)
 * [test](#test)
@@ -24,12 +25,15 @@ Display help message.
 
 	$ leetcode help
 
-	list [keyword]     list problems
-	show <keyword>     show problem by name or index
-	submit <filename>  submit final solution to leetcode
-	test <filename>    send solution to leetcode and run test
-	user               login/logout with leetcode account
-	version            show version info
+	list [keyword]        list problems
+	show <keyword>        show problem by name or index
+	star <keyword>        Star problem by name or index
+	stat                  show statistics
+	submission [keyword]  retrieve earlier submission by name or index
+	submit <filename>     submit final solution to leetcode
+	test <filename>       send solution to leetcode and run test
+	user                  login/logout with leetcode account
+	version               show version info
 
 Show help on sub command:
 
@@ -47,12 +51,17 @@ Show help on sub command:
 
 # list
 
-Navigate all the problems. The heading `✔` means you have AC-ed the problem, `✘` means not AC-ed.
+Navigate the problems.
 
+* Symbols
+	* `✔` means you have AC-ed the problem.
+	* `✘` means not AC-ed.
+	* `★` means starred problem.
+	* `🔒` means locked problem.
 * `-q` to query by conditions.
-	* `e` = easy, `E` = m + h.
-	* `m` = medium, `M` = e + h.
-	* `h` = hard, `H` = e + m.
+	* `e` = easy, `E` = not easy = m + h.
+	* `m` = medium, `M` = not medium = e + h.
+	* `h` = hard, `H` = not hard = e + m.
 	* `d` = done = AC-ed, `D` = not AC-ed.
 	* `l` = locked, `L` = not locked.
 	* `s` = starred, `S` = unstarred.
@@ -88,10 +97,10 @@ Use keyword search and query:
 
 # show
 
-Display problem details. With `-g`+`-l`, the code template could be auto generated for you.
+Display problem details. With `-g`/`-l`/`-x`, the code template could be auto generated for you.
 
 * `-g` to generate source file.
-* `-x` to add problem details in the generated source file.
+* `-x` to add problem description in the generated source file.
 * `-l` to choose programming language. (Depends on which langs are provided on leetcode)
 	* c
 	* cpp
@@ -103,6 +112,7 @@ Display problem details. With `-g`+`-l`, the code template could be auto generat
 	* ruby
 	* swift
 * Instead of index number, you can use name to select a problem.
+	* `leetcode show 1`
 	* `leetcode show "Two Sum"`
 	* `leetcode show two-sum`
 
@@ -150,9 +160,47 @@ Mark your favorite problems. The starred problem will be shown with a `★`.
 	$ leetcode star 1 -d
 	[1] Two Sum ☆
 
+# stat
+
+Show your personal statistics of the problems progress.
+
+* `-g` to show the heatmap graph.
+
+*Example*
+
+Show AC-ed progress:
+
+	$ leetcode stat
+	 Easy     116/136 (85.29%)	██████████████████████████░░░░
+	 Medium   195/280 (69.64%)	█████████████████████░░░░░░░░░
+	 Hard      50/103 (48.54%)	███████████████░░░░░░░░░░░░░░░
+
+	Without Locked:
+	 Easy     116/121 (95.87%)	█████████████████████████████░
+	 Medium   195/220 (88.64%)	███████████████████████████░░░
+	 Hard      50/83  (60.24%)	███████████████████░░░░░░░░░░░
+
+Show heatmap graph:
+
+	$ leetcode stat -g
+           1       10   11      20   21      30   31      40   41      50
+     001   ██████████   ██████████   █████████░   ██████░███   ██████████
+     050   ██████████   ██████████   ██████████   ██████████   ██████████
+     100   ██████████   ██████████   █████░████   ██████████   ██████████
+     150   █████░░░░█   ░█░██████░   ████    █         ░████   █      ███
+     200   ██████████   █░█████░█X   ███░██████   ██████████   ██░░░░░░░░
+     250   ░░░░░░██░█   ░ ██░░░█░░   ░░░██░░██░   ░░██░░█░░█   ░█░░█░█░██
+     300   █░██░██░█░   ░██░██░██░   ░█░X░█░███   ██░██X██░░   █████░█░██
+     350   ░█░░░░█░░░   ░░░░█░██░░   ████░░█░░█   █████████X   ░█████████
+     400   ██████░░█░   ░██████░░░   ░░█░░         ░ ██░██░░   ██ ░█░██░░
+     450   ███░██  █░   ███░░░█░░    ░░█████  ░   ██░░██░░ ░   ░█░███ █░█
+     500   █░██░███       █░██X  █   ░░██X█░ ██   ░█░ █░███    ███░░░░░░
+
+       █ Accepted   X Not Accepted   ░ Remaining
+
 # submission
 
-Retrieve your existing submissions from leetcode.com and save to local files.
+Retrieve your old submissions from leetcode.com and save to local files.
 
 * For AC-ed problem, the last accepted submission will be retrieved, which output in green color.
 * For non AC-ed problem, the last non-accepted submission will be retrieved, which output in yellow.
@@ -220,7 +268,6 @@ Login with your leetcode account (username or email).
 
 * `-l` to login
 * `-L` to logout.
-* `-s` to show user statistics.
 * `leetcode user` to show current account.
 
 *Examples*
@@ -231,15 +278,6 @@ Login:
 	login: <account>
 	pass:
 	Successfully login as <account>
-
-Show user statistics:
-
-	$ leetcode user -s
-	You are now login as <account>
-
-	Easy      72/95  (75.79%)      	[+++++++++++++++++++++++.......]
-	Medium    97/194 (50.00%)      	[+++++++++++++++...............]
-	Hard      27/82  (32.93%)      	[++++++++++....................]
 
 # version
 
@@ -270,6 +308,7 @@ Verbose:
 
 	[Configuration]
 	AUTO_LOGIN:      true
+	COLOR_THEME:     default
 	LANG:            java
 	MAX_WORKERS:     10
 	URL_BASE:        https://leetcode.com
