@@ -1,14 +1,14 @@
 # leetcode-cli
 
+A cli tool to enjoy leetcode!
+
+Great thanks to leetcode.com, a really awesome website!
+
 [![npm version](https://img.shields.io/npm/v/leetcode-cli.svg?style=flat)](https://www.npmjs.com/package/leetcode-cli)
 [![Releases](https://img.shields.io/github/release/skygragon/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/releases)
 [![license](https://img.shields.io/npm/l/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/blob/master/LICENSE)
 [![Build](https://img.shields.io/travis/skygragon/leetcode-cli.svg?style=flat)](https://travis-ci.org/skygragon/leetcode-cli)
 [![Join chat at https://gitter.im/skygragon/leetcode-cli](https://img.shields.io/gitter/room/skygragon/leetcode-cli.svg?style=flat)](https://gitter.im/skygragon/leetcode-cli)
-
-A cli tool to enjoy leetcode!
-
-Great thanks to leetcode.com, a really awesome website!
 
 ⦙ [Installation Guide](https://skygragon.github.io/leetcode-cli/install) ⦙
 [Documentations](https://skygragon.github.io/leetcode-cli/) ⦙
