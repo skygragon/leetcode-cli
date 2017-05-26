@@ -30,7 +30,17 @@ describe('core', function() {
 
   describe('#user', function() {
     var USER = {name: 'test-user', pass: 'password'};
-    var SAFE_USER = {name: 'test-user'};
+    var USER_AFTER = {name: 'test-user', pass: 'password', hash: 'abcdef'};
+    var USER_AFTER_SAFE = {name: 'test-user', hash: 'abcdef'};
+
+    var FAVORITES = {
+      'favorites': {
+        'private_favorites': [{
+          'id_hash': 'abcdef',
+          'name':    'Favorite'
+        }]
+      }
+    };
 
     it('should login ok', function(done) {
       config.AUTO_LOGIN = true;
@@ -42,13 +52,16 @@ describe('core', function() {
       client.login = function(user, cb) {
         return cb(null, user);
       };
+      client.getFavorites = function(cb) {
+        return cb(null, FAVORITES);
+      };
 
       core.login(USER, function(e, user) {
         assert.equal(e, null);
-        assert.deepEqual(USER, user);
+        assert.deepEqual(user, USER_AFTER);
 
         // after login
-        assert.deepEqual(core.getUser(), user);
+        assert.deepEqual(core.getUser(), USER_AFTER);
         assert.equal(core.isLogin(), true);
         done();
       });
@@ -64,8 +77,8 @@ describe('core', function() {
 
       core.login(USER, function(e, user) {
         assert.equal(e, null);
-        assert.deepEqual(USER, user);
-        assert.deepEqual(SAFE_USER, core.getUser());
+        assert.deepEqual(user, USER_AFTER);
+        assert.deepEqual(core.getUser(), USER_AFTER_SAFE);
         assert.equal(core.isLogin(), true);
         done();
       });
@@ -262,7 +275,7 @@ describe('core', function() {
 
     describe('#starProblem', function() {
       it('should starProblem ok', function(done) {
-        client.starProblem = function(problem, starred, cb) {
+        client.starProblem = function(user, problem, starred, cb) {
           return cb(null, starred);
         };
 

@@ -7,6 +7,7 @@ var config = require('../lib/config');
 var core = require('../lib/core');
 
 describe('leetcode_client', function() {
+  var USER = {hash: 'abcdef'};
   var PROBLEM = {
     id:     389,
     name:   'Find the Difference',
@@ -372,10 +373,10 @@ describe('leetcode_client', function() {
   describe('#starProblem', function() {
     it('should star ok', function(done) {
       nock('https://leetcode.com')
-        .post('/problems/favor/')
-        .reply(200, '{"is_favor": true}');
+        .post('/list/api/questions')
+        .reply(204, '');
 
-      client.starProblem(PROBLEM, true, function(e, starred) {
+      client.starProblem(USER, PROBLEM, true, function(e, starred) {
         assert.equal(e, null);
         assert.equal(starred, true);
         done();
@@ -384,10 +385,10 @@ describe('leetcode_client', function() {
 
     it('should unstar ok', function(done) {
       nock('https://leetcode.com')
-        .delete('/problems/favor/')
-        .reply(200, '{"is_favor": false}');
+        .delete('/list/api/questions/abcdef/389')
+        .reply(204, '');
 
-      client.starProblem(PROBLEM, false, function(e, starred) {
+      client.starProblem(USER, PROBLEM, false, function(e, starred) {
         assert.equal(e, null);
         assert.equal(starred, false);
         done();
@@ -396,10 +397,10 @@ describe('leetcode_client', function() {
 
     it('should star fail if http error', function(done) {
       nock('https://leetcode.com')
-        .post('/problems/favor/')
+        .post('/list/api/questions')
         .replyWithError('unknown error!');
 
-      client.starProblem(PROBLEM, true, function(e, starred) {
+      client.starProblem(USER, PROBLEM, true, function(e, starred) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
