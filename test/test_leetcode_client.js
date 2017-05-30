@@ -16,6 +16,10 @@ describe('leetcode_client', function() {
     locked: false,
     file:   '/dev/null'
   };
+  var EXPIRED_ERROR = {
+    msg:        'session expired, please login again',
+    statusCode: -1
+  };
 
   before(function() {
     config.init();
@@ -57,11 +61,7 @@ describe('leetcode_client', function() {
       nock(config.URL_PROBLEMS).get('/').reply(403);
 
       client.getProblems(function(e, problems) {
-        var expected = {
-          msg:        'session expired, please login again',
-          statusCode: 403
-        };
-        assert.deepEqual(e, expected);
+        assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
     });
@@ -83,17 +83,13 @@ describe('leetcode_client', function() {
     it('should fail if http error in relogin', function(done) {
       config.AUTO_LOGIN = true;
       nock(config.URL_PROBLEMS).get('/').reply(403);
+      nock(config.URL_PROBLEMS).get('/').reply(403);
       core.login = function(user, cb) {
         return cb('unknown error!');
       };
 
-      // the original error will be returned instead
-      var expected = {
-        msg:        'session expired, please login again',
-        statusCode: 403
-      };
       client.getProblems(function(e, problems) {
-        assert.deepEqual(e, expected);
+        assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
     });
@@ -111,10 +107,11 @@ describe('leetcode_client', function() {
     });
 
     it('should fail if not login', function(done) {
+      config.AUTO_LOGIN = false;
       nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.nologin.json.20161015');
 
       client.getProblems(function(e, problems) {
-        assert.equal(e, 'session expired, please login again');
+        assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
     });
