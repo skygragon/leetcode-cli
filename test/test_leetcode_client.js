@@ -49,7 +49,7 @@ describe('leetcode_client', function() {
       nock(config.URL_PROBLEMS).get('/').reply(403);
       nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
 
-      client.getProblems(function(e, problems) {
+      client.getProblems(USER, function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
         done();
@@ -60,7 +60,7 @@ describe('leetcode_client', function() {
       config.AUTO_LOGIN = false;
       nock(config.URL_PROBLEMS).get('/').reply(403);
 
-      client.getProblems(function(e, problems) {
+      client.getProblems(USER, function(e, problems) {
         assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
@@ -70,7 +70,7 @@ describe('leetcode_client', function() {
       config.AUTO_LOGIN = true;
       nock(config.URL_PROBLEMS).get('/').reply(503);
 
-      client.getProblems(function(e, problems) {
+      client.getProblems(USER, function(e, problems) {
         var expected = {
           msg:        'http error',
           statusCode: 503
@@ -88,7 +88,7 @@ describe('leetcode_client', function() {
         return cb('unknown error!');
       };
 
-      client.getProblems(function(e, problems) {
+      client.getProblems(USER, function(e, problems) {
         assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
@@ -99,7 +99,7 @@ describe('leetcode_client', function() {
     it('should ok', function(done) {
       nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
 
-      client.getProblems(function(e, problems) {
+      client.getProblems(USER, function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
         done();
@@ -110,7 +110,7 @@ describe('leetcode_client', function() {
       config.AUTO_LOGIN = false;
       nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.nologin.json.20161015');
 
-      client.getProblems(function(e, problems) {
+      client.getProblems(USER, function(e, problems) {
         assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
@@ -123,7 +123,7 @@ describe('leetcode_client', function() {
         .get('/problems/find-the-difference')
         .replyWithFile(200, './test/mock/find-the-difference.html.20170424');
 
-      client.getProblem(PROBLEM, function(e, problem) {
+      client.getProblem(USER, PROBLEM, function(e, problem) {
         assert.equal(e, null);
         assert.equal(problem.totalAC, 63380);
         assert.equal(problem.totalSubmit, 123178);
@@ -244,7 +244,7 @@ describe('leetcode_client', function() {
         .get('/problems/find-the-difference')
         .replyWithFile(200, './test/mock/locked.html.20161015');
 
-      client.getProblem(PROBLEM, function(e, problem) {
+      client.getProblem(USER, PROBLEM, function(e, problem) {
         assert.equal(e, 'failed to load locked problem!');
         done();
       });
@@ -255,7 +255,7 @@ describe('leetcode_client', function() {
         .get('/problems/find-the-difference')
         .replyWithError('unknown error!');
 
-      client.getProblem(PROBLEM, function(e, problem) {
+      client.getProblem(USER, PROBLEM, function(e, problem) {
         assert.equal(e.message, 'unknown error!');
         done();
       });

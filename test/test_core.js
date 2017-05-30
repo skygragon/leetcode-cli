@@ -133,7 +133,7 @@ describe('core', function() {
       it('should getProblems w/o cache ok', function(done) {
         cache.del('all');
 
-        client.getProblems = function(cb) {
+        client.getProblems = function(user, cb) {
           return cb(null, PROBLEMS);
         };
 
@@ -147,7 +147,7 @@ describe('core', function() {
       it('should getProblems w/o cache fail if client error', function(done) {
         cache.del('all');
 
-        client.getProblems = function(cb) {
+        client.getProblems = function(user, cb) {
           return cb('client getProblems error');
         };
 
@@ -196,7 +196,7 @@ describe('core', function() {
         cache.set('all', PROBLEMS);
         cache.del('key0');
 
-        client.getProblem = function(problem, cb) {
+        client.getProblem = function(user, problem, cb) {
           return cb(null, problem);
         };
 
@@ -220,7 +220,7 @@ describe('core', function() {
         cache.set('all', PROBLEMS);
         cache.del('key0');
 
-        client.getProblem = function(problem, cb) {
+        client.getProblem = function(user, problem, cb) {
           return cb('client getProblem error');
         };
 
@@ -232,7 +232,7 @@ describe('core', function() {
 
       it('should getProblem fail if getProblems error', function(done) {
         cache.del('all');
-        client.getProblems = function(cb) {
+        client.getProblems = function(user, cb) {
           return cb('getProblems error');
         };
 
