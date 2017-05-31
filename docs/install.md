@@ -26,7 +26,7 @@ Choose one of the following ways to install leetcode-cli:
 **From source code**
 
     $ git clone http://github.com/skygragon/leetcode-cli
-    $ cd leetcode-cli && npm install && sudo npm install -g .
+    $ cd leetcode-cli && npm install && sudo npm install -g --unsafe-perm .
 
 Then verify the result:
 

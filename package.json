@@ -8,7 +8,8 @@
   },
   "scripts": {
     "lint": "eslint lib/ test/",
-    "test": "npm run lint && nyc mocha test/"
+    "test": "npm run lint && nyc mocha test/",
+    "prepare": "./bin/prepare"
   },
   "repository": {
     "type": "git",
