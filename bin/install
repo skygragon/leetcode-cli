@@ -36,6 +36,4 @@ npm install
 echo "You might need root privilege to install globally ... "
 sudo npm install -g .
 
-rm $ENVFILE
-
 echo "leetcode-cli successfully installed."
