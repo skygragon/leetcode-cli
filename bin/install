@@ -1,0 +1,41 @@
+#!/bin/bash
+
+ENVFILE=.env.json
+
+check() {
+  printf "Checking $1 ... "
+  $1 --version > /dev/null 2>&1
+  if [ $? != 0 ]; then
+    echo "No"
+    echo "[ERROR] Missing $1!"
+    exit 1;
+  fi
+  echo "Yes"
+}
+
+create() {
+  cat << EOF > $1
+{
+  "commit": {
+    "full": "`git rev-parse HEAD`",
+    "short": "`git rev-parse --short HEAD`"
+  },
+  "node": "`node -v`",
+  "npm": "`npm -v`"
+}
+EOF
+}
+
+check git
+check node
+check npm
+
+create $ENVFILE
+
+npm install
+echo "You might need root privilege to install globally ... "
+sudo npm install -g .
+
+rm $ENVFILE
+
+echo "leetcode-cli successfully installed."
