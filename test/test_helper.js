@@ -129,7 +129,7 @@ describe('helper', function() {
       process.env.HOME = '/home/skygragon';
 
       assert.equal(h.getHomeDir(), '/home/skygragon');
-      assert.equal(h.getCacheDir(), '/home/skygragon/.lc/');
+      assert.equal(h.getCacheDir(), '/home/skygragon/.lc');
       assert.equal(h.getCacheFile('xxx'), '/home/skygragon/.lc/xxx.json');
       assert.equal(h.getConfigFile(), '/home/skygragon/.lcconfig');
       assert.equal(h.getFilename('/home/skygragon/.lc/xxx.json'), 'xxx');
