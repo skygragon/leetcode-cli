@@ -3,6 +3,8 @@ var assert = require('chai').assert;
 var chalk = require('../lib/chalk');
 var h = require('../lib/helper');
 
+chalk.init();
+
 describe('helper', function() {
   describe('#prettyState', function() {
     it('should ok w/ color', function() {
