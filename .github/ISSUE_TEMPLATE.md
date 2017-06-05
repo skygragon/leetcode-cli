@@ -3,15 +3,15 @@ Before submit please try followings to see if your problem is gone:
 
 1. login agian:
 ```
-  leetcode login -l
+leetcode login -l
 ```
 
 2. run the latest code:
 ```
-	cd <your local repo>
-	git pull --rebase origin master
-	./bin/install	// install globally, OR
-	./bin/leetcode <command>	// run the command locally
+cd <your local repo>
+git pull --rebase origin master
+./bin/install	// install globally, OR
+./bin/leetcode <command>	// run the command locally
 ```
 -->
 
@@ -26,8 +26,10 @@ Before submit please try followings to see if your problem is gone:
 -->
 
 ### Environment
-<!--- if using latest code, you could get those info in `leetcode version -v`
--->
+<!--- if using latest code, you could get those info in `leetcode version -v` -->
+<!--- if installed from git repo, please also provide last commit: `git rev-parse HEAD` -->
+- leetcode-cli version:
+<!--- e.g. mac 10.11, ubuntu 16.04, win7, etc -->
 - OS version:
 - Node version:
 - Npm version:
