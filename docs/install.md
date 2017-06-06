@@ -10,6 +10,8 @@ title: Installation
 * https://nodejs.org/en/download/package-manager/
 * https://nodejs.org/en/download/
 
+You might wanna choose the latest stable release on the list.
+
 Then verify the result:
 
 	$ node -v
@@ -19,11 +21,21 @@ Then verify the result:
 
 Choose one of the following ways to install leetcode-cli:
 
-**From npm repo**
+### From npm
 
-    $ sudo npm install -g leetcode-cli
+This will install the latest stable release, but not include the latest development version.
 
-**From source code**
+    $ npm install -g leetcode-cli
+
+### From GitHub
+
+This will install the latest development version on GitHub.
+
+	$ npm install -g skygragon/leetcode-cli
+
+### From local source
+
+Similar with above, while you can introduce your changes as you like.
 
     $ git clone http://github.com/skygragon/leetcode-cli
     $ cd leetcode-cli && ./bin/install
