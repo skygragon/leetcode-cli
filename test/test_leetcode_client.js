@@ -280,8 +280,8 @@ describe('leetcode_client', function() {
         assert.equal(e, null);
         assert.deepEqual(results,
           [
-            {name: 'Your', state: 'SUCCESS'},
-            {name: 'Expected', state: 'SUCCESS'}
+            {id: 'id2', name: 'Your', state: 'SUCCESS'},
+            {id: 'id1', name: 'Expected', state: 'SUCCESS'}
           ]);
         done();
       });
@@ -311,7 +311,7 @@ describe('leetcode_client', function() {
 
       client.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
-        assert.deepEqual(results, [{name: 'Your', state: 'SUCCESS'}]);
+        assert.deepEqual(results, [{id: 'id1', name: 'Your', state: 'SUCCESS'}]);
         done();
       });
     });
@@ -335,7 +335,7 @@ describe('leetcode_client', function() {
 
       client.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
-        assert.deepEqual(results, [{name: 'Your', state: 'SUCCESS'}]);
+        assert.deepEqual(results, [{id: 'id1', name: 'Your', state: 'SUCCESS'}]);
         done();
       });
     });
