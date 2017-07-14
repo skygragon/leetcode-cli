@@ -111,8 +111,8 @@ describe('core', function() {
 
   describe('#problems', function() {
     var PROBLEMS = [
-      {id: 0, name: 'name0', slug: 'slug0', starred: false},
-      {id: 1, name: 'name1', slug: 'slug1', starred: true}
+      {id: 0, name: 'name0', slug: 'slug0', starred: false, category: 'algorithms'},
+      {id: 1, name: 'name1', slug: 'slug1', starred: true, category: 'algorithms'}
     ];
     var RESULTS = [
       {name: 'result0'},
@@ -121,7 +121,7 @@ describe('core', function() {
 
     describe('#getProblems', function() {
       it('should getProblems w/ cache ok', function(done) {
-        cache.set('all', PROBLEMS);
+        cache.set('problems', PROBLEMS);
 
         core.getProblems(function(e, problems) {
           assert.equal(e, null);
@@ -131,7 +131,7 @@ describe('core', function() {
       });
 
       it('should getProblems w/o cache ok', function(done) {
-        cache.del('all');
+        cache.del('problems');
 
         client.getProblems = function(category, user, cb) {
           return cb(null, PROBLEMS);
@@ -145,7 +145,7 @@ describe('core', function() {
       });
 
       it('should getProblems w/o cache fail if client error', function(done) {
-        cache.del('all');
+        cache.del('problems');
 
         client.getProblems = function(category, user, cb) {
           return cb('client getProblems error');
@@ -160,8 +160,8 @@ describe('core', function() {
 
     describe('#getProblem', function() {
       it('should getProblem by id w/ cache ok', function(done) {
-        cache.set('all', PROBLEMS);
-        cache.set('slug0', PROBLEMS[0]);
+        cache.set('problems', PROBLEMS);
+        cache.set('0.slug0.algorithms', PROBLEMS[0]);
 
         core.getProblem(0, function(e, problem) {
           assert.equal(e, null);
@@ -171,8 +171,8 @@ describe('core', function() {
       });
 
       it('should getProblem by name w/ cache ok', function(done) {
-        cache.set('all', PROBLEMS);
-        cache.set('slug0', PROBLEMS[0]);
+        cache.set('problems', PROBLEMS);
+        cache.set('0.slug0.algorithms', PROBLEMS[0]);
 
         core.getProblem('name0', function(e, problem) {
           assert.equal(e, null);
@@ -182,8 +182,8 @@ describe('core', function() {
       });
 
       it('should getProblem by key w/ cache ok', function(done) {
-        cache.set('all', PROBLEMS);
-        cache.set('slug0', PROBLEMS[0]);
+        cache.set('problems', PROBLEMS);
+        cache.set('0.slug0.algorithms', PROBLEMS[0]);
 
         core.getProblem('slug0', function(e, problem) {
           assert.equal(e, null);
@@ -193,8 +193,8 @@ describe('core', function() {
       });
 
       it('should getProblem by id w/o cache ok', function(done) {
-        cache.set('all', PROBLEMS);
-        cache.del('slug0');
+        cache.set('problems', PROBLEMS);
+        cache.del('0.slug0.algorithms');
 
         client.getProblem = function(user, problem, cb) {
           return cb(null, problem);
@@ -208,7 +208,7 @@ describe('core', function() {
       });
 
       it('should getProblem error if not found', function(done) {
-        cache.set('all', PROBLEMS);
+        cache.set('problems', PROBLEMS);
 
         core.getProblem(3, function(e, problem) {
           assert.equal(e, 'Problem not found!');
@@ -217,8 +217,8 @@ describe('core', function() {
       });
 
       it('should getProblem fail if client error', function(done) {
-        cache.set('all', PROBLEMS);
-        cache.del('slug0');
+        cache.set('problems', PROBLEMS);
+        cache.del('0.slug0.algorithms');
 
         client.getProblem = function(user, problem, cb) {
           return cb('client getProblem error');
@@ -231,7 +231,7 @@ describe('core', function() {
       });
 
       it('should getProblem fail if getProblems error', function(done) {
-        cache.del('all');
+        cache.del('problems');
         client.getProblems = function(category, user, cb) {
           return cb('getProblems error');
         };
@@ -245,8 +245,8 @@ describe('core', function() {
 
     describe('#updateProblem', function() {
       it('should updateProblem ok', function(done) {
-        cache.set('all', PROBLEMS);
-        cache.del('slug0');
+        cache.set('problems', PROBLEMS);
+        cache.del('0.slug0.algorithms');
 
         var kv = {value: 'value00'};
         var ret = core.updateProblem(PROBLEMS[0], kv);
@@ -255,19 +255,19 @@ describe('core', function() {
         core.getProblem(0, function(e, problem) {
           assert.equal(e, null);
           assert.deepEqual(problem,
-            {id: 0, name: 'name0', slug: 'slug0', value: 'value00', starred: false});
+            {id: 0, name: 'name0', slug: 'slug0', value: 'value00', starred: false, category: 'algorithms'});
           done();
         });
       });
 
       it('should updateProblem fail if no problems found', function() {
-        cache.del('all');
+        cache.del('problems');
         var ret = core.updateProblem(PROBLEMS[0], {});
         assert.equal(ret, false);
       });
 
       it('should updateProblem fail if unknown problem', function() {
-        cache.set('all', [PROBLEMS[1]]);
+        cache.set('problems', [PROBLEMS[1]]);
         var ret = core.updateProblem(PROBLEMS[0], {});
         assert.equal(ret, false);
       });
