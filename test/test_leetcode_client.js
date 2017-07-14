@@ -20,6 +20,7 @@ describe('leetcode_client', function() {
     msg:        'session expired, please login again',
     statusCode: -1
   };
+  var URL_ALGORITHMS = 'https://leetcode.com/api/problems/algorithms/';
 
   before(function() {
     config.init();
@@ -46,10 +47,10 @@ describe('leetcode_client', function() {
 
     it('should ok', function(done) {
       config.AUTO_LOGIN = true;
-      nock(config.URL_PROBLEMS).get('/').reply(403);
-      nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
+      nock(URL_ALGORITHMS).get('/').reply(403);
+      nock(URL_ALGORITHMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
 
-      client.getProblems(USER, function(e, problems) {
+      client.getProblems('algorithms', USER, function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
         done();
@@ -58,9 +59,9 @@ describe('leetcode_client', function() {
 
     it('should fail if no auto login', function(done) {
       config.AUTO_LOGIN = false;
-      nock(config.URL_PROBLEMS).get('/').reply(403);
+      nock(URL_ALGORITHMS).get('/').reply(403);
 
-      client.getProblems(USER, function(e, problems) {
+      client.getProblems('algorithms', USER, function(e, problems) {
         assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
@@ -68,9 +69,9 @@ describe('leetcode_client', function() {
 
     it('should fail if other error', function(done) {
       config.AUTO_LOGIN = true;
-      nock(config.URL_PROBLEMS).get('/').reply(503);
+      nock(URL_ALGORITHMS).get('/').reply(503);
 
-      client.getProblems(USER, function(e, problems) {
+      client.getProblems('algorithms', USER, function(e, problems) {
         var expected = {
           msg:        'http error',
           statusCode: 503
@@ -82,13 +83,13 @@ describe('leetcode_client', function() {
 
     it('should fail if http error in relogin', function(done) {
       config.AUTO_LOGIN = true;
-      nock(config.URL_PROBLEMS).get('/').reply(403);
-      nock(config.URL_PROBLEMS).get('/').reply(403);
+      nock(URL_ALGORITHMS).get('/').reply(403);
+      nock(URL_ALGORITHMS).get('/').reply(403);
       core.login = function(user, cb) {
         return cb('unknown error!');
       };
 
-      client.getProblems(USER, function(e, problems) {
+      client.getProblems('algorithms', USER, function(e, problems) {
         assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
@@ -97,9 +98,9 @@ describe('leetcode_client', function() {
 
   describe('#getProblems', function() {
     it('should ok', function(done) {
-      nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
+      nock(URL_ALGORITHMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
 
-      client.getProblems(USER, function(e, problems) {
+      client.getProblems('algorithms', USER, function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
         done();
@@ -108,9 +109,9 @@ describe('leetcode_client', function() {
 
     it('should fail if not login', function(done) {
       config.AUTO_LOGIN = false;
-      nock(config.URL_PROBLEMS).get('/').replyWithFile(200, './test/mock/problems.nologin.json.20161015');
+      nock(URL_ALGORITHMS).get('/').replyWithFile(200, './test/mock/problems.nologin.json.20161015');
 
-      client.getProblems(USER, function(e, problems) {
+      client.getProblems('algorithms', USER, function(e, problems) {
         assert.deepEqual(e, EXPIRED_ERROR);
         done();
       });
