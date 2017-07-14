@@ -11,7 +11,7 @@ describe('leetcode_client', function() {
   var PROBLEM = {
     id:     389,
     name:   'Find the Difference',
-    key:    'find-the-difference',
+    slug:   'find-the-difference',
     link:   'https://leetcode.com/problems/find-the-difference',
     locked: false,
     file:   '/dev/null'
@@ -409,7 +409,7 @@ describe('leetcode_client', function() {
       var problem = {
         id:     1,
         name:   'Two Sum',
-        key:    'two-sum',
+        slug:   'two-sum',
         link:   'https://leetcode.com/problems/two-sum',
         locked: false
       };
