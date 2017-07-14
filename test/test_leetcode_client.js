@@ -122,12 +122,12 @@ describe('leetcode_client', function() {
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/problems/find-the-difference')
-        .replyWithFile(200, './test/mock/find-the-difference.html.20170424');
+        .replyWithFile(200, './test/mock/find-the-difference.html.20170714');
 
       client.getProblem(USER, PROBLEM, function(e, problem) {
         assert.equal(e, null);
-        assert.equal(problem.totalAC, 63380);
-        assert.equal(problem.totalSubmit, 123178);
+        assert.equal(problem.totalAC, '73.2K');
+        assert.equal(problem.totalSubmit, '142K');
         assert.equal(problem.desc,
           [
             '',
@@ -151,7 +151,7 @@ describe('leetcode_client', function() {
             ''
           ].join('\r\n'));
 
-        assert.equal(problem.templates.length, 7);
+        assert.equal(problem.templates.length, 11);
 
         assert.equal(problem.templates[0].value, 'cpp');
         assert.equal(problem.templates[0].text, 'C++');
@@ -190,18 +190,32 @@ describe('leetcode_client', function() {
             '        '
           ].join('\r\n'));
 
-        assert.equal(problem.templates[3].value, 'c');
-        assert.equal(problem.templates[3].text, 'C');
+        assert.equal(problem.templates[3].value, 'python3');
+        assert.equal(problem.templates[3].text, 'Python3');
         assert.equal(problem.templates[3].defaultCode,
+          [
+            'class Solution:',
+            '    def findTheDifference(self, s, t):',
+            '        """',
+            '        :type s: str',
+            '        :type t: str',
+            '        :rtype: str',
+            '        """',
+            '        '
+          ].join('\r\n'));
+
+        assert.equal(problem.templates[4].value, 'c');
+        assert.equal(problem.templates[4].text, 'C');
+        assert.equal(problem.templates[4].defaultCode,
           [
             'char findTheDifference(char* s, char* t) {',
             '    ',
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[4].value, 'csharp');
-        assert.equal(problem.templates[4].text, 'C#');
-        assert.equal(problem.templates[4].defaultCode,
+        assert.equal(problem.templates[5].value, 'csharp');
+        assert.equal(problem.templates[5].text, 'C#');
+        assert.equal(problem.templates[5].defaultCode,
           [
             'public class Solution {',
             '    public char FindTheDifference(string s, string t) {',
@@ -210,9 +224,9 @@ describe('leetcode_client', function() {
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[5].value, 'javascript');
-        assert.equal(problem.templates[5].text, 'JavaScript');
-        assert.equal(problem.templates[5].defaultCode,
+        assert.equal(problem.templates[6].value, 'javascript');
+        assert.equal(problem.templates[6].text, 'JavaScript');
+        assert.equal(problem.templates[6].defaultCode,
           [
             '/**',
             ' * @param {string} s',
@@ -224,9 +238,9 @@ describe('leetcode_client', function() {
             '};'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[6].value, 'ruby');
-        assert.equal(problem.templates[6].text, 'Ruby');
-        assert.equal(problem.templates[6].defaultCode,
+        assert.equal(problem.templates[7].value, 'ruby');
+        assert.equal(problem.templates[7].text, 'Ruby');
+        assert.equal(problem.templates[7].defaultCode,
           [
             '# @param {String} s',
             '# @param {String} t',
@@ -235,6 +249,38 @@ describe('leetcode_client', function() {
             '    ',
             'end'
           ].join('\r\n'));
+
+        assert.equal(problem.templates[8].value, 'swift');
+        assert.equal(problem.templates[8].text, 'Swift');
+        assert.equal(problem.templates[8].defaultCode,
+          [
+            'class Solution {',
+            '    func findTheDifference(_ s: String, _ t: String) -> Character {',
+            '        ',
+            '    }',
+            '}'
+          ].join('\r\n'));
+
+        assert.equal(problem.templates[9].value, 'golang');
+        assert.equal(problem.templates[9].text, 'Go');
+        assert.equal(problem.templates[9].defaultCode,
+          [
+            'func findTheDifference(s string, t string) byte {',
+            '    ',
+            '}'
+          ].join('\r\n'));
+
+        assert.equal(problem.templates[10].value, 'scala');
+        assert.equal(problem.templates[10].text, 'Scala');
+        assert.equal(problem.templates[10].defaultCode,
+          [
+            'object Solution {',
+            '    def findTheDifference(s: String, t: String): Char = {',
+            '        ',
+            '    }',
+            '}'
+          ].join('\n'));
+
         done();
       });
     });
