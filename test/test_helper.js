@@ -46,6 +46,29 @@ describe('helper', function() {
     });
   }); // #prettyText
 
+  describe('#prettySize', function() {
+    it('should ok', function() {
+      assert.equal(h.prettySize(0), '0.00B');
+      assert.equal(h.prettySize(512), '512.00B');
+      assert.equal(h.prettySize(1024), '1.00K');
+      assert.equal(h.prettySize(1024 * 1024), '1.00M');
+      assert.equal(h.prettySize(1024 * 1024 * 1024), '1.00G');
+    });
+  }); // #prettySize
+
+  describe('#prettyTime', function() {
+    it('should ok', function() {
+      assert.equal(h.prettyTime(30), '30 secs');
+      assert.equal(h.prettyTime(60), '1 mins');
+      assert.equal(h.prettyTime(2400), '40 mins');
+      assert.equal(h.prettyTime(3600), '1 hours');
+      assert.equal(h.prettyTime(7200), '2 hours');
+      assert.equal(h.prettyTime(86400), '1 days');
+      assert.equal(h.prettyTime(86400 * 3), '3 days');
+      assert.equal(h.prettyTime(86400 * 7), '1 weeks');
+    });
+  }); // #prettyTime
+
   describe('#levelToName', function() {
     it('should ok', function() {
       assert.equal(h.levelToName(0), ' ');
@@ -160,6 +183,24 @@ describe('helper', function() {
       assert.equal(h.getSetCookieValue(respNoSetCookie, 'key1'), null);
     });
   }); // #getSetCookieValue
+
+  describe('#printSafeHTTP', function() {
+    it('should hide sensitive info', function() {
+      var raw = [
+        "Cookie: 'xxxxxx'",
+        "'X-CSRFToken': 'yyyyyy'",
+        "'set-cookie': ['zzzzzz']"
+      ].join('\r\n');
+
+      var hide = [
+        "Cookie: <hidden>",
+        "'X-CSRFToken': <hidden>",
+        "'set-cookie': <hidden>"
+      ].join('\r\n');
+
+      assert.equal(h.printSafeHTTP(raw), hide);
+    });
+  }); // #printSafeHTTP
 
   describe('#readStdin', function() {
     function hijackStdin(data) {

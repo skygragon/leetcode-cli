@@ -33,4 +33,28 @@ describe('cache', function() {
     assert.deepEqual(cache.get(k), v);
     assert.equal(cache.del(k), true);
   });
+
+  it('should list ok when no cached', function() {
+    var items = cache.list();
+    assert.equal(items.length, 0);
+  });
+
+  it('should list ok when cached', function() {
+    assert.equal(cache.set(k, v), true);
+
+    var items = cache.list();
+    assert.equal(items.length, 1);
+
+    assert.equal(items[0].name, k);
+    assert.equal(items[0].size, JSON.stringify(v).length);
+  });
+
+  it('should list ok when cache dir not exist', function() {
+    h.getCacheDir = function() {
+      return '/not-exist-dir';
+    };
+
+    var items = cache.list();
+    assert.equal(items.length, 0);
+  });
 });
