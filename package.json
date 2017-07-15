@@ -33,7 +33,6 @@
     "ansi-styles": "^3.0.0",
     "cheerio": "^0.20.0",
     "he": "^1.1.1",
-    "loglevel": "^1.4.1",
     "prompt": "^1.0.0",
     "request": "^2.74.0",
     "sprintf-js": "^1.0.3",

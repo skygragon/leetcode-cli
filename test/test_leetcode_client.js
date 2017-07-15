@@ -2,6 +2,7 @@ var _ = require('underscore');
 var assert = require('chai').assert;
 var nock = require('nock');
 
+var log = require('../lib/log');
 var client = require('../lib/leetcode_client');
 var config = require('../lib/config');
 var core = require('../lib/core');
@@ -23,6 +24,7 @@ describe('leetcode_client', function() {
   var URL_ALGORITHMS = 'https://leetcode.com/api/problems/algorithms/';
 
   before(function() {
+    log.init();
     config.init();
   });
 

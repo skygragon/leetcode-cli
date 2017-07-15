@@ -5,6 +5,8 @@ var _ = require('underscore');
 var assert = require('chai').assert;
 var rewire = require('rewire');
 
+var log = require('../lib/log');
+
 // mock depedencies
 var cache = rewire('../lib/cache');
 var client = rewire('../lib/leetcode_client');
@@ -14,6 +16,8 @@ var h = rewire('../lib/helper');
 
 describe('core', function() {
   before(function() {
+    log.init();
+
     var home = './tmp';
     execSync('rm -rf ' + home);
     fs.mkdirSync(home);
