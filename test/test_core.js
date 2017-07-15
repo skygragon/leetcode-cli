@@ -134,12 +134,16 @@ describe('core', function() {
         cache.del('problems');
 
         client.getProblems = function(category, user, cb) {
-          return cb(null, PROBLEMS);
+          return cb(null, [{category: category}]);
         };
 
         core.getProblems(function(e, problems) {
           assert.equal(e, null);
-          assert.deepEqual(problems, PROBLEMS);
+          assert.deepEqual(problems, [
+            {category: 'algorithms'},
+            {category: 'database'},
+            {category: 'shell'}
+          ]);
           done();
         });
       });
