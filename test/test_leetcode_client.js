@@ -619,5 +619,23 @@ describe('leetcode_client', function() {
       });
     });
   }); // #login
+
+  describe('#getFavorites', function() {
+    it('should ok', function(done) {
+      nock('https://leetcode.com')
+        .get('/list/api/questions')
+        .replyWithFile(200, './test/mock/favorites.json.20170716');
+
+      client.getFavorites(function(e, favorites) {
+        assert.equal(e, null);
+
+        var my = favorites.favorites.private_favorites;
+        assert.equal(my.length, 1);
+        assert.equal(my[0].name, 'Favorite');
+        assert.equal(my[0].id_hash, 'abcdefg');
+        done();
+      });
+    });
+  }); // #getFavorites
 });
 
