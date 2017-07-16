@@ -58,9 +58,9 @@ describe('helper', function() {
 
   describe('#prettyTime', function() {
     it('should ok', function() {
-      assert.equal(h.prettyTime(30), '30 secs');
-      assert.equal(h.prettyTime(60), '1 mins');
-      assert.equal(h.prettyTime(2400), '40 mins');
+      assert.equal(h.prettyTime(30), '30 seconds');
+      assert.equal(h.prettyTime(60), '1 minutes');
+      assert.equal(h.prettyTime(2400), '40 minutes');
       assert.equal(h.prettyTime(3600), '1 hours');
       assert.equal(h.prettyTime(7200), '2 hours');
       assert.equal(h.prettyTime(86400), '1 days');
