@@ -134,16 +134,8 @@ describe('helper', function() {
 
   describe('#langToCommentStyle', function() {
     it('should ok', function() {
-      var C_STYLE = {
-        commentHeader: '/*',
-        commentLine:   ' *',
-        commentFooter: ' */'
-      };
-      var RUBY_STYLE = {
-        commentHeader: '#',
-        commentLine:   '#',
-        commentFooter: '#'
-      };
+      var C_STYLE = {start: '/*', line: ' *', end: ' */'};
+      var RUBY_STYLE = {start: '#', line: '#', end: '#'};
 
       assert.deepEqual(h.langToCommentStyle('bash'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('c'), C_STYLE);

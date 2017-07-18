@@ -364,7 +364,7 @@ describe('core', function() {
           '',
           '    }',
           '};'
-        ].join('\r\n');
+        ].join('\n');
 
         injectVerify(expected, done);
 
@@ -399,7 +399,7 @@ describe('core', function() {
           '    }',
           '};',
           ''
-        ].join('\r\n');
+        ].join('\n');
 
         injectVerify(expected, done);
 
@@ -443,7 +443,7 @@ describe('core', function() {
           '    ',
           'end',
           ''
-        ].join('\r\n');
+        ].join('\n');
 
         injectVerify(expected, done);
 
