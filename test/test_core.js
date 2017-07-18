@@ -14,22 +14,27 @@ var config = rewire('../lib/config');
 var core = rewire('../lib/core');
 var h = rewire('../lib/helper');
 
+var HOME = './tmp';
+
 describe('core', function() {
   before(function() {
     log.init();
 
-    var home = './tmp';
-    execSync('rm -rf ' + home);
-    fs.mkdirSync(home);
-
     h.getHomeDir = function() {
-      return home;
+      return HOME;
     };
+
+    config.CATEGORIES = ['algorithms', 'database', 'shell'];
 
     cache.__set__('h', h);
     core.__set__('cache', cache);
     core.__set__('client', client);
     core.__set__('config', config);
+  });
+
+  beforeEach(function() {
+    execSync('rm -rf ' + HOME);
+    fs.mkdirSync(HOME);
   });
 
   describe('#user', function() {
@@ -374,6 +379,7 @@ describe('core', function() {
           ' *',
           ' * https://leetcode.com/problems/add-two-numbers',
           ' *',
+          ' * algorithms',
           ' * Medium (25.37%)',
           ' * Total Accepted:    195263',
           ' * Total Submissions: 769711',
@@ -408,6 +414,7 @@ describe('core', function() {
           '#',
           '# https://leetcode.com/problems/add-two-numbers',
           '#',
+          '# algorithms',
           '# Medium (25.37%)',
           '# Total Accepted:    195263',
           '# Total Submissions: 769711',

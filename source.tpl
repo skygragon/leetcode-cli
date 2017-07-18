@@ -3,6 +3,7 @@
 <%= commentLine %>
 <%= commentLine %> <%= link %>
 <%= commentLine %>
+<%= commentLine %> <%= category %>
 <%= commentLine %> <%= level %> (<%= percent %>%)
 <%= commentLine %> Total Accepted:    <%= totalAC %>
 <%= commentLine %> Total Submissions: <%= totalSubmit %>
