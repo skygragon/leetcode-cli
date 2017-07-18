@@ -13,13 +13,17 @@ describe('config', function() {
     config.__set__('h', h);
     config.init();
 
-    var expect = config.__get__('DEFAULT_CONFIG');
+    var expect = config.getDefaultConfig();
     var actual = _.extendOwn({}, config); // remove 'init' function
     assert.equal(_.isEqual(actual, expect), true);
   });
 
   it('should ok w/ local config', function() {
-    var localConfig = {LANG: 'ruby', USE_COLOR: false, AUTO_LOGIN: false};
+    var localConfig = {
+      AUTO_LOGIN: false,
+      LANG:       'ruby',
+      USE_COLOR:  false
+    };
 
     var h = rewire('../lib/helper');
     h.getFileData = function() {
@@ -30,8 +34,9 @@ describe('config', function() {
     config.__set__('h', h);
     config.init();
 
-    var expect = _.extendOwn(config.__get__('DEFAULT_CONFIG'), localConfig);
+    var expect = config.getDefaultConfig();
     var actual = _.extendOwn({}, config); // remove 'init' function
+    _.extendOwn(expect, localConfig);
     assert.equal(_.isEqual(actual, expect), true);
   });
 });
