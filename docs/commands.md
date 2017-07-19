@@ -4,6 +4,7 @@ title: Commands Help
 ---
 
 * [help](#help)
+* [cache](#cache)
 * [list](#list)
 * [show](#show)
 * [star](#star)
@@ -49,6 +50,23 @@ Show help on sub command:
                    Uppercase means negative, e.g. D(not done)               [string]
       --stat, -s   Show problems statistics                                [boolean]
 
+# cache
+
+Show cached problems.
+
+* `-d` to delete specific cached problem.
+* `-a` to delete all cached problems.
+
+*Examples*
+
+Show cache:
+
+	$ leetcode cache
+	.user                                               816.00B    2 hours ago
+	problems                                            148.48K    2 hours ago
+	1.two-sum.algorithms                                  2.52K    2 hours ago
+	......
+
 # list
 
 Navigate the problems.
@@ -65,6 +83,10 @@ Navigate the problems.
 	* `d` = done = AC-ed, `D` = not AC-ed.
 	* `l` = locked, `L` = not locked.
 	* `s` = starred, `S` = unstarred.
+* `-t` to filter by given tag.
+	* algorithms
+	* database
+	* shell
 * `-s` to show statistic counters.
 * `leetcode list <keyword>` to search by keyword matching.
 
@@ -101,15 +123,21 @@ Display problem details. With `-g`/`-l`/`-x`, the code template could be auto ge
 
 * `-g` to generate source file.
 * `-x` to add problem description in the generated source file.
+* `-t` to show code template.
+* `-d` to show problem description.
 * `-l` to choose programming language. (Depends on which langs are provided on leetcode)
+	* bash
 	* c
 	* cpp
 	* csharp
 	* golang
 	* java
 	* javascript
+	* mysql
 	* python
+	* python3
 	* ruby
+	* scala
 	* swift
 * Instead of index number, you can use name to select a problem.
 	* `leetcode show 1`
@@ -124,6 +152,7 @@ Display problem details. With `-g`/`-l`/`-x`, the code template could be auto ge
 
     https://leetcode.com/problems/two-sum/
 
+	* algorithms
     * Easy (25.6%)
     * Total Accepted: 274880
     * Total Submissions: 1074257
@@ -142,6 +171,16 @@ Display problem details. With `-g`/`-l`/`-x`, the code template could be auto ge
 
     UPDATE (2016/2/13):
     The return format had been changed to zero-based indices. Please read the above updated description carefully.
+
+Only show the code template:
+
+	$ leetcode show -t --no-desc 1
+	class Solution {
+	public:
+		vector<int> twoSum(vector<int>& nums, int target) {
+
+		}
+	};
 
 # star
 
@@ -165,6 +204,10 @@ Mark your favorite problems. The starred problem will be shown with a `★`.
 Show your personal statistics of the problems progress.
 
 * `-g` to show the heatmap graph.
+* `-t` to show statistics on given tag. E.g.
+	* algorithms
+	* database
+	* shell
 
 *Example*
 
@@ -210,6 +253,7 @@ Available options:
 
 * `-o` to specify the output folder.
 * `-a` to work against all problems.
+* `-l` to specify the desired programming language.
 * `-x` to add problem details in the output file.
 * Or work against specfic problem only.
 	* `leetcode submission 1`
@@ -236,13 +280,17 @@ Submit code to leetcode.com.
 
 	  ✔ Accepted
 	  ✔ 16/16 cases passed (12 ms)
+	  ✔ Your runtime beats 49.89 % of cpp submissions
 
 # test
 
 Customize your testcase and run it against leetcode. If no testcase provided, a default testcase will be used.
 
 * `-t` to provide test case in command line.
+	* NOTE: use single quote `'` to surround your test case. (double quote is NOT safe in bash shell due to escaping)
 * `-i` to provide test case in interactive mode.
+	* on Linux/MacOS, press `Ctrl-D` to finish input.
+	* on Windows, press `Ctrl-D` and `Return` to finish input.
 
 *Examples*
 
@@ -307,17 +355,13 @@ Verbose:
 	Config: /Users/skygragon/.lcconfig
 
 	[Configuration]
-	AUTO_LOGIN:      true
-	COLOR_THEME:     default
-	LANG:            java
-	MAX_WORKERS:     10
-	URL_BASE:        https://leetcode.com
-	URL_LOGIN:       https://leetcode.com/accounts/login/
-	URL_PROBLEM:     https://leetcode.com/problems/$id
-	URL_PROBLEMS:    https://leetcode.com/api/problems/algorithms/
-	URL_SUBMISSION:  https://leetcode.com/submissions/detail/$id/
-	URL_SUBMISSIONS: https://leetcode.com/problems/$key/submissions/
-	URL_SUBMIT:      https://leetcode.com/problems/$key/submit/
-	URL_TEST:        https://leetcode.com/problems/$key/interpret_solution/
-	URL_VERIFY:      https://leetcode.com/submissions/detail/$id/check/
-	USE_COLOR:       true
+	AUTO_LOGIN           true
+	COLOR_THEME          orange
+	ICON_THEME           default
+	LANG                 cpp
+	MAX_WORKERS          10
+	USE_COLOR            true
+
+	[Themes]
+	Colors               blue,dark,default,orange,pink
+	Icons                ascii,default,win7

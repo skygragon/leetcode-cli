@@ -39,9 +39,9 @@ The local cache folder (`.lc/`) is in your home directory, e.g.
 
 	$ ls -a1 ~/.lc/
 
-	.user.json         # your account info
-	all.json           # problems list
-	two-sum.json       # specific problem info
+	.user.json                      # your account info
+	problems.json                   # problems list
+	1.two-sum.algorithms.json       # specific problem info
 
 # Configuration
 
@@ -60,6 +60,7 @@ Here are some useful settings:
 
 * `AUTO_LOGIN` to enable auto login feature, see [Auto Login](#auto-login).
 * `COLOR_THEME` to set color theme used in output, see [Color Theme](#color-theme).
+* `ICON_THEME` to set icon them used in output.
 * `LANG` to set your default language used in coding.
 * `USE_COLOR` to enable colorful output.
 
@@ -76,8 +77,10 @@ When color is enabled, you can choose your favor color theme as well, see [COLOR
 
 Following are available themes:
 
+* `blue`
 * `default`
 * `dark` for night.
+* `orange`
 * `pink` for girls.
 
 Of course you can create your own themes if you like, please see `colors` folder in the source code.
@@ -100,3 +103,4 @@ Of course you can create your own themes if you like, please see `colors` folder
 
 * `-v` to enable debug output.
 * `-vv` to enable trace output.
+	* Will print detailed HTTP requests/responses.
