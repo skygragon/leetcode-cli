@@ -472,25 +472,25 @@ describe('leetcode_client', function() {
         assert.equal(submissions.length, 20);
 
         assert.deepEqual(submissions[0], {
-          id:               '95464136',
-          title:            'Two Sum',
-          'is_pending':     false,
-          lang:             'cpp',
-          time:             '1 month, 3 weeks',
-          runtime:          '12 ms',
-          url:              '/submissions/detail/95464136/',
-          'status_display': 'Accepted'
+          id:             '95464136',
+          title:          'Two Sum',
+          is_pending:     false,
+          lang:           'cpp',
+          time:           '1 month, 3 weeks',
+          runtime:        '12 ms',
+          url:            '/submissions/detail/95464136/',
+          status_display: 'Accepted'
         });
 
         assert.deepEqual(submissions[1], {
-          id:               '78502271',
-          title:            'Two Sum',
-          'is_pending':     false,
-          lang:             'cpp',
-          time:             '6 months, 1 week',
-          runtime:          '13 ms',
-          url:              '/submissions/detail/78502271/',
-          'status_display': 'Accepted'
+          id:             '78502271',
+          title:          'Two Sum',
+          is_pending:     false,
+          lang:           'cpp',
+          time:           '6 months, 1 week',
+          runtime:        '13 ms',
+          url:            '/submissions/detail/78502271/',
+          status_display: 'Accepted'
         });
         done();
       });

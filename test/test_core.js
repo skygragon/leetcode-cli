@@ -43,10 +43,10 @@ describe('core', function() {
     var USER_AFTER_SAFE = {name: 'test-user', hash: 'abcdef'};
 
     var FAVORITES = {
-      'favorites': {
-        'private_favorites': [{
-          'id_hash': 'abcdef',
-          'name':    'Favorite'
+      favorites: {
+        private_favorites: [{
+          id_hash: 'abcdef',
+          name:    'Favorite'
         }]
       }
     };
