@@ -1,13 +1,15 @@
 var _ = require('underscore');
 var assert = require('chai').assert;
 var nock = require('nock');
+var rewire = require('rewire');
 
-var log = require('../lib/log');
-var client = require('../lib/leetcode_client');
-var config = require('../lib/config');
-var core = require('../lib/core');
+var config = require('../../lib/config');
+var log = require('../../lib/log');
 
-describe('leetcode_client', function() {
+var plugin = rewire('../../lib/plugins/leetcode');
+var session = rewire('../../lib/session');
+
+describe('plugin:leetcode', function() {
   var USER = {hash: 'abcdef'};
   var PROBLEM = {
     id:     389,
@@ -17,92 +19,90 @@ describe('leetcode_client', function() {
     locked: false,
     file:   '/dev/null'
   };
-  var EXPIRED_ERROR = {
-    msg:        'session expired, please login again',
-    statusCode: -1
+  var SUBMISSION = {
+    id:      '73790064',
+    lang:    'cpp',
+    runtime: '9 ms',
+    path:    '/submissions/detail/73790064/',
+    state:   'Accepted'
   };
-  var URL_ALGORITHMS = 'https://leetcode.com/api/problems/algorithms/';
 
   before(function() {
     log.init();
     config.init();
+
+    session.getUser = function() {
+      return USER;
+    };
+    plugin.__set__('session', session);
   });
 
-  describe('#autologin', function() {
-    var _core;
-
-    before(function() {
-      _core = _.clone(core);
-
-      core.getUser = function() {
-        return {};
-      };
-      core.login = function(user, cb) {
-        return cb(null, user);
-      };
-    });
-
-    // restore to original 'core'
-    after(function() {
-      _.extendOwn(core, _core);
-    });
-
+  describe('#login', function() {
     it('should ok', function(done) {
-      config.AUTO_LOGIN = true;
-      nock(URL_ALGORITHMS).get('/').reply(403);
-      nock(URL_ALGORITHMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
+      nock('https://leetcode.com')
+        .get('/accounts/login/')
+        .reply(200, '', {
+          'Set-Cookie': [
+            'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+          ]});
 
-      client.getProblems('algorithms', USER, function(e, problems) {
+      nock('https://leetcode.com')
+        .post('/accounts/login/')
+        .reply(302, '', {
+          'Set-Cookie': [
+            'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
+            'LEETCODE_SESSION=SESSION_ID; Max-Age=31449600; Path=/; secure',
+            "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
+          ]});
+
+      plugin.login({}, function(e, user) {
         assert.equal(e, null);
-        assert.equal(problems.length, 377);
+
+        assert.equal(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
+        assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
+        assert.equal(user.sessionId, 'SESSION_ID');
+        assert.equal(user.name, 'Eric');
         done();
       });
     });
 
-    it('should fail if no auto login', function(done) {
-      config.AUTO_LOGIN = false;
-      nock(URL_ALGORITHMS).get('/').reply(403);
+    it('should fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .get('/accounts/login/')
+        .reply(200, '', {
+          'Set-Cookie': [
+            'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+          ]});
 
-      client.getProblems('algorithms', USER, function(e, problems) {
-        assert.deepEqual(e, EXPIRED_ERROR);
+      nock('https://leetcode.com')
+        .post('/accounts/login/')
+        .replyWithError('unknown error!');
+
+      plugin.login({}, function(e, user) {
+        assert.equal(e.message, 'unknown error!');
         done();
       });
     });
 
-    it('should fail if other error', function(done) {
-      config.AUTO_LOGIN = true;
-      nock(URL_ALGORITHMS).get('/').reply(503);
+    it('should fail if http error, 2nd', function(done) {
+      nock('https://leetcode.com')
+        .get('/accounts/login/')
+        .replyWithError('unknown error!');
 
-      client.getProblems('algorithms', USER, function(e, problems) {
-        var expected = {
-          msg:        'http error',
-          statusCode: 503
-        };
-        assert.deepEqual(e, expected);
+      plugin.login({}, function(e, user) {
+        assert.equal(e.message, 'unknown error!');
         done();
       });
     });
-
-    it('should fail if http error in relogin', function(done) {
-      config.AUTO_LOGIN = true;
-      nock(URL_ALGORITHMS).get('/').reply(403);
-      nock(URL_ALGORITHMS).get('/').reply(403);
-      core.login = function(user, cb) {
-        return cb('unknown error!');
-      };
-
-      client.getProblems('algorithms', USER, function(e, problems) {
-        assert.deepEqual(e, EXPIRED_ERROR);
-        done();
-      });
-    });
-  });
+  }); // #login
 
   describe('#getProblems', function() {
     it('should ok', function(done) {
-      nock(URL_ALGORITHMS).get('/').replyWithFile(200, './test/mock/problems.json.20160911');
+      nock('https://leetcode.com')
+        .get('/api/problems/algorithms/')
+        .replyWithFile(200, './test/mock/problems.json.20160911');
 
-      client.getProblems('algorithms', USER, function(e, problems) {
+      plugin.getCategoryProblems('algorithms', function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377);
         done();
@@ -111,14 +111,16 @@ describe('leetcode_client', function() {
 
     it('should fail if not login', function(done) {
       config.AUTO_LOGIN = false;
-      nock(URL_ALGORITHMS).get('/').replyWithFile(200, './test/mock/problems.nologin.json.20161015');
+      nock('https://leetcode.com')
+        .get('/api/problems/algorithms/')
+        .replyWithFile(200, './test/mock/problems.nologin.json.20161015');
 
-      client.getProblems('algorithms', USER, function(e, problems) {
-        assert.deepEqual(e, EXPIRED_ERROR);
+      plugin.getCategoryProblems('algorithms', function(e, problems) {
+        assert.deepEqual(e, session.errors.EXPIRED);
         done();
       });
     });
-  }); // #getProblems
+  }); // #getCategoryProblems
 
   describe('#getProblem', function() {
     it('should ok', function(done) {
@@ -126,7 +128,7 @@ describe('leetcode_client', function() {
         .get('/problems/find-the-difference')
         .replyWithFile(200, './test/mock/find-the-difference.html.20170714');
 
-      client.getProblem(USER, PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, null);
         assert.equal(problem.totalAC, '73.2K');
         assert.equal(problem.totalSubmit, '142K');
@@ -293,7 +295,7 @@ describe('leetcode_client', function() {
         .get('/problems/find-the-difference')
         .replyWithFile(200, './test/mock/locked.html.20161015');
 
-      client.getProblem(USER, PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, 'failed to load locked problem!');
         done();
       });
@@ -304,7 +306,7 @@ describe('leetcode_client', function() {
         .get('/problems/find-the-difference')
         .replyWithError('unknown error!');
 
-      client.getProblem(USER, PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
@@ -325,7 +327,7 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/id2/check/')
         .reply(200, '{"state": "SUCCESS"}');
 
-      client.testProblem(PROBLEM, function(e, results) {
+      plugin.testProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results,
           [
@@ -341,7 +343,7 @@ describe('leetcode_client', function() {
         .post('/problems/find-the-difference/interpret_solution/')
         .replyWithError('unknown error!');
 
-      client.testProblem(PROBLEM, function(e, results) {
+      plugin.testProblem(PROBLEM, function(e, results) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
@@ -358,7 +360,7 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/id1/check/')
         .reply(200, '{"state": "SUCCESS"}');
 
-      client.submitProblem(PROBLEM, function(e, results) {
+      plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results, [{id: 'id1', name: 'Your', state: 'SUCCESS'}]);
         done();
@@ -382,7 +384,7 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/id1/check/')
         .reply(200, '{"state": "SUCCESS"}');
 
-      client.submitProblem(PROBLEM, function(e, results) {
+      plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
         assert.deepEqual(results, [{id: 'id1', name: 'Your', state: 'SUCCESS'}]);
         done();
@@ -394,7 +396,7 @@ describe('leetcode_client', function() {
         .post('/problems/find-the-difference/submit/')
         .reply(200, '{"error": "maybe internal error?"}');
 
-      client.submitProblem(PROBLEM, function(e, results) {
+      plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, 'maybe internal error?');
         done();
       });
@@ -409,7 +411,7 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/id1/check/')
         .replyWithError('unknown error!');
 
-      client.submitProblem(PROBLEM, function(e, results) {
+      plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
@@ -422,7 +424,7 @@ describe('leetcode_client', function() {
         .post('/list/api/questions')
         .reply(204, '');
 
-      client.starProblem(USER, PROBLEM, true, function(e, starred) {
+      plugin.starProblem(PROBLEM, true, function(e, starred) {
         assert.equal(e, null);
         assert.equal(starred, true);
         done();
@@ -434,7 +436,7 @@ describe('leetcode_client', function() {
         .delete('/list/api/questions/abcdef/389')
         .reply(204, '');
 
-      client.starProblem(USER, PROBLEM, false, function(e, starred) {
+      plugin.starProblem(PROBLEM, false, function(e, starred) {
         assert.equal(e, null);
         assert.equal(starred, false);
         done();
@@ -446,7 +448,7 @@ describe('leetcode_client', function() {
         .post('/list/api/questions')
         .replyWithError('unknown error!');
 
-      client.starProblem(USER, PROBLEM, true, function(e, starred) {
+      plugin.starProblem(PROBLEM, true, function(e, starred) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
@@ -467,7 +469,7 @@ describe('leetcode_client', function() {
         .get('/api/submissions/two-sum')
         .replyWithFile(200, './test/mock/two-sum.submissions.json.20170425');
 
-      client.getSubmissions(problem, function(e, submissions) {
+      plugin.getSubmissions(problem, function(e, submissions) {
         assert.equal(e, null);
         assert.equal(submissions.length, 20);
 
@@ -501,7 +503,7 @@ describe('leetcode_client', function() {
         .get('/api/submissions/find-the-difference')
         .replyWithError('unknown error!');
 
-      client.getSubmissions(PROBLEM, function(e, submissions) {
+      plugin.getSubmissions(PROBLEM, function(e, submissions) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
@@ -509,24 +511,12 @@ describe('leetcode_client', function() {
   }); // #getSubmissions
 
   describe('#getSubmission', function() {
-    var SUBMISSION;
-
-    beforeEach(function() {
-      SUBMISSION = {
-        id:      '73790064',
-        lang:    'cpp',
-        runtime: '9 ms',
-        path:    '/submissions/detail/73790064/',
-        state:   'Accepted'
-      };
-    });
-
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/submissions/detail/73790064/')
         .replyWithFile(200, './test/mock/two-sum.submission.73790064.html.20161006');
 
-      client.getSubmission(SUBMISSION, function(e, submission) {
+      plugin.getSubmission(_.clone(SUBMISSION), function(e, submission) {
         assert.equal(e, null);
         assert.deepEqual(submission.code,
           [
@@ -547,7 +537,7 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/73790064/')
         .replyWithError('unknown error!');
 
-      client.getSubmission(SUBMISSION, function(e, submission) {
+      plugin.getSubmission(_.clone(SUBMISSION), function(e, submission) {
         assert.equal(e.message, 'unknown error!');
         done();
       });
@@ -558,7 +548,7 @@ describe('leetcode_client', function() {
         .get('/submissions/detail/73790064/')
         .replyWithFile(200, './test/mock/locked.html.20161015');
 
-      client.getSubmission(SUBMISSION, function(e, submission) {
+      plugin.getSubmission(_.clone(SUBMISSION), function(e, submission) {
         assert.equal(e, null);
         assert.equal(submission.code, null);
         done();
@@ -566,67 +556,13 @@ describe('leetcode_client', function() {
     });
   }); // #getSubmission
 
-  describe('#login', function() {
-    it('should ok', function(done) {
-      nock(config.URL_LOGIN).get('/').reply(200, '', {
-        'Set-Cookie': [
-          'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
-        ]
-      });
-
-      nock(config.URL_LOGIN).post('/').reply(302, '', {
-        'Set-Cookie': [
-          'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
-          'LEETCODE_SESSION=SESSION_ID; Max-Age=31449600; Path=/; secure',
-          "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
-        ]
-      });
-
-      var user = {};
-      client.login(user, function(e, user) {
-        assert.equal(e, null);
-
-        assert.equal(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
-        assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
-        assert.equal(user.sessionId, 'SESSION_ID');
-        assert.equal(user.name, 'Eric');
-        done();
-      });
-    });
-
-    it('should fail if http error', function(done) {
-      nock(config.URL_LOGIN).get('/').reply(200, '', {
-        'Set-Cookie': [
-          'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
-        ]
-      });
-      nock(config.URL_LOGIN).post('/').replyWithError('unknown error!');
-
-      var user = {};
-      client.login(user, function(e, user) {
-        assert.equal(e.message, 'unknown error!');
-        done();
-      });
-    });
-
-    it('should fail if http error, 2nd', function(done) {
-      nock(config.URL_LOGIN).get('/').replyWithError('unknown error!');
-
-      var user = {};
-      client.login(user, function(e, user) {
-        assert.equal(e.message, 'unknown error!');
-        done();
-      });
-    });
-  }); // #login
-
   describe('#getFavorites', function() {
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/list/api/questions')
         .replyWithFile(200, './test/mock/favorites.json.20170716');
 
-      client.getFavorites(function(e, favorites) {
+      plugin.getFavorites(function(e, favorites) {
         assert.equal(e, null);
 
         var my = favorites.favorites.private_favorites;
@@ -638,4 +574,3 @@ describe('leetcode_client', function() {
     });
   }); // #getFavorites
 });
-
