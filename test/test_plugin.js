@@ -1,4 +1,3 @@
-var _ = require('underscore');
 var assert = require('chai').assert;
 var rewire = require('rewire');
 
