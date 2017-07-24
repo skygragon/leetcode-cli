@@ -7,10 +7,10 @@ var Plugin = rewire('../lib/plugin');
 var h = rewire('../lib/helper');
 
 describe('plugin', function() {
-  var cache = new Plugin('cache', 'Cache', '1.0', '');
-  var leetcode = new Plugin('leetcode', 'Leetcode', '2.0', '');
-  var retry = new Plugin('retry', 'Retry', '3.0', '');
-  var core = new Plugin('core', 'Core', '4.0', '');
+  var leetcode = new Plugin(0, 'Leetcode', '2.0', '');
+  var cache = new Plugin(1, 'Cache', '1.0', '');
+  var retry = new Plugin(2, 'Retry', '3.0', '');
+  var core = new Plugin(3, 'Core', '4.0', '');
 
   before(function() {
     log.init();
@@ -26,7 +26,6 @@ describe('plugin', function() {
         {name: 'cache', data: cache},
         {name: 'leetcode', data: leetcode},
         {name: 'retry', data: retry},
-        {name: 'core', data: core},
         {name: 'bad', data: null}
       ];
     };
@@ -34,9 +33,14 @@ describe('plugin', function() {
   });
 
   it('should init ok', function() {
-    assert.deepEqual(_.keys(Plugin.plugins), []);
+    assert.deepEqual(Plugin.plugins, []);
     Plugin.init(core);
-    assert.deepEqual(_.keys(Plugin.plugins), ['cache', 'leetcode', 'retry', 'core']);
+    assert.deepEqual(Plugin.plugins.length, 3);
+
+    var names = Plugin.plugins.map(function(p) {
+      return p.name;
+    });
+    assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode']);
 
     assert.equal(core.next, retry);
     assert.equal(retry.next, cache);
