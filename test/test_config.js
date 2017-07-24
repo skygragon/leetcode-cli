@@ -15,7 +15,11 @@ describe('config', function() {
 
     var expect = config.getDefaultConfig();
     var actual = _.extendOwn({}, config); // remove 'init' function
-    assert.equal(_.isEqual(actual, expect), true);
+    assert.deepEqual(actual, expect);
+
+    expect = config.getUserConfig();
+    actual = config.__get__('DEFAULT_USER_CONFIG');
+    assert.deepEqual(actual, expect);
   });
 
   it('should ok w/ local config', function() {
@@ -37,6 +41,11 @@ describe('config', function() {
     var expect = config.getDefaultConfig();
     var actual = _.extendOwn({}, config); // remove 'init' function
     _.extendOwn(expect, localConfig);
-    assert.equal(_.isEqual(actual, expect), true);
+    assert.deepEqual(actual, expect);
+
+    expect = config.getUserConfig();
+    actual = config.__get__('DEFAULT_USER_CONFIG');
+    _.extendOwn(actual, localConfig);
+    assert.deepEqual(actual, expect);
   });
 });

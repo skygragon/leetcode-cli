@@ -32,6 +32,7 @@ describe('plugin:cache', function() {
   before(function() {
     log.init();
     config.init();
+    plugin.init();
 
     h.getHomeDir = function() {
       return HOME;

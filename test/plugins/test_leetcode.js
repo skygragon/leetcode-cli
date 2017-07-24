@@ -30,6 +30,7 @@ describe('plugin:leetcode', function() {
   before(function() {
     log.init();
     config.init();
+    plugin.init();
 
     session.getUser = function() {
       return USER;
@@ -97,6 +98,47 @@ describe('plugin:leetcode', function() {
   }); // #login
 
   describe('#getProblems', function() {
+    it('should ok', function(done) {
+      nock('https://leetcode.com')
+        .get('/api/problems/algorithms/')
+        .replyWithFile(200, './test/mock/problems.json.20160911');
+
+      nock('https://leetcode.com')
+        .get('/api/problems/database/')
+        .replyWithFile(200, './test/mock/problems.json.20160911');
+
+      nock('https://leetcode.com')
+        .get('/api/problems/shell/')
+        .replyWithFile(200, './test/mock/problems.json.20160911');
+
+      plugin.getProblems(function(e, problems) {
+        assert.equal(e, null);
+        assert.equal(problems.length, 377 * 3);
+        done();
+      });
+    });
+
+    it('should fail if error occurs', function(done) {
+      nock('https://leetcode.com')
+        .get('/api/problems/algorithms/')
+        .replyWithFile(200, './test/mock/problems.json.20160911');
+
+      nock('https://leetcode.com')
+        .get('/api/problems/database/')
+        .replyWithError('unknown error');
+
+      nock('https://leetcode.com')
+        .get('/api/problems/shell/')
+        .replyWithFile(200, './test/mock/problems.json.20160911');
+
+      plugin.getProblems(function(e, problems) {
+        assert.equal(e.message, 'unknown error');
+        done();
+      });
+    });
+  }); // #getProblems
+
+  describe('#getCategoryProblems', function() {
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/api/problems/algorithms/')
@@ -301,7 +343,29 @@ describe('plugin:leetcode', function() {
       });
     });
 
+    it('should fail if session expired', function(done) {
+      nock('https://leetcode.com')
+        .get('/problems/find-the-difference')
+        .reply(403);
+
+      plugin.getProblem(PROBLEM, function(e, problem) {
+        assert.equal(e, session.errors.EXPIRED);
+        done();
+      });
+    });
+
     it('should fail if http error', function(done) {
+      nock('https://leetcode.com')
+        .get('/problems/find-the-difference')
+        .reply(500);
+
+      plugin.getProblem(PROBLEM, function(e, problem) {
+        assert.deepEqual(e, {msg: 'http error', statusCode: 500});
+        done();
+      });
+    });
+
+    it('should fail if unknown error', function(done) {
       nock('https://leetcode.com')
         .get('/problems/find-the-difference')
         .replyWithError('unknown error!');

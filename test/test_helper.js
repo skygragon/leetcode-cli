@@ -167,6 +167,14 @@ describe('helper', function() {
       process.env.USERPROFILE = 'C:\\Users\\skygragon';
       assert.equal(h.getHomeDir(), 'C:\\Users\\skygragon');
     });
+
+    it('should getDirData ok', function() {
+      var files = h.getDirData(['lib', 'plugins']);
+      assert.equal(files.length, 3);
+      assert.equal(files[0].name, 'cache');
+      assert.equal(files[1].name, 'leetcode');
+      assert.equal(files[2].name, 'retry');
+    });
   }); // #dirAndFiles
 
   describe('#getSetCookieValue', function() {
