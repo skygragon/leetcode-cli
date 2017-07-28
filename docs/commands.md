@@ -6,6 +6,7 @@ title: Commands Help
 * [help](#help)
 * [cache](#cache)
 * [list](#list)
+* [plugin](#plugin)
 * [show](#show)
 * [star](#star)
 * [stat](#stat)
@@ -117,6 +118,20 @@ Use keyword search and query:
 	  🔒 [360] Sort Transformed Array                                       Medium (41.0%)
 	  🔒 [325] Maximum Size Subarray Sum Equals k                           Medium (40.9%)
 
+# plugin
+
+Display installed plugins.
+
+* `-i` to install new plugin.
+* `-d` to delete existing plugin.
+
+*Example*
+
+	$ leetcode plugin
+	retry                default         Plugin to retry last failed request if AUTO_LOGIN is on.
+	cache                default         Plugin to provide local cache.
+	leetcode             default         Plugin to talk with leetcode APIs.
+
 # show
 
 Display problem details. With `-g`/`-l`/`-x`, the code template could be auto generated for you.
@@ -143,6 +158,8 @@ Display problem details. With `-g`/`-l`/`-x`, the code template could be auto ge
 	* `leetcode show 1`
 	* `leetcode show "Two Sum"`
 	* `leetcode show two-sum`
+* If index number/name not provided, a randomly problem will be displayed.
+	* `leetcode show`
 
 *Examples*
 
@@ -365,3 +382,8 @@ Verbose:
 	[Themes]
 	Colors               blue,dark,default,orange,pink
 	Icons                ascii,default,win7
+
+	[Plugins]
+	retry                default
+	cache                default
+	leetcode             default
