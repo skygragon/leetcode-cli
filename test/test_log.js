@@ -8,6 +8,7 @@ describe('log', function() {
   var result = '';
 
   before(function() {
+    chalk.init();
     _output = log.output;
     log.output = function(s) {
       result = s;

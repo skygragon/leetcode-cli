@@ -35,6 +35,7 @@ describe('plugin:leetcode', function() {
     session.getUser = function() {
       return USER;
     };
+    session.saveUser = function() {};
     plugin.__set__('session', session);
   });
 
