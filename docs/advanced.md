@@ -9,6 +9,7 @@ title: Advanced Topic
 * [Configuration](#configuration)
 * [Color Theme](#color-theme)
 * [Log Level](#log-level)
+* [Plugins](#plugins)
 
 # Auto login
 
@@ -104,3 +105,11 @@ Of course you can create your own themes if you like, please see `colors` folder
 * `-v` to enable debug output.
 * `-vv` to enable trace output.
 	* Will print detailed HTTP requests/responses.
+
+# Plugins
+
+You can easily introduce more features by installing other plugins form third parties. Here lists the avaible 3rd party plugins at the moment:
+
+* [leetcode-cli-plugins](https://github.com/skygragon/leetcode-cli-plugins)
+
+Feel free to try out the plugins above. Or you can develope your own plugins to enrich leetcode-cli's functionalities.

@@ -120,17 +120,19 @@ Use keyword search and query:
 
 # plugin
 
-Display installed plugins.
+Display installed plugins. To install 3rd party plugins, please check the 'Advanced Tips'.
 
 * `-i` to install new plugin.
-* `-d` to delete existing plugin.
+* `-d` to disable existing plugin.
+* `-e` to enable existing plugin.
+* `-D` to delete existing plugin.
 
 *Example*
 
 	$ leetcode plugin
-	retry                default         Plugin to retry last failed request if AUTO_LOGIN is on.
-	cache                default         Plugin to provide local cache.
-	leetcode             default         Plugin to talk with leetcode APIs.
+	✔ retry                default         Plugin to retry last failed request if AUTO_LOGIN is on.
+	✔ cache                default         Plugin to provide local cache.
+	✔ leetcode             default         Plugin to talk with leetcode APIs.
 
 # show
 
