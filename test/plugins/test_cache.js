@@ -21,11 +21,6 @@ describe('plugin:cache', function() {
     {id: 1, name: 'name1', slug: 'slug1', starred: true, category: 'algorithms'}
   ];
   var PROBLEM = {id: 0, slug: 'slug0', category: 'algorithms'};
-  var FAVORITES = {
-    favorites: {
-      private_favorites: [{id_hash: 'abcdef', name: 'Favorite'}]
-    }
-  };
 
   var NEXT = {};
 
@@ -179,8 +174,7 @@ describe('plugin:cache', function() {
 
   describe('#user', function() {
     var USER = {name: 'test-user', pass: 'password'};
-    var USER_AFTER = {name: 'test-user', pass: 'password', hash: 'abcdef'};
-    var USER_AFTER_SAFE = {name: 'test-user', hash: 'abcdef'};
+    var USER_SAFE = {name: 'test-user'};
 
     it('should login ok', function(done) {
       config.AUTO_LOGIN = true;
@@ -192,16 +186,13 @@ describe('plugin:cache', function() {
       NEXT.login = function(user, cb) {
         return cb(null, user);
       };
-      NEXT.getFavorites = function(cb) {
-        return cb(null, FAVORITES);
-      };
 
       plugin.login(USER, function(e, user) {
         assert.equal(e, null);
-        assert.deepEqual(user, USER_AFTER);
+        assert.deepEqual(user, USER);
 
         // after login
-        assert.deepEqual(session.getUser(), USER_AFTER);
+        assert.deepEqual(session.getUser(), USER);
         assert.equal(session.isLogin(), true);
         done();
       });
@@ -217,8 +208,8 @@ describe('plugin:cache', function() {
 
       plugin.login(USER, function(e, user) {
         assert.equal(e, null);
-        assert.deepEqual(user, USER_AFTER);
-        assert.deepEqual(session.getUser(), USER_AFTER_SAFE);
+        assert.deepEqual(user, USER);
+        assert.deepEqual(session.getUser(), USER_SAFE);
         assert.equal(session.isLogin(), true);
         done();
       });

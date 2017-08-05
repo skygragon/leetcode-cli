@@ -57,6 +57,10 @@ describe('plugin:leetcode', function() {
             "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
           ]});
 
+      nock('https://leetcode.com')
+        .get('/list/api/questions')
+        .reply(200, JSON.stringify({favorites: {private_favorites: [{id_hash: 'abcdef', name: 'Favorite'}]}}));
+
       plugin.login({}, function(e, user) {
         assert.equal(e, null);
 
@@ -64,6 +68,7 @@ describe('plugin:leetcode', function() {
         assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
         assert.equal(user.sessionId, 'SESSION_ID');
         assert.equal(user.name, 'Eric');
+        assert.equal(user.hash, 'abcdef');
         done();
       });
     });
