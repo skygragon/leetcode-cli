@@ -391,19 +391,18 @@ describe('plugin:leetcode', function() {
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS"}');
+        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id2/check/')
-        .reply(200, '{"state": "SUCCESS"}');
+        .reply(200, '{"state": "SUCCESS", "run_success": false, "status_code": 15}');
 
       plugin.testProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
-        assert.deepEqual(results,
-          [
-            {id: 'id2', name: 'Your', state: 'SUCCESS'},
-            {id: 'id1', name: 'Expected', state: 'SUCCESS'}
-          ]);
+        assert.equal(results[0].id, 'id2');
+        assert.equal(results[0].ok, false);
+        assert.equal(results[1].id, 'id1');
+        assert.equal(results[1].ok, true);
         done();
       });
     });
@@ -428,11 +427,12 @@ describe('plugin:leetcode', function() {
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS"}');
+        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
-        assert.deepEqual(results, [{id: 'id1', name: 'Your', state: 'SUCCESS'}]);
+        assert.equal(results[0].id, 'id1');
+        assert.equal(results[0].ok, true);
         done();
       });
     });
@@ -452,11 +452,12 @@ describe('plugin:leetcode', function() {
         .reply(200, '{"state": "STARTED"}');
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS"}');
+        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
-        assert.deepEqual(results, [{id: 'id1', name: 'Your', state: 'SUCCESS'}]);
+        assert.equal(results[0].id, 'id1');
+        assert.equal(results[0].ok, true);
         done();
       });
     });
