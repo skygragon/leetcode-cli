@@ -44,6 +44,8 @@ The local cache folder (`.lc/`) is in your home directory, e.g.
 	problems.json                   # problems list
 	1.two-sum.algorithms.json       # specific problem info
 
+Normally you don't need dig into the folder to manipulate those files. Use [cache command](https://skygragon.github.io/leetcode-cli/commands#cache) instead.
+
 # Configuration
 
 Create a JSON file named `.lcconfig` in your home directory, e.g.
@@ -54,7 +56,8 @@ Create a JSON file named `.lcconfig` in your home directory, e.g.
 		"LANG": "java",
 		"USE_COLOR": true,
 		"COLOR_THEME": "default",
-		"AUTO_LOGIN": false
+		"AUTO_LOGIN": false,
+		"PLUGINS": {}
 	}
 
 Here are some useful settings:
@@ -64,6 +67,24 @@ Here are some useful settings:
 * `ICON_THEME` to set icon them used in output.
 * `LANG` to set your default language used in coding.
 * `USE_COLOR` to enable colorful output.
+* `PLUGINS` to config each installed plugins, see [Plugins](#plugins).
+
+*Example*
+
+Config for `github.js` and `cpp.lint.js` plugins:
+
+	{
+		"PLUGINS": {
+			"github": {
+				"repo": "https://github.com/skygragon/test",
+				"token": "abcdefghijklmnopqrstuvwxyz"
+			},
+			"cpp.lint": {
+				"bin": "~/bin/cpplibt.py",
+				"flags": []
+			}
+		}
+	}
 
 # Color Theme
 

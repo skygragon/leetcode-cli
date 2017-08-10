@@ -120,7 +120,7 @@ Use keyword search and query:
 
 # plugin
 
-Display installed plugins. To install 3rd party plugins, please check the 'Advanced Tips'.
+Display installed plugins. To install 3rd party plugins, please check the [Advanced Tips](https://skygragon.github.io/leetcode-cli/advanced#plugins).
 
 * `-i` to install new plugin.
 * `-d` to disable existing plugin.
@@ -128,6 +128,12 @@ Display installed plugins. To install 3rd party plugins, please check the 'Advan
 * `-D` to delete existing plugin.
 
 *Example*
+
+Install plugin.
+
+	$ leecode plugin -i company.js
+
+List all the plugins, `✘` means the plugin is disabled.
 
 	$ leetcode plugin
 	✔ retry                default         Plugin to retry last failed request if AUTO_LOGIN is on.
