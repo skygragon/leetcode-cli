@@ -32,8 +32,5 @@ check npm
 
 create $ENVFILE
 
-npm install
-echo "You might need root privilege to install globally ... "
-sudo npm install -g .
-
+npm install -g .
 echo "leetcode-cli successfully installed."
