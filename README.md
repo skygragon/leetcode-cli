@@ -22,6 +22,7 @@ Great thanks to leetcode.com, a really awesome website!
 * Support live [**TEST**](https://skygragon.github.io/leetcode-cli/commands#test) and [**SUBMIT**](https://skygragon.github.io/leetcode-cli/commands#submit) againts leetcode.com.
 * [**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login) among multiple sessions with single leetcode account.
 * Retrieve your previous [**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission) thus you can easily backup and manage your code.
+* More [**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins) to enjoy extra useful features!
 
 ## Showcases
 
