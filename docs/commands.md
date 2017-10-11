@@ -131,7 +131,7 @@ Display installed plugins. To install 3rd party plugins, please check the [Advan
 
 Install plugin.
 
-	$ leecode plugin -i company.js
+	$ leetcode plugin -i company.js
 
 List all the plugins, `✘` means the plugin is disabled.
 
