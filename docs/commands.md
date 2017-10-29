@@ -129,9 +129,13 @@ Display installed plugins. To install 3rd party plugins, please check the [Advan
 
 *Example*
 
-Install plugin.
+Install plugin from github:
 
-	$ leetcode plugin -i company.js
+	$ leetcode plugin -i company
+
+Install plugin from local file:
+
+	$ leetcode plugin -i <path/of/local/file>/company.js
 
 List all the plugins, `✘` means the plugin is disabled.
 
