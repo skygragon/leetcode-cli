@@ -205,7 +205,7 @@ describe('helper', function() {
       ].join('\r\n');
 
       var hide = [
-        "Cookie: <hidden>",
+        'Cookie: <hidden>',
         "'X-CSRFToken': <hidden>",
         "'set-cookie': <hidden>"
       ].join('\r\n');

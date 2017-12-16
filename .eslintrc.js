@@ -1,12 +1,15 @@
 module.exports = {
     "env": {
       "browser": false,
-      "node": true,
-      "mocha": true
+      "es6": false,
+      "mocha": true,
+      "node": true
     },
     "extends": "google",
     "rules": {
       "camelcase": [2, {properties: "never"}],
+      "comma-dangle": 0,
+      "curly": 0,
       "key-spacing": [2, {align: "value"}],
       "max-len": [1, 120],
       "no-eval": 1, // we use it on purpose
@@ -15,8 +18,12 @@ module.exports = {
       "no-proto": 1,
       "no-unused-expressions": 1,
       "no-unused-vars": 1,
+      "no-var": 0,
       "no-warning-comments": 0,
+      "prefer-rest-params": 0,
+      "prefer-spread": 0,
       "quote-props": 1,
+      "quotes": [2, "single", {avoidEscape: true}],
       "require-jsdoc": 0,
     }
 };
