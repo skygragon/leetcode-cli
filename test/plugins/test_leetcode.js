@@ -171,15 +171,19 @@ describe('plugin:leetcode', function() {
   }); // #getCategoryProblems
 
   describe('#getProblem', function() {
+    beforeEach(function() {
+      PROBLEM.locked = false;
+    });
+
     it('should ok', function(done) {
       nock('https://leetcode.com')
-        .get('/problems/find-the-difference')
-        .replyWithFile(200, './test/mock/find-the-difference.html.20170714');
+        .post('/graphql')
+        .replyWithFile(200, './test/mock/find-the-difference.json.20171216');
 
       plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, null);
-        assert.equal(problem.totalAC, '73.2K');
-        assert.equal(problem.totalSubmit, '142K');
+        assert.equal(problem.totalAC, '89.7K');
+        assert.equal(problem.totalSubmit, '175.7K');
         assert.equal(problem.desc,
           [
             '',
@@ -203,7 +207,7 @@ describe('plugin:leetcode', function() {
             ''
           ].join('\r\n'));
 
-        assert.equal(problem.templates.length, 11);
+        assert.equal(problem.templates.length, 12);
 
         assert.equal(problem.templates[0].value, 'cpp');
         assert.equal(problem.templates[0].text, 'C++');
@@ -221,7 +225,7 @@ describe('plugin:leetcode', function() {
         assert.equal(problem.templates[1].text, 'Java');
         assert.equal(problem.templates[1].defaultCode,
           [
-            'public class Solution {',
+            'class Solution {',
             '    public char findTheDifference(String s, String t) {',
             '        ',
             '    }',
@@ -333,15 +337,23 @@ describe('plugin:leetcode', function() {
             '}'
           ].join('\n'));
 
+        assert.equal(problem.templates[11].value, 'kotlin');
+        assert.equal(problem.templates[11].text, 'Kotlin');
+        assert.equal(problem.templates[11].defaultCode,
+          [
+            'class Solution {',
+            '    fun findTheDifference(s: String, t: String): Char {',
+            '        ',
+            '    }',
+            '}'
+          ].join('\n'));
+
         done();
       });
     });
 
     it('should fail if no permission for locked', function(done) {
       PROBLEM.locked = true;
-      nock('https://leetcode.com')
-        .get('/problems/find-the-difference')
-        .replyWithFile(200, './test/mock/locked.html.20161015');
 
       plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, 'failed to load locked problem!');
@@ -350,9 +362,7 @@ describe('plugin:leetcode', function() {
     });
 
     it('should fail if session expired', function(done) {
-      nock('https://leetcode.com')
-        .get('/problems/find-the-difference')
-        .reply(403);
+      nock('https://leetcode.com').post('/graphql').reply(403);
 
       plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e, session.errors.EXPIRED);
@@ -361,9 +371,7 @@ describe('plugin:leetcode', function() {
     });
 
     it('should fail if http error', function(done) {
-      nock('https://leetcode.com')
-        .get('/problems/find-the-difference')
-        .reply(500);
+      nock('https://leetcode.com').post('/graphql').reply(500);
 
       plugin.getProblem(PROBLEM, function(e, problem) {
         assert.deepEqual(e, {msg: 'http error', statusCode: 500});
@@ -372,9 +380,7 @@ describe('plugin:leetcode', function() {
     });
 
     it('should fail if unknown error', function(done) {
-      nock('https://leetcode.com')
-        .get('/problems/find-the-difference')
-        .replyWithError('unknown error!');
+      nock('https://leetcode.com').post('/graphql').replyWithError('unknown error!');
 
       plugin.getProblem(PROBLEM, function(e, problem) {
         assert.equal(e.message, 'unknown error!');
