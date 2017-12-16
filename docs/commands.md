@@ -55,8 +55,9 @@ Show help on sub command:
 
 Show cached problems.
 
-* `-d` to delete specific cached problem.
-* `-a` to delete all cached problems.
+* `leetcode cache <id>` to show specific problem cache.
+* `-d <id>` to delete specific problem cache.
+* `-d` to delete all cached problems.
 
 *Examples*
 
@@ -67,6 +68,10 @@ Show cache:
 	problems                                            148.48K    2 hours ago
 	1.two-sum.algorithms                                  2.52K    2 hours ago
 	......
+
+Delete cache for problem 537:
+
+	$ leetcode cache -d 537
 
 # list
 
@@ -399,3 +404,4 @@ Verbose:
 	retry                default
 	cache                default
 	leetcode             default
+
