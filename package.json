@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "eslint lib/ test/",
-    "test": "npm run lint && nyc mocha test/**"
+    "test": "npm run lint && nyc mocha test/** && nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
@@ -30,24 +30,24 @@
   },
   "homepage": "https://github.com/skygragon/leetcode-cli#readme",
   "dependencies": {
-    "ansi-styles": "^3.0.0",
-    "cheerio": "^0.20.0",
-    "he": "^1.1.1",
-    "prompt": "^1.0.0",
-    "request": "^2.74.0",
-    "sprintf-js": "^1.0.3",
-    "supports-color": "^3.2.3",
-    "underscore": "^1.8.3",
-    "wordwrap": "^1.0.0",
-    "yargs": "^5.0.0"
+    "ansi-styles": "3.2.0",
+    "cheerio": "0.20.0",
+    "he": "1.1.1",
+    "prompt": "1.0.0",
+    "request": "2.83.0",
+    "sprintf-js": "1.1.1",
+    "supports-color": "5.1.0",
+    "underscore": "1.8.3",
+    "wordwrap": "1.0.0",
+    "yargs": "10.0.3"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "4.1.2",
     "eslint": "^3.3.1",
     "eslint-config-google": "^0.6.0",
-    "mocha": "^3.0.2",
-    "nock": "^8.0.0",
-    "nyc": "^8.1.0",
-    "rewire": "^2.5.2"
+    "mocha": "4.0.1",
+    "nock": "9.1.4",
+    "nyc": "11.3.0",
+    "rewire": "2.5.2"
   }
 }
