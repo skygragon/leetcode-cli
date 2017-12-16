@@ -372,7 +372,7 @@ Display version information.
 Short:
 
 	$ leetcode version
-	2.0.3
+	2.1.0
 
 Verbose:
 
@@ -382,7 +382,7 @@ Verbose:
 	| | ___  ___| |_  ___  ___   __| | ___
 	| |/ _ \/ _ \ __|/ __|/ _ \ / _` |/ _ \
 	| |  __/  __/ |_  (__| (_) | (_| |  __/
-	|_|\___|\___|\__|\___|\___/ \__,_|\___|  CLI v2.0.3
+	|_|\___|\___|\__|\___|\___/ \__,_|\___|  CLI v2.1.0
 
 	[Environment]
 	Cache:  /Users/skygragon/.lc/
