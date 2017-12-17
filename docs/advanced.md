@@ -54,6 +54,7 @@ Create a JSON file named `.lcconfig` in your home directory, e.g.
 
 	{
 		"LANG": "java",
+		"EDITOR": "vim",
 		"USE_COLOR": true,
 		"COLOR_THEME": "default",
 		"AUTO_LOGIN": false,
@@ -64,6 +65,7 @@ Here are some useful settings:
 
 * `AUTO_LOGIN` to enable auto login feature, see [Auto Login](#auto-login).
 * `COLOR_THEME` to set color theme used in output, see [Color Theme](#color-theme).
+* `EDITOR` to set editor used to open generated source file.
 * `ICON_THEME` to set icon them used in output.
 * `LANG` to set your default language used in coding.
 * `USE_COLOR` to enable colorful output.

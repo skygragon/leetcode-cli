@@ -94,6 +94,7 @@ Navigate the problems.
 	* database
 	* shell
 * `-s` to show statistic counters.
+* `-e` to open editor with generated source file.
 * `leetcode list <keyword>` to search by keyword matching.
 
 *Examples*
