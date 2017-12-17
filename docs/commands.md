@@ -156,8 +156,7 @@ Display problem details. With `-g`/`-l`/`-x`, the code template could be auto ge
 
 * `-g` to generate source file.
 * `-x` to add problem description in the generated source file.
-* `-t` to show code template.
-* `-d` to show problem description.
+* `-c` to only show code template.
 * `-l` to choose programming language. (Depends on which langs are provided on leetcode)
 	* bash
 	* c
@@ -209,7 +208,7 @@ Display problem details. With `-g`/`-l`/`-x`, the code template could be auto ge
 
 Only show the code template:
 
-	$ leetcode show -t --no-desc 1
+	$ leetcode show -c 1
 	class Solution {
 	public:
 		vector<int> twoSum(vector<int>& nums, int target) {
