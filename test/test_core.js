@@ -1,6 +1,3 @@
-var fs = require('fs');
-
-var _ = require('underscore');
 var assert = require('chai').assert;
 var rewire = require('rewire');
 
@@ -71,33 +68,35 @@ describe('core', function() {
   }); // #starProblem
 
   describe('#exportProblem', function() {
-    function injectVerify(expected, done) {
-      plugin.__set__('fs', {
-        writeFileSync: function(f, data) {
-          assert.equal(data, expected);
-          done();
-        },
-        readFileSync: fs.readFileSync
-      });
-    }
-
-    it('should ok w/ code only', function(done) {
+    it('should codeonly ok', function() {
       var expected = [
+        '/**',
+        ' * Definition for singly-linked list.',
+        ' * struct ListNode {',
+        ' *     int val;',
+        ' *     ListNode *next;',
+        ' *     ListNode(int x) : val(x), next(NULL) {}',
+        ' * };',
+        ' */',
         'class Solution {',
         'public:',
         '    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {',
-        '',
+        '        ',
         '    }',
-        '};'
+        '};',
+        ''
       ].join('\n');
 
-      injectVerify(expected, done);
-
       var problem = require('./mock/add-two-numbers.20161015.json');
-      plugin.exportProblem(problem, 'test.cpp', true);
+      var opts = {
+        lang: 'cpp',
+        code: problem.templates[0].defaultCode,
+        tpl:  'codeonly'
+      };
+      assert.equal(plugin.exportProblem(problem, opts), expected);
     });
 
-    it('should ok w/ detailed comments', function(done) {
+    it('should detailed ok', function() {
       var expected = [
         '/*',
         ' * [2] Add Two Numbers',
@@ -117,22 +116,33 @@ describe('core', function() {
         ' * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)',
         ' * Output: 7 -> 0 -> 8',
         ' */',
+        '/**',
+        ' * Definition for singly-linked list.',
+        ' * struct ListNode {',
+        ' *     int val;',
+        ' *     ListNode *next;',
+        ' *     ListNode(int x) : val(x), next(NULL) {}',
+        ' * };',
+        ' */',
         'class Solution {',
         'public:',
         '    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {',
-        '',
+        '        ',
         '    }',
         '};',
         ''
       ].join('\n');
 
-      injectVerify(expected, done);
-
       var problem = require('./mock/add-two-numbers.20161015.json');
-      plugin.exportProblem(problem, 'test.cpp', false);
+      var opts = {
+        lang: 'cpp',
+        code: problem.templates[0].defaultCode,
+        tpl:  'detailed'
+      };
+      assert.equal(plugin.exportProblem(problem, opts), expected);
     });
 
-    it('should ok w/ detailed comments, 2nd', function(done) {
+    it('should detailed ok, 2nd', function() {
       var expected = [
         '#',
         '# [2] Add Two Numbers',
@@ -170,14 +180,14 @@ describe('core', function() {
         ''
       ].join('\n');
 
-      injectVerify(expected, done);
-
       var problem = require('./mock/add-two-numbers.20161015.json');
       problem.testcase = null;
-      problem.code = _.find(problem.templates, function(template) {
-        return template.value === 'ruby';
-      }).defaultCode;
-      plugin.exportProblem(problem, 'test.rb', false);
+      var opts = {
+        lang: 'ruby',
+        code: problem.templates[6].defaultCode,
+        tpl:  'detailed'
+      };
+      assert.equal(plugin.exportProblem(problem, opts), expected);
     });
   }); // #exportProblem
 
