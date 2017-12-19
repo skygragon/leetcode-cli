@@ -50,12 +50,12 @@ describe('helper', function() {
     it('should ok w/ color', function() {
       chalk.enabled = true;
 
-      assert.equal(h.prettyLevel('Easy'), chalk.green('Easy  '));
+      assert.equal(h.prettyLevel('Easy'), chalk.green('Easy'));
       assert.equal(h.prettyLevel('Medium'), chalk.yellow('Medium'));
-      assert.equal(h.prettyLevel('Hard'), chalk.red('Hard  '));
-      assert.equal(h.prettyLevel('easy'), chalk.green('easy  '));
+      assert.equal(h.prettyLevel('Hard'), chalk.red('Hard'));
+      assert.equal(h.prettyLevel('easy  '), chalk.green('easy  '));
       assert.equal(h.prettyLevel('medium'), chalk.yellow('medium'));
-      assert.equal(h.prettyLevel('hard'), chalk.red('hard  '));
+      assert.equal(h.prettyLevel('hard  '), chalk.red('hard  '));
       assert.equal(h.prettyLevel('unknown'), 'unknown');
     });
   }); // #prettyLevel
