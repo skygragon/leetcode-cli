@@ -5,6 +5,7 @@ title: Commands Help
 
 * [help](#help)
 * [cache](#cache)
+* [config](#config)
 * [list](#list)
 * [plugin](#plugin)
 * [show](#show)
@@ -72,6 +73,31 @@ Show cache:
 Delete cache for problem 537:
 
 	$ leetcode cache -d 537
+
+# config
+
+Manage user config (~/.lcconfig).
+
+* `leetcode config` to show all user modified configs.
+* `-a` to show all user configs (includes default ones).
+* `leetcode config <key>` to show config item by key.
+* `leetcode config <key> <value>` to update config by key.
+* `-d` to delete config item by key.
+
+*Examples*
+
+Set config item:
+
+	$ leetcode config color:enable false
+
+**NOTE: the key is using colon ":" as the separator, not dot "."!**
+
+Show config item:
+
+	$ leetcode config color
+	{
+		"enable": true
+	}
 
 # list
 

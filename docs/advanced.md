@@ -48,7 +48,7 @@ The local cache folder (`.lc/`) is in your home directory, e.g.
 	problems.json                   # problems list
 	1.two-sum.algorithms.json       # specific problem info
 
-Normally you don't need dig into the folder to manipulate those files. Use [cache command](https://skygragon.github.io/leetcode-cli/commands#cache) instead.
+**NOTE: Normally you don't need dig into the folder to manipulate those files. Use [cache command](https://skygragon.github.io/leetcode-cli/commands#cache) instead.**
 
 # Configuration
 
@@ -86,6 +86,8 @@ Here are some useful settings:
 * `color:theme` to set color theme used in output, see [Color Theme](#color-theme).
 * `icon:theme` to set icon them used in output.
 * `plugins` to config each installed plugins, see [Plugins](#plugins).
+
+**NOTE: Normally you don't need dig into the folder to manipulate those files. Use [config command](https://skygragon.github.io/leetcode-cli/commands#config) instead.**
 
 *Example*
 
