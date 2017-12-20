@@ -1,6 +1,6 @@
 {
   "name": "leetcode-cli",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A cli tool to enjoy leetcode!",
   "preferGlobal": "true",
   "bin": {
@@ -33,7 +33,7 @@
     "ansi-styles": "3.2.0",
     "cheerio": "0.20.0",
     "he": "1.1.1",
-    "nconf": "^0.10.0",
+    "nconf": "0.10.0",
     "prompt": "1.0.0",
     "request": "2.83.0",
     "sprintf-js": "1.1.1",

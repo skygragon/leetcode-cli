@@ -2,6 +2,17 @@
 layout: default
 title: Release Notes
 ---
+# 2.2.0
+
+* `config`
+	* add new `config` command to manage user configs.
+	* try to save user from manually editing config file (~/.lcconfig).
+	* start to use new json config format. (NOTE: not compatible with old format!)
+* `show`
+	* print suppoerted language list.
+* add Release Notes page.
+* remove several legacy hacks.
+
 # 2.1.1
 * `show`
 	* add `-e` option to open editor for coding.
