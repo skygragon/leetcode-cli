@@ -14,6 +14,7 @@ Great thanks to leetcode.com, a really awesome website!
 [Documentations](https://skygragon.github.io/leetcode-cli/) ⦙
 [Commands](https://skygragon.github.io/leetcode-cli/commands) ⦙
 [Advanced Tips](https://skygragon.github.io/leetcode-cli/advanced) ⦙
+[Release Notes](https://skygragon.github.io/leetcode-cli/releases) ⦙
 
 * A very [**EFFICIENT**](#quick-start) way to fight problems.
 * [**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache) problems locally thus you can easily navigate & think it offline.
