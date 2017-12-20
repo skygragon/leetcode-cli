@@ -17,7 +17,11 @@ Leetcode.com is restricting only one session alive in the same time, which means
 
 The good news is leetcode-cli will help a lot on this by trying re-login transparently and automatically without interrupting your current work whenever it detects your current session is expired. To enable this feature you could add following in your config then login again:
 
-	"AUTO_LOGIN": true
+	{
+		"autologin": {
+			"enable": true
+		}
+	}
 
 **NOTE: once enabled, your PASSWORD will be persisted locally for further using, so PLEASE be careful to ONLY enable this on your OWN computer for the sake of security!**
 
@@ -53,30 +57,42 @@ Create a JSON file named `.lcconfig` in your home directory, e.g.
 	$ cat ~/.lcconfig
 
 	{
-		"LANG": "java",
-		"EDITOR": "vim",
-		"USE_COLOR": true,
-		"COLOR_THEME": "default",
-		"AUTO_LOGIN": false,
-		"PLUGINS": {}
+		"auto_login": {
+			"enable": false
+		},
+		"code": {
+			"editor": "vim",
+			"lang": "cpp"
+		},
+		"color": {
+			"enable": true,
+			"theme": "default"
+		},
+		"icon": {
+			"theme": ""
+		},
+		"network": {
+			"concurrency": 10
+		},
+		"plugins": {}
 	}
 
 Here are some useful settings:
 
-* `AUTO_LOGIN` to enable auto login feature, see [Auto Login](#auto-login).
-* `COLOR_THEME` to set color theme used in output, see [Color Theme](#color-theme).
-* `EDITOR` to set editor used to open generated source file.
-* `ICON_THEME` to set icon them used in output.
-* `LANG` to set your default language used in coding.
-* `USE_COLOR` to enable colorful output.
-* `PLUGINS` to config each installed plugins, see [Plugins](#plugins).
+* `autologin:enable` to enable auto login feature, see [Auto Login](#auto-login).
+* `code:editor` to set editor used to open generated source file.
+* `code:lang` to set your default language used in coding.
+* `color:enable` to enable colorful output.
+* `color:theme` to set color theme used in output, see [Color Theme](#color-theme).
+* `icon:theme` to set icon them used in output.
+* `plugins` to config each installed plugins, see [Plugins](#plugins).
 
 *Example*
 
 Config for `github.js` and `cpp.lint.js` plugins:
 
 	{
-		"PLUGINS": {
+		"plugins": {
 			"github": {
 				"repo": "https://github.com/skygragon/test",
 				"token": "abcdefghijklmnopqrstuvwxyz"
@@ -95,9 +111,9 @@ You can choose to use colorful output or not.
 * `--color` to enable color.
 * `--no-color` to disable it.
 
-Or use configuration setting to avoid typing it repeatedly, see [USE_COLOR](#configuration).
+Or use configuration setting to avoid typing it repeatedly, see [color:enable](#configuration).
 
-When color is enabled, you can choose your favor color theme as well, see [COLOR_THEME](#configuration).
+When color is enabled, you can choose your favor color theme as well, see [color:theme](#configuration).
 
 Following are available themes:
 

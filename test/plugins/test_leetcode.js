@@ -158,7 +158,7 @@ describe('plugin:leetcode', function() {
     });
 
     it('should fail if not login', function(done) {
-      config.AUTO_LOGIN = false;
+      config.autologin.enable = false;
       nock('https://leetcode.com')
         .get('/api/problems/algorithms/')
         .replyWithFile(200, './test/mock/problems.nologin.json.20161015');

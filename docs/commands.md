@@ -146,7 +146,7 @@ Install plugin from local file:
 List all the plugins, `✘` means the plugin is disabled.
 
 	$ leetcode plugin
-	✔ retry                default         Plugin to retry last failed request if AUTO_LOGIN is on.
+	✔ retry                default         Plugin to retry last failed request if autologin is on.
 	✔ cache                default         Plugin to provide local cache.
 	✔ leetcode             default         Plugin to talk with leetcode APIs.
 
@@ -385,16 +385,17 @@ Verbose:
 	|_|\___|\___|\__|\___|\___/ \__,_|\___|  CLI v2.1.1
 
 	[Environment]
-	Cache:  /Users/skygragon/.lc/
-	Config: /Users/skygragon/.lcconfig
+	Node                 v8.1.4
+	OS                   darwin 16.5.0
+	Cache:               /Users/skygragon/.lc/
+	Config:              /Users/skygragon/.lcconfig
 
 	[Configuration]
-	AUTO_LOGIN           true
-	COLOR_THEME          orange
-	ICON_THEME           default
-	LANG                 cpp
-	MAX_WORKERS          10
-	USE_COLOR            true
+	autologin            {"enable":false}
+	code                 {"editor":"vim","lang":"haha"}
+	color                {"enable":false,"theme":"default"}
+	icon                 {"theme":""}
+	network              {"concurrency":10}
 
 	[Themes]
 	Colors               blue,dark,default,orange,pink

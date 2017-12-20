@@ -177,7 +177,7 @@ describe('plugin:cache', function() {
     var USER_SAFE = {name: 'test-user'};
 
     it('should login ok', function(done) {
-      config.AUTO_LOGIN = true;
+      config.autologin.enable = true;
       // before login
       cache.del('.user');
       assert.equal(session.getUser(), null);
@@ -199,7 +199,7 @@ describe('plugin:cache', function() {
     });
 
     it('should login ok w/ auto login', function(done) {
-      config.AUTO_LOGIN = false;
+      config.autologin.enable = false;
       cache.del('.user');
 
       NEXT.login = function(user, cb) {

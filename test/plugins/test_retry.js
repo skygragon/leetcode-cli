@@ -27,7 +27,7 @@ describe('plugin:retry', function() {
   });
 
   it('should fail if auto login disabled', function(done) {
-    config.AUTO_LOGIN = false;
+    config.autologin.enable = false;
     NEXT.getProblems = function(cb) {
       return cb(session.errors.EXPIRED);
     };
@@ -39,7 +39,7 @@ describe('plugin:retry', function() {
   });
 
   it('should retry if session expired', function(done) {
-    config.AUTO_LOGIN = true;
+    config.autologin.enable = true;
 
     var n = 0;
     NEXT.getProblems = function(cb) {
@@ -60,7 +60,7 @@ describe('plugin:retry', function() {
   });
 
   it('should fail if user expired locally', function(done) {
-    config.AUTO_LOGIN = true;
+    config.autologin.enable = true;
 
     var n = 0;
     NEXT.getProblems = function(cb) {
@@ -81,7 +81,7 @@ describe('plugin:retry', function() {
   });
 
   it('should fail if other errors', function(done) {
-    config.AUTO_LOGIN = true;
+    config.autologin.enable = true;
     NEXT.getProblems = function(cb) {
       return cb('unknown error');
     };
