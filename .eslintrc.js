@@ -7,6 +7,8 @@ module.exports = {
     },
     "extends": "google",
     "rules": {
+      "block-spacing": [2, "always"],
+      "brace-style": [2, "1tbs", { "allowSingleLine": true }],
       "camelcase": [2, {properties: "never"}],
       "comma-dangle": 0,
       "curly": 0,
