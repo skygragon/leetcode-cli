@@ -119,7 +119,7 @@ describe('helper', function() {
       assert.equal(h.langToExt('javascript'), '.js');
       assert.equal(h.langToExt('mysql'), '.sql');
       assert.equal(h.langToExt('python'), '.py');
-      assert.equal(h.langToExt('python3'), '.py3');
+      assert.equal(h.langToExt('python3'), '.python3.py');
       assert.equal(h.langToExt('ruby'), '.rb');
       assert.equal(h.langToExt('scala'), '.scala');
       assert.equal(h.langToExt('swift'), '.swift');
@@ -138,6 +138,7 @@ describe('helper', function() {
       assert.equal(h.extToLang('c:/file.js'), 'javascript');
       assert.equal(h.extToLang('c:/Users/skygragon/file.py'), 'python');
       assert.equal(h.extToLang('c:/Users/skygragon/file.py3'), 'python3');
+      assert.equal(h.extToLang('c:/Users/skygragon/file.python3.py'), 'python3');
       assert.equal(h.extToLang('~/file.rb'), 'ruby');
       assert.equal(h.extToLang('/tmp/file.scala'), 'scala');
       assert.equal(h.extToLang('~/leetcode/file.swift'), 'swift');
