@@ -53,8 +53,7 @@ describe('plugin:leetcode', function() {
         .reply(302, '', {
           'Set-Cookie': [
             'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
-            'LEETCODE_SESSION=SESSION_ID; Max-Age=31449600; Path=/; secure',
-            "messages='Successfully signed in as Eric.'; Max-Age=31449600; Path=/; secure"
+            'LEETCODE_SESSION=SESSION_ID; Max-Age=31449600; Path=/; secure'
           ]});
 
       nock('https://leetcode.com')
