@@ -2,6 +2,19 @@
 layout: default
 title: Release Notes
 ---
+# 2.2.1
+
+* add commands aliases.
+* enhance documents about install error on Ubuntu.
+* `config`
+	* fix wrong parsing on non-string value.
+* `plugin`
+	* fix bug when installing new npm modules.
+* `show`
+	* use traditional `.py` for python3 filename.
+* `submission`
+	* enhance recursive folder creation.
+
 # 2.2.0
 
 * `config`
