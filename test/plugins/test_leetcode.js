@@ -59,7 +59,12 @@ describe('plugin:leetcode', function() {
 
       nock('https://leetcode.com')
         .get('/list/api/questions')
-        .reply(200, JSON.stringify({favorites: {private_favorites: [{id_hash: 'abcdef', name: 'Favorite'}]}}));
+        .reply(200, JSON.stringify({
+          user_name: 'Eric',
+          favorites: {
+            private_favorites: [{id_hash: 'abcdef', name: 'Favorite'}]
+          }
+        }));
 
       plugin.login({}, function(e, user) {
         assert.equal(e, null);
