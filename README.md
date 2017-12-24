@@ -13,10 +13,11 @@ Great thanks to leetcode.com, a really awesome website!
 [![Join chat at https://gitter.im/skygragon/leetcode-cli](https://img.shields.io/gitter/room/skygragon/leetcode-cli.svg?style=flat)](https://gitter.im/skygragon/leetcode-cli)
 
 ⦙ [Releases](https://skygragon.github.io/leetcode-cli/releases) ⦙
-[Installation](https://skygragon.github.io/leetcode-cli/install) ⦙
+[Install](https://skygragon.github.io/leetcode-cli/install) ⦙
 [Docs](https://skygragon.github.io/leetcode-cli/) ⦙
 [Commands](https://skygragon.github.io/leetcode-cli/commands) ⦙
-[Advanced Tips](https://skygragon.github.io/leetcode-cli/advanced) ⦙
+[Advanced](https://skygragon.github.io/leetcode-cli/advanced) ⦙
+[Plugins](https://github.com/skygragon/leetcode-cli-plugins) ⦙
 
 * A very [**EFFICIENT**](#quick-start) way to fight problems.
 * [**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache) problems locally thus you can easily navigate & think it offline.
