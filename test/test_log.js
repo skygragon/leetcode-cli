@@ -97,4 +97,11 @@ describe('log', function() {
       assert.equal(result, chalk.red('[ERROR] some error [0]'));
     });
   });
+
+  describe('#printf', function() {
+    it('should ok', function() {
+      log.printf('%s and %d and %%', 'string', 100);
+      assert.equal(result, 'string and 100 and %');
+    });
+  });
 });
