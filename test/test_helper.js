@@ -1,3 +1,5 @@
+var path = require('path');
+
 var assert = require('chai').assert;
 
 var chalk = require('../lib/chalk');
@@ -169,6 +171,8 @@ describe('helper', function() {
   }); // #langToCommentStyle
 
   describe('#dirAndFiles', function() {
+    var root = path.join(__dirname, '..');
+
     it('should ok', function() {
       process.env.HOME = '/home/skygragon';
 
@@ -183,12 +187,26 @@ describe('helper', function() {
       assert.equal(h.getHomeDir(), 'C:\\Users\\skygragon');
     });
 
-    it('should getDirData ok', function() {
-      var files = h.getDirData(['lib', 'plugins']);
+    it('should getCodeDir ok', function() {
+      assert.equal(h.getCodeDir(), root);
+      assert.equal(h.getCodeDir('.'), root);
+      assert.equal(h.getCodeDir('icons'), path.join(root, 'icons'));
+      assert.equal(h.getCodeDir('lib/plugins'), path.join(root, 'lib', 'plugins'));
+    });
+
+    it('should getCodeDirData ok', function() {
+      var files = h.getCodeDirData('lib/plugins');
       assert.equal(files.length, 3);
       assert.equal(files[0].name, 'cache');
       assert.equal(files[1].name, 'leetcode');
       assert.equal(files[2].name, 'retry');
+    });
+
+    it('should getPluginFile ok', function() {
+      var expect = path.join(root, 'lib/plugins/cache.js');
+      assert.equal(h.getPluginFile('cache.js'), expect);
+      assert.equal(h.getPluginFile('./cache.js'), expect);
+      assert.equal(h.getPluginFile('https://github.com/skygragon/cache.js'), expect);
     });
   }); // #dirAndFiles
 

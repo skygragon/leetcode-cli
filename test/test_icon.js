@@ -7,7 +7,7 @@ describe('icon', function() {
   var icon = null;
 
   before(function() {
-    h.getDirData = function() {
+    h.getCodeDirData = function() {
       return [
         {
           name: 'word',

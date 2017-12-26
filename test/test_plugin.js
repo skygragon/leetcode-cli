@@ -20,7 +20,7 @@ describe('plugin', function() {
     retry.init = noop;
     core.init = noop;
 
-    h.getDirData = function() {
+    h.getCodeDirData = function() {
       return [
         {name: 'cache', data: cache},
         {name: 'leetcode', data: leetcode},
