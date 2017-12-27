@@ -4,7 +4,7 @@ srcdir=/root/leetcode-cli
 leetcode=$srcdir/bin/leetcode
 
 if [ ! -f "$leetcode" ]; then
-  echo "Not found leetcode, install now ..."
+  echo "Unpacking leetcode-cli code ..."
   mkdir -p $srcdir
   tar zxf /leetcode-cli.tar.gz -C $srcdir
 fi

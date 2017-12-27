@@ -1,7 +1,0 @@
-#!/bin/bash
-
-echo "Generating source code tarbal"
-git archive --format=tar HEAD | gzip > docker/src.tar.gz
-
-echo "Building docker image"
-docker build -t leetcode-cli docker/
