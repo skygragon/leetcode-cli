@@ -1,4 +1,4 @@
-<img src="docs/logo.png" width="350" align="right">
+<img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" width="350" align="right">
 
 # leetcode-cli
 
