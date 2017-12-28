@@ -2,6 +2,21 @@
 layout: default
 title: Release Notes
 ---
+
+# 2.3.0
+
+* `plugin`
+	* only install necessary depedencies on specific platform.
+	* add `-c` option to show plugin config.
+	* support [cookie.chrome](https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/cookie.chrome.md) plugin.
+	* support [cookie.firefox](https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/cookie.firefox.md) plugin.
+* docker
+	* support running leetcode-cli as docker container for new user's tasting.
+	* auto build docker image in Docker Hub.
+* UI
+	* Add spinner message for long time running works.
+* Add logo and updte documents.
+
 # 2.2.1
 
 * add commands aliases.
