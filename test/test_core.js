@@ -235,7 +235,7 @@ describe('core', function() {
         ]);
       };
 
-      plugin.getProblem(undefined, function(e, problem) {
+      plugin.getProblem('', function(e, problem) {
         assert.equal(e, null);
         assert.equal(problem.id, 2);
         done();
