@@ -8,8 +8,28 @@ var plugin = rewire('../lib/core');
 
 describe('core', function() {
   var PROBLEMS = [
-    {id: 0, name: 'name0', slug: 'slug0', starred: false, category: 'algorithms'},
-    {id: 1, name: 'name1', slug: 'slug1', starred: true, category: 'algorithms'}
+    {
+      category: 'algorithms',
+      id:       0,
+      name:     'name0',
+      slug:     'slug0',
+      level:    'Hard',
+      locked:   true,
+      starred:  false,
+      state:    'ac',
+      tags:     ['google', 'facebook']
+    },
+    {
+      category:  'algorithms',
+      companies: ['amazon', 'facebook'],
+      id:        1,
+      name:      'name1',
+      slug:      'slug1',
+      level:     'Easy',
+      locked:    false,
+      starred:   true,
+      state:     'none'
+    }
   ];
   var USER = {};
   var NEXT = {};
@@ -32,6 +52,57 @@ describe('core', function() {
     NEXT.getProblem = function(problem, cb) {
       return cb(null, problem);
     };
+  });
+
+  describe('#filterProblems', function() {
+    it('should filter by query ok', function(done) {
+      var cases = [
+        ['',     [0, 1]],
+        ['x',    [0, 1]],
+        ['h',    [0]],
+        ['H',    [1]],
+        ['m',    []],
+        ['M',    [0, 1]],
+        ['l',    [0]],
+        ['L',    [1]],
+        ['s',    [1]],
+        ['S',    [0]],
+        ['d',    [0]],
+        ['D',    [1]],
+        ['eLsD', [1]],
+        ['Dh',   []]
+      ];
+      var n = cases.length;
+      cases.forEach(function(x) {
+        plugin.filterProblems({query: x[0]}, function(e, problems) {
+          assert.equal(e, null);
+          assert.equal(problems.length, x[1].length);
+          for (var i = 0; i < problems.length; ++i)
+            assert.equal(problems[i], PROBLEMS[x[1][i]]);
+          if (--n === 0) done();
+        });
+      });
+    });
+
+    it('should filter by tag ok', function(done) {
+      var cases = [
+        [[],           [0, 1]],
+        [['facebook'], [0, 1]],
+        [['google'],   [0]],
+        [['amazon'],   [1]],
+        [['apple'],    []],
+      ];
+      var n = cases.length;
+      cases.forEach(function(x) {
+        plugin.filterProblems({tag: x[0]}, function(e, problems) {
+          assert.equal(e, null);
+          assert.equal(problems.length, x[1].length);
+          for (var i = 0; i < problems.length; ++i)
+            assert.equal(problems[i], PROBLEMS[x[1][i]]);
+          if (--n === 0) done();
+        });
+      });
+    });
   });
 
   describe('#starProblem', function() {
