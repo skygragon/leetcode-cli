@@ -18,6 +18,7 @@ describe('cache', function() {
       return cachedir;
     };
     cache.__set__('h', h);
+    cache.init();
   });
 
   it('should ok when not cached', function() {
@@ -47,14 +48,5 @@ describe('cache', function() {
 
     assert.equal(items[0].name, k);
     assert.equal(items[0].size, JSON.stringify(v).length);
-  });
-
-  it('should list ok when cache dir not exist', function() {
-    h.getCacheDir = function() {
-      return '/not-exist-dir';
-    };
-
-    var items = cache.list();
-    assert.equal(items.length, 0);
   });
 });

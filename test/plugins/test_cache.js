@@ -29,11 +29,12 @@ describe('plugin:cache', function() {
     config.init();
     plugin.init();
 
-    h.getHomeDir = function() {
+    h.getCacheDir = function() {
       return HOME;
     };
-
     cache.__set__('h', h);
+    cache.init();
+
     session.__set__('cache', cache);
     plugin.__set__('cache', cache);
     plugin.__set__('session', session);
@@ -179,7 +180,7 @@ describe('plugin:cache', function() {
     it('should login ok', function(done) {
       config.autologin.enable = true;
       // before login
-      cache.del('.user');
+      cache.del(h.KEYS.user);
       assert.equal(session.getUser(), null);
       assert.equal(session.isLogin(), false);
 
@@ -200,7 +201,7 @@ describe('plugin:cache', function() {
 
     it('should login ok w/ auto login', function(done) {
       config.autologin.enable = false;
-      cache.del('.user');
+      cache.del(h.KEYS.user);
 
       NEXT.login = function(user, cb) {
         return cb(null, user);
@@ -228,7 +229,7 @@ describe('plugin:cache', function() {
 
     it('should logout ok', function(done) {
       // before logout
-      cache.set('.user', USER);
+      cache.set(h.KEYS.user, USER);
       assert.deepEqual(session.getUser(), USER);
       assert.equal(session.isLogin(), true);
 
