@@ -52,4 +52,17 @@ describe('config', function() {
 
     assert.equal(config.code.editor, 'vim');
   });
+
+  it('should remove legacy keys', function() {
+    var data = {
+      USE_COLOR: true,
+      code:      {lang: 'ruby'}
+    };
+    fs.writeFileSync(f, JSON.stringify(data));
+
+    config.init();
+
+    assert.equal(config.USE_COLOR, undefined);
+    assert.equal(config.code.lang, 'ruby');
+  });
 });
