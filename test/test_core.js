@@ -297,18 +297,10 @@ describe('core', function() {
       });
     });
 
-    it('should getProblem random ok', function(done) {
-      NEXT.getProblems = function(cb) {
-        return cb(null, [
-          {id: 0, state: 'ac', locked: false},
-          {id: 1, state: 'none', locked: true},
-          {id: 2, state: 'none', locked: false}
-        ]);
-      };
-
-      plugin.getProblem('', function(e, problem) {
+    it('should getProblem ok if problem is already there', function(done) {
+      plugin.getProblem(PROBLEMS[1], function(e, problem) {
         assert.equal(e, null);
-        assert.equal(problem.id, 2);
+        assert.deepEqual(problem, PROBLEMS[1]);
         done();
       });
     });
