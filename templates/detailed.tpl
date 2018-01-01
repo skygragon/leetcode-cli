@@ -9,6 +9,6 @@
 <%= comment.line %> Total Submissions: <%= totalSubmit %>
 <%= comment.line %> Testcase Example:  <%= testcase %>
 <%= comment.line %>
-<% _.each(desc, function(x) { %><%= comment.line %> <%= x %>
+<% desc.forEach(function(x) { %><%= comment.line %> <%= x %>
 <% }) %><%= comment.end %>
 <%= code %>
