@@ -1,3 +1,4 @@
+'use strict';
 var assert = require('chai').assert;
 
 var Queue = require('../lib/queue');

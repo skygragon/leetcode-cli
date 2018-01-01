@@ -1,3 +1,4 @@
+'use strict';
 var _ = require('underscore');
 var assert = require('chai').assert;
 var nock = require('nock');
@@ -448,8 +449,6 @@ describe('plugin:leetcode', function() {
     });
 
     it('should ok after delay', function(done) {
-      this.timeout(5000);
-
       nock('https://leetcode.com')
         .post('/problems/find-the-difference/submit/')
         .reply(200, '{"error": "You run code too soon"}');
@@ -470,7 +469,7 @@ describe('plugin:leetcode', function() {
         assert.equal(results[0].ok, true);
         done();
       });
-    });
+    }).timeout(5000);
 
     it('should fail if server error', function(done) {
       nock('https://leetcode.com')

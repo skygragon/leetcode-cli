@@ -1,3 +1,4 @@
+'use strict';
 var execSync = require('child_process').execSync;
 
 var assert = require('chai').assert;

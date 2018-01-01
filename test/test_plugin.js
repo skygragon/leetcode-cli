@@ -1,3 +1,4 @@
+'use strict';
 var fs = require('fs');
 var path = require('path');
 
@@ -97,13 +98,12 @@ describe('plugin', function() {
     after(clean);
 
     it('should copy from http error', function(done) {
-      this.timeout(5000);
       Plugin.copy('non-exists', function(e, fullpath) {
         assert.equal(e, 'HTTP Error: 404');
         assert.equal(fs.existsSync(dst), false);
         done();
       });
-    });
+    }).timeout(5000);
 
     it('should copy from local ok', function(done) {
       var data = [

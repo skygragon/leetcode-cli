@@ -3,6 +3,9 @@
   "version": "2.3.0",
   "description": "A cli tool to enjoy leetcode!",
   "preferGlobal": "true",
+  "engines": {
+    "node": ">=4"
+  },
   "bin": {
     "leetcode": "./bin/leetcode"
   },

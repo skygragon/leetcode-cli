@@ -1,9 +1,9 @@
+'use strict';
 var assert = require('chai').assert;
 var rewire = require('rewire');
 
 var log = require('../lib/log');
 
-var session = rewire('../lib/session');
 var plugin = rewire('../lib/core');
 
 describe('core', function() {
@@ -31,17 +31,10 @@ describe('core', function() {
       state:     'none'
     }
   ];
-  var USER = {};
   var NEXT = {};
 
   before(function() {
     log.init();
-
-    session.getUser = function() {
-      return USER;
-    };
-
-    plugin.__set__('session', session);
     plugin.setNext(NEXT);
   });
 
