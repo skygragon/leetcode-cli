@@ -1,11 +1,11 @@
 'use strict';
-var assert = require('chai').assert;
-var rewire = require('rewire');
+const assert = require('chai').assert;
+const rewire = require('rewire');
 
-var h = rewire('../lib/helper');
+const h = rewire('../lib/helper');
 
 describe('icon', function() {
-  var icon = null;
+  let icon = null;
 
   before(function() {
     h.getCodeDirData = function() {

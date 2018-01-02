@@ -1,17 +1,17 @@
 'use strict';
-var fs = require('fs');
+const fs = require('fs');
 
-var assert = require('chai').assert;
-var rewire = require('rewire');
-var _ = require('underscore');
+const assert = require('chai').assert;
+const rewire = require('rewire');
+const _ = require('underscore');
 
 describe('config', function() {
-  var config;
-  var f = './tmp/config.json';
+  let config;
+  const f = './tmp/config.json';
 
   beforeEach(function() {
     config = rewire('../lib/config');
-    var h = rewire('../lib/helper');
+    const h = rewire('../lib/helper');
     h.getConfigFile = function() {
       return f;
     };
@@ -25,11 +25,11 @@ describe('config', function() {
   it('should ok w/o local config', function() {
     if (fs.existsSync(f)) fs.unlinkSync(f);
 
-    var DEFAULT_CONFIG = config.__get__('DEFAULT_CONFIG');
+    const DEFAULT_CONFIG = config.__get__('DEFAULT_CONFIG');
     config.init();
 
-    var actual = config.getAll();
-    var expect = DEFAULT_CONFIG;
+    let actual = config.getAll();
+    let expect = DEFAULT_CONFIG;
     assert.deepEqual(actual, expect);
 
     actual = config.getAll(true);
@@ -38,7 +38,7 @@ describe('config', function() {
   });
 
   it('should ok w/ local config', function() {
-    var data = {
+    const data = {
       autologin: {enable: false},
       code:      {lang: 'ruby'},
       color:     {enable: false}
@@ -55,7 +55,7 @@ describe('config', function() {
   });
 
   it('should remove legacy keys', function() {
-    var data = {
+    const data = {
       USE_COLOR: true,
       code:      {lang: 'ruby'}
     };

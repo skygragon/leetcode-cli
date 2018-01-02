@@ -1,12 +1,12 @@
 'use strict';
-var assert = require('chai').assert;
+const assert = require('chai').assert;
 
-var chalk = require('../lib/chalk');
-var log = require('../lib/log');
+const chalk = require('../lib/chalk');
+const log = require('../lib/log');
 
 describe('log', function() {
-  var _output = null;
-  var result = '';
+  let _output = null;
+  let result = '';
 
   before(function() {
     chalk.init();

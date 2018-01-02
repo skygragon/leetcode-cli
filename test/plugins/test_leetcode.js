@@ -1,18 +1,18 @@
 'use strict';
-var _ = require('underscore');
-var assert = require('chai').assert;
-var nock = require('nock');
-var rewire = require('rewire');
+const _ = require('underscore');
+const assert = require('chai').assert;
+const nock = require('nock');
+const rewire = require('rewire');
 
-var config = require('../../lib/config');
-var log = require('../../lib/log');
+const config = require('../../lib/config');
+const log = require('../../lib/log');
 
-var plugin = rewire('../../lib/plugins/leetcode');
-var session = rewire('../../lib/session');
+const plugin = rewire('../../lib/plugins/leetcode');
+const session = rewire('../../lib/session');
 
 describe('plugin:leetcode', function() {
-  var USER = {hash: 'abcdef'};
-  var PROBLEM = {
+  const USER = {hash: 'abcdef'};
+  const PROBLEM = {
     id:     389,
     name:   'Find the Difference',
     slug:   'find-the-difference',
@@ -20,7 +20,7 @@ describe('plugin:leetcode', function() {
     locked: false,
     file:   '/dev/null'
   };
-  var SUBMISSION = {
+  const SUBMISSION = {
     id:      '73790064',
     lang:    'cpp',
     runtime: '9 ms',
@@ -537,7 +537,7 @@ describe('plugin:leetcode', function() {
 
   describe('#getSubmissions', function() {
     it('should ok', function(done) {
-      var problem = {
+      const problem = {
         id:     1,
         name:   'Two Sum',
         slug:   'two-sum',
@@ -645,7 +645,7 @@ describe('plugin:leetcode', function() {
       plugin.getFavorites(function(e, favorites) {
         assert.equal(e, null);
 
-        var my = favorites.favorites.private_favorites;
+        const my = favorites.favorites.private_favorites;
         assert.equal(my.length, 1);
         assert.equal(my[0].name, 'Favorite');
         assert.equal(my[0].id_hash, 'abcdefg');

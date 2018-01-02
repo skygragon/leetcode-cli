@@ -1,13 +1,13 @@
 'use strict';
-var assert = require('chai').assert;
-var rewire = require('rewire');
+const assert = require('chai').assert;
+const rewire = require('rewire');
 
-var log = require('../lib/log');
+const log = require('../lib/log');
 
-var plugin = rewire('../lib/core');
+const plugin = rewire('../lib/core');
 
 describe('core', function() {
-  var PROBLEMS = [
+  const PROBLEMS = [
     {
       category: 'algorithms',
       id:       0,
@@ -31,7 +31,7 @@ describe('core', function() {
       state:     'none'
     }
   ];
-  var NEXT = {};
+  const NEXT = {};
 
   before(function() {
     log.init();
@@ -49,7 +49,7 @@ describe('core', function() {
 
   describe('#filterProblems', function() {
     it('should filter by query ok', function(done) {
-      var cases = [
+      const cases = [
         ['',     [0, 1]],
         ['x',    [0, 1]],
         ['h',    [0]],
@@ -65,12 +65,12 @@ describe('core', function() {
         ['eLsD', [1]],
         ['Dh',   []]
       ];
-      var n = cases.length;
+      let n = cases.length;
       cases.forEach(function(x) {
         plugin.filterProblems({query: x[0]}, function(e, problems) {
           assert.equal(e, null);
           assert.equal(problems.length, x[1].length);
-          for (var i = 0; i < problems.length; ++i)
+          for (let i = 0; i < problems.length; ++i)
             assert.equal(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
@@ -78,19 +78,19 @@ describe('core', function() {
     });
 
     it('should filter by tag ok', function(done) {
-      var cases = [
+      const cases = [
         [[],           [0, 1]],
         [['facebook'], [0, 1]],
         [['google'],   [0]],
         [['amazon'],   [1]],
         [['apple'],    []],
       ];
-      var n = cases.length;
+      let n = cases.length;
       cases.forEach(function(x) {
         plugin.filterProblems({tag: x[0]}, function(e, problems) {
           assert.equal(e, null);
           assert.equal(problems.length, x[1].length);
-          for (var i = 0; i < problems.length; ++i)
+          for (let i = 0; i < problems.length; ++i)
             assert.equal(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
@@ -133,7 +133,7 @@ describe('core', function() {
 
   describe('#exportProblem', function() {
     it('should codeonly ok', function() {
-      var expected = [
+      const expected = [
         '/**',
         ' * Definition for singly-linked list.',
         ' * struct ListNode {',
@@ -151,8 +151,8 @@ describe('core', function() {
         ''
       ].join('\n');
 
-      var problem = require('./mock/add-two-numbers.20161015.json');
-      var opts = {
+      const problem = require('./mock/add-two-numbers.20161015.json');
+      const opts = {
         lang: 'cpp',
         code: problem.templates[0].defaultCode,
         tpl:  'codeonly'
@@ -161,7 +161,7 @@ describe('core', function() {
     });
 
     it('should detailed ok', function() {
-      var expected = [
+      const expected = [
         '/*',
         ' * [2] Add Two Numbers',
         ' *',
@@ -197,8 +197,8 @@ describe('core', function() {
         ''
       ].join('\n');
 
-      var problem = require('./mock/add-two-numbers.20161015.json');
-      var opts = {
+      const problem = require('./mock/add-two-numbers.20161015.json');
+      const opts = {
         lang: 'cpp',
         code: problem.templates[0].defaultCode,
         tpl:  'detailed'
@@ -207,7 +207,7 @@ describe('core', function() {
     });
 
     it('should detailed ok, 2nd', function() {
-      var expected = [
+      const expected = [
         '#',
         '# [2] Add Two Numbers',
         '#',
@@ -244,9 +244,9 @@ describe('core', function() {
         ''
       ].join('\n');
 
-      var problem = require('./mock/add-two-numbers.20161015.json');
+      const problem = require('./mock/add-two-numbers.20161015.json');
       problem.testcase = null;
-      var opts = {
+      const opts = {
         lang: 'ruby',
         code: problem.templates[6].defaultCode,
         tpl:  'detailed'

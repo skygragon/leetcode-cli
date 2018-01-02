@@ -1,13 +1,13 @@
 'use strict';
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var assert = require('chai').assert;
-var rewire = require('rewire');
+const assert = require('chai').assert;
+const rewire = require('rewire');
 
-var log = require('../lib/log');
-var Plugin = rewire('../lib/plugin');
-var h = rewire('../lib/helper');
+const log = require('../lib/log');
+const Plugin = rewire('../lib/plugin');
+const h = rewire('../lib/helper');
 
 describe('plugin', function() {
   before(function() {
@@ -15,13 +15,13 @@ describe('plugin', function() {
   });
 
   describe('#init', function() {
-    var leetcode = new Plugin(0, 'Leetcode', '2.0', '');
-    var cache = new Plugin(1, 'Cache', '1.0', '');
-    var retry = new Plugin(2, 'Retry', '3.0', '');
-    var core = new Plugin(3, 'Core', '4.0', '');
+    const leetcode = new Plugin(0, 'Leetcode', '2.0', '');
+    const cache = new Plugin(1, 'Cache', '1.0', '');
+    const retry = new Plugin(2, 'Retry', '3.0', '');
+    const core = new Plugin(3, 'Core', '4.0', '');
 
     before(function() {
-      var noop = function() {};
+      const noop = function() {};
       cache.init = noop;
       leetcode.init = noop;
       retry.init = noop;
@@ -43,7 +43,7 @@ describe('plugin', function() {
       Plugin.init(core);
       assert.deepEqual(Plugin.plugins.length, 3);
 
-      var names = Plugin.plugins.map(p => p.name);
+      const names = Plugin.plugins.map(p => p.name);
       assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode']);
 
       assert.equal(core.next, retry);
@@ -54,9 +54,9 @@ describe('plugin', function() {
   }); // #init
 
   describe('#install', function() {
-    var expect;
+    let expect;
     before(function() {
-      var cp = {
+      const cp = {
         exec: function(cmd, opts, cb) {
           expect = cmd;
           return cb();
@@ -67,7 +67,7 @@ describe('plugin', function() {
 
     it('should install no deps ok', function(done) {
       expect = '';
-      var plugin = new Plugin(100, 'test', '2017.12.26', 'desc', []);
+      const plugin = new Plugin(100, 'test', '2017.12.26', 'desc', []);
       plugin.install(function() {
         assert.equal(expect, '');
         done();
@@ -75,8 +75,8 @@ describe('plugin', function() {
     });
 
     it('should install deps ok', function(done) {
-      var deps = ['a', 'b:linux', 'b:darwin', 'b:win32', 'c:bad', 'd'];
-      var plugin = new Plugin(100, 'test', '2017.12.26', 'desc', deps);
+      const deps = ['a', 'b:linux', 'b:darwin', 'b:win32', 'c:bad', 'd'];
+      const plugin = new Plugin(100, 'test', '2017.12.26', 'desc', deps);
       plugin.install(function() {
         assert.equal(expect, 'npm install --save a b d');
         done();
@@ -85,8 +85,8 @@ describe('plugin', function() {
   }); // #install
 
   describe('#copy', function() {
-    var src = path.resolve('./tmp/copy.src.js');
-    var dst = path.resolve('./tmp/copy.test.js');
+    const src = path.resolve('./tmp/copy.src.js');
+    const dst = path.resolve('./tmp/copy.test.js');
 
     function clean() {
       if (fs.existsSync(src)) fs.unlinkSync(src);
@@ -106,7 +106,7 @@ describe('plugin', function() {
     }).timeout(5000);
 
     it('should copy from local ok', function(done) {
-      var data = [
+      const data = [
         'module.exports = {',
         '  x: 123,',
         '  install: function(cb) { cb(); }',

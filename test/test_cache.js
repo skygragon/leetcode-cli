@@ -1,18 +1,18 @@
 'use strict';
-var execSync = require('child_process').execSync;
+const execSync = require('child_process').execSync;
 
-var assert = require('chai').assert;
-var rewire = require('rewire');
+const assert = require('chai').assert;
+const rewire = require('rewire');
 
-var cache = rewire('../lib/cache');
-var h = rewire('../lib/helper');
+const cache = rewire('../lib/cache');
+const h = rewire('../lib/helper');
 
 describe('cache', function() {
-  var k = '.test';
-  var v = {test: 'data'};
+  const k = '.test';
+  const v = {test: 'data'};
 
   before(function() {
-    var cachedir = './tmp';
+    const cachedir = './tmp';
     execSync('rm -rf ' + cachedir);
 
     h.getCacheDir = function() {
@@ -37,14 +37,14 @@ describe('cache', function() {
   });
 
   it('should list ok when no cached', function() {
-    var items = cache.list();
+    const items = cache.list();
     assert.equal(items.length, 0);
   });
 
   it('should list ok when cached', function() {
     assert.equal(cache.set(k, v), true);
 
-    var items = cache.list();
+    const items = cache.list();
     assert.equal(items.length, 1);
 
     assert.equal(items[0].name, k);

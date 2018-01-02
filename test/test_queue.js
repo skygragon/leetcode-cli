@@ -1,7 +1,7 @@
 'use strict';
-var assert = require('chai').assert;
+const assert = require('chai').assert;
 
-var Queue = require('../lib/queue');
+const Queue = require('../lib/queue');
 
 describe('queue', function() {
   it('should ok', function(done) {
@@ -11,8 +11,8 @@ describe('queue', function() {
       return cb();
     }
 
-    var ctx = {n: 0, sum: 0};
-    var q = new Queue([], ctx, doTask);
+    const ctx = {n: 0, sum: 0};
+    const q = new Queue([], ctx, doTask);
 
     q.addTask(1);
     q.addTask(2);

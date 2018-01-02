@@ -1,10 +1,10 @@
 'use strict';
-var path = require('path');
+const path = require('path');
 
-var assert = require('chai').assert;
+const assert = require('chai').assert;
 
-var chalk = require('../lib/chalk');
-var h = require('../lib/helper');
+const chalk = require('../lib/chalk');
+const h = require('../lib/helper');
 
 chalk.init();
 
@@ -152,8 +152,8 @@ describe('helper', function() {
 
   describe('#langToCommentStyle', function() {
     it('should ok', function() {
-      var C_STYLE = {start: '/*', line: ' *', end: ' */'};
-      var RUBY_STYLE = {start: '#', line: '#', end: '#'};
+      const C_STYLE = {start: '/*', line: ' *', end: ' */'};
+      const RUBY_STYLE = {start: '#', line: '#', end: '#'};
 
       assert.deepEqual(h.langToCommentStyle('bash'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('c'), C_STYLE);
@@ -172,7 +172,7 @@ describe('helper', function() {
   }); // #langToCommentStyle
 
   describe('#dirAndFiles', function() {
-    var root = path.join(__dirname, '..');
+    const root = path.join(__dirname, '..');
 
     it('should ok', function() {
       process.env.HOME = '/home/skygragon';
@@ -197,7 +197,7 @@ describe('helper', function() {
     });
 
     it('should getCodeDirData ok', function() {
-      var files = h.getCodeDirData('lib/plugins');
+      const files = h.getCodeDirData('lib/plugins');
       assert.equal(files.length, 3);
       assert.equal(files[0].name, 'cache');
       assert.equal(files[1].name, 'leetcode');
@@ -205,7 +205,7 @@ describe('helper', function() {
     });
 
     it('should getPluginFile ok', function() {
-      var expect = path.join(root, 'lib/plugins/cache.js');
+      const expect = path.join(root, 'lib/plugins/cache.js');
       assert.equal(h.getPluginFile('cache.js'), expect);
       assert.equal(h.getPluginFile('./cache.js'), expect);
       assert.equal(h.getPluginFile('https://github.com/skygragon/cache.js'), expect);
@@ -214,13 +214,13 @@ describe('helper', function() {
 
   describe('#getSetCookieValue', function() {
     it('should ok', function() {
-      var resp = {
+      const resp = {
         headers: {'set-cookie': [
           'key1=value1; path=/; Httponly',
           'key2=value2; path=/; Httponly']
         }
       };
-      var respNoSetCookie = {
+      const respNoSetCookie = {
         headers: {}
       };
 
@@ -233,13 +233,13 @@ describe('helper', function() {
 
   describe('#printSafeHTTP', function() {
     it('should hide sensitive info', function() {
-      var raw = [
+      const raw = [
         "Cookie: 'xxxxxx'",
         "'X-CSRFToken': 'yyyyyy'",
         "'set-cookie': ['zzzzzz']"
       ].join('\r\n');
 
-      var hide = [
+      const hide = [
         'Cookie: <hidden>',
         "'X-CSRFToken': <hidden>",
         "'set-cookie': <hidden>"
@@ -251,8 +251,8 @@ describe('helper', function() {
 
   describe('#readStdin', function() {
     function hijackStdin(data) {
-      var stream = require('stream');
-      var rs = new stream.Readable();
+      const stream = require('stream');
+      const rs = new stream.Readable();
       rs.push(data);
       rs.push(null);
 

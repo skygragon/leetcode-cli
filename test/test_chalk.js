@@ -1,11 +1,11 @@
 'use strict';
-var assert = require('chai').assert;
-var rewire = require('rewire');
+const assert = require('chai').assert;
+const rewire = require('rewire');
 
 // refer to https://en.wikipedia.org/wiki/ANSI_escape_code
 describe('chalk', function() {
   it('should ok w/ 256 colors', function() {
-    var chalk = rewire('../lib/chalk');
+    const chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = true;
     chalk.init();
@@ -29,7 +29,7 @@ describe('chalk', function() {
   });
 
   it('should ok w/ 8 colors', function() {
-    var chalk = rewire('../lib/chalk');
+    const chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = false;
     chalk.init();
@@ -46,7 +46,7 @@ describe('chalk', function() {
   });
 
   it('should ok w/o colors', function() {
-    var chalk = rewire('../lib/chalk');
+    const chalk = rewire('../lib/chalk');
     chalk.enabled = false;
     chalk.init();
     chalk.setTheme('default');
@@ -62,7 +62,7 @@ describe('chalk', function() {
   });
 
   it('should sprint ok', function() {
-    var chalk = rewire('../lib/chalk');
+    const chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = true;
     chalk.init();
@@ -75,7 +75,7 @@ describe('chalk', function() {
   });
 
   it('should set theme ok', function() {
-    var chalk = rewire('../lib/chalk');
+    const chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = true;
     chalk.init();
@@ -85,7 +85,7 @@ describe('chalk', function() {
   });
 
   it('should set unknown theme ok', function() {
-    var chalk = rewire('../lib/chalk');
+    const chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = true;
     chalk.init();

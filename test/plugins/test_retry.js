@@ -1,17 +1,17 @@
 'use strict';
-var assert = require('chai').assert;
-var rewire = require('rewire');
+const assert = require('chai').assert;
+const rewire = require('rewire');
 
-var log = require('../../lib/log');
+const log = require('../../lib/log');
 
-var config = rewire('../../lib/config');
-var session = rewire('../../lib/session');
-var plugin = rewire('../../lib/plugins/retry');
+const config = rewire('../../lib/config');
+const session = rewire('../../lib/session');
+const plugin = rewire('../../lib/plugins/retry');
 
 describe('plugin:retry', function() {
-  var USER = {};
-  var NEXT = {};
-  var PROBLEMS = [{id: 0, name: 'name0'}];
+  const USER = {};
+  const NEXT = {};
+  const PROBLEMS = [{id: 0, name: 'name0'}];
 
   before(function() {
     log.init();
@@ -42,7 +42,7 @@ describe('plugin:retry', function() {
   it('should retry if session expired', function(done) {
     config.autologin.enable = true;
 
-    var n = 0;
+    let n = 0;
     NEXT.getProblems = function(cb) {
       ++n;
       if (n === 1) return cb(session.errors.EXPIRED);
@@ -63,7 +63,7 @@ describe('plugin:retry', function() {
   it('should fail if user expired locally', function(done) {
     config.autologin.enable = true;
 
-    var n = 0;
+    let n = 0;
     NEXT.getProblems = function(cb) {
       ++n;
       if (n === 1) return cb(session.errors.EXPIRED);
