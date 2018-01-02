@@ -3,6 +3,26 @@ layout: default
 title: Release Notes
 ---
 
+# 2.4.0
+
+* only supports node's version >= 4.
+* Refactor folder structure:
+	* now `~/.lc/` would be the only folder used by leetcode-cli.
+	* move lcconfig file to `~/.lc/`.
+	* move cache files to `~/.lc/cache/`.
+* `config`
+	* fix string value parsing error.
+* `list`
+	* show tag/lang badges in `-x` output.
+* `show`
+	* add `-q` `-t` options to filter random questions.
+* `stat`
+	* enhance output of `-g` option.
+	* enhance output on windows.
+	* add `-c` option to display calendar stat of how many AC-ed questions per day.
+	* add `--no-lock` option to filter out locked questions.
+	* add `-q` `-t` options to filter questions stat.
+
 # 2.3.0
 
 * `plugin`
