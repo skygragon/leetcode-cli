@@ -277,4 +277,12 @@ describe('helper', function() {
       });
     });
   }); // #readStdin
+
+  describe('#badge', function() {
+    it('should ok', function() {
+      chalk.enabled = true;
+      assert.equal(h.badge('x'), chalk.white.bgBlue(' x '));
+      assert.equal(h.badge('x', 'green'), chalk.black.bgGreen(' x '));
+    });
+  }); // #badge
 });
