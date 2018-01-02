@@ -1,11 +1,14 @@
 module.exports = {
     "env": {
       "browser": false,
-      "es6": false,
+      "es6": true,
       "mocha": true,
       "node": true
     },
-    "extends": "google",
+    "extends": [
+      "google",
+      "eslint:recommended"
+    ],
     "rules": {
       "block-spacing": [2, "always"],
       "brace-style": [2, "1tbs", { "allowSingleLine": true }],
@@ -14,6 +17,8 @@ module.exports = {
       "curly": 0,
       "key-spacing": [2, {align: "value"}],
       "max-len": [1, 120],
+      "no-console": 1,
+      "no-empty": [2, { "allowEmptyCatch": true }],
       "no-eval": 1, // we use it on purpose
       "no-loop-func": 1,
       "no-multi-spaces": 0,
