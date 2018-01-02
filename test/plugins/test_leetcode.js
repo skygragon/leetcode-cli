@@ -33,10 +33,8 @@ describe('plugin:leetcode', function() {
     config.init();
     plugin.init();
 
-    session.getUser = function() {
-      return USER;
-    };
-    session.saveUser = function() {};
+    session.getUser = () => USER;
+    session.saveUser = () => {};
     plugin.__set__('session', session);
   });
 

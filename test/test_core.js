@@ -39,12 +39,8 @@ describe('core', function() {
   });
 
   beforeEach(function() {
-    NEXT.getProblems = function(cb) {
-      return cb(null, PROBLEMS);
-    };
-    NEXT.getProblem = function(problem, cb) {
-      return cb(null, problem);
-    };
+    NEXT.getProblems = cb => cb(null, PROBLEMS);
+    NEXT.getProblem = (problem, cb) => cb(null, problem);
   });
 
   describe('#filterProblems', function() {
@@ -280,9 +276,7 @@ describe('core', function() {
     });
 
     it('should getProblem fail if client error', function(done) {
-      NEXT.getProblem = function(problem, cb) {
-        return cb('client getProblem error');
-      };
+      NEXT.getProblem = (problem, cb) => cb('client getProblem error');
 
       plugin.getProblem(0, function(e, problem) {
         assert.equal(e, 'client getProblem error');
@@ -299,9 +293,7 @@ describe('core', function() {
     });
 
     it('should getProblem fail if getProblems error', function(done) {
-      NEXT.getProblems = function(cb) {
-        return cb('getProblems error');
-      };
+      NEXT.getProblems = cb => cb('getProblems error');
 
       plugin.getProblem(0, function(e, problem) {
         assert.equal(e, 'getProblems error');

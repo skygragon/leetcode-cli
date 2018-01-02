@@ -30,9 +30,7 @@ describe('plugin:cache', function() {
     config.init();
     plugin.init();
 
-    h.getCacheDir = function() {
-      return HOME;
-    };
+    h.getCacheDir = () => HOME;
     cache.__set__('h', h);
     cache.init();
 
@@ -60,10 +58,7 @@ describe('plugin:cache', function() {
 
     it('should getProblems w/o cache ok', function(done) {
       cache.del('problems');
-
-      NEXT.getProblems = function(cb) {
-        return cb(null, PROBLEMS);
-      };
+      NEXT.getProblems = cb => cb(null, PROBLEMS);
 
       plugin.getProblems(function(e, problems) {
         assert.equal(e, null);
@@ -74,10 +69,7 @@ describe('plugin:cache', function() {
 
     it('should getProblems w/o cache fail if client error', function(done) {
       cache.del('problems');
-
-      NEXT.getProblems = function(cb) {
-        return cb('client getProblems error');
-      };
+      NEXT.getProblems = cb => cb('client getProblems error');
 
       plugin.getProblems(function(e, problems) {
         assert.equal(e, 'client getProblems error');
@@ -101,10 +93,7 @@ describe('plugin:cache', function() {
     it('should getProblem w/o cache ok', function(done) {
       cache.set('problems', PROBLEMS);
       cache.del('0.slug0.algorithms');
-
-      NEXT.getProblem = function(problem, cb) {
-        return cb(null, PROBLEMS[0]);
-      };
+      NEXT.getProblem = (problem, cb) => cb(null, PROBLEMS[0]);
 
       plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
         assert.equal(e, null);
@@ -116,10 +105,7 @@ describe('plugin:cache', function() {
     it('should getProblem fail if client error', function(done) {
       cache.set('problems', PROBLEMS);
       cache.del('0.slug0.algorithms');
-
-      NEXT.getProblem = function(problem, cb) {
-        return cb('client getProblem error');
-      };
+      NEXT.getProblem = (problem, cb) => cb('client getProblem error');
 
       plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
         assert.equal(e, 'client getProblem error');
@@ -185,9 +171,7 @@ describe('plugin:cache', function() {
       assert.equal(session.getUser(), null);
       assert.equal(session.isLogin(), false);
 
-      NEXT.login = function(user, cb) {
-        return cb(null, user);
-      };
+      NEXT.login = (user, cb) => cb(null, user);
 
       plugin.login(USER, function(e, user) {
         assert.equal(e, null);
@@ -204,9 +188,7 @@ describe('plugin:cache', function() {
       config.autologin.enable = false;
       cache.del(h.KEYS.user);
 
-      NEXT.login = function(user, cb) {
-        return cb(null, user);
-      };
+      NEXT.login = (user, cb) => cb(null, user);
 
       plugin.login(USER, function(e, user) {
         assert.equal(e, null);
@@ -218,9 +200,7 @@ describe('plugin:cache', function() {
     });
 
     it('should login fail if client login error', function(done) {
-      NEXT.login = function(user, cb) {
-        return cb('client login error');
-      };
+      NEXT.login = (user, cb) => cb('client login error');
 
       plugin.login(USER, function(e, user) {
         assert.equal(e, 'client login error');

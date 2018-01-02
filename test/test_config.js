@@ -12,9 +12,7 @@ describe('config', function() {
   beforeEach(function() {
     config = rewire('../lib/config');
     const h = rewire('../lib/helper');
-    h.getConfigFile = function() {
-      return f;
-    };
+    h.getConfigFile = () => f;
     config.__set__('h', h);
   });
 

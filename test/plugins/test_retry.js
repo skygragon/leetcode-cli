@@ -18,9 +18,7 @@ describe('plugin:retry', function() {
     config.init();
     plugin.init();
 
-    session.getUser = function() {
-      return USER;
-    };
+    session.getUser = () => USER;
 
     plugin.__set__('config', config);
     plugin.__set__('session', session);
@@ -29,9 +27,7 @@ describe('plugin:retry', function() {
 
   it('should fail if auto login disabled', function(done) {
     config.autologin.enable = false;
-    NEXT.getProblems = function(cb) {
-      return cb(session.errors.EXPIRED);
-    };
+    NEXT.getProblems = cb => cb(session.errors.EXPIRED);
 
     plugin.getProblems(function(e, problems) {
       assert.equal(e, session.errors.EXPIRED);
@@ -49,9 +45,7 @@ describe('plugin:retry', function() {
       return cb(null, PROBLEMS);
     };
 
-    NEXT.login = function(user, cb) {
-      return cb(null, user);
-    };
+    NEXT.login = (user, cb) => cb(null, user);
 
     plugin.getProblems(function(e, problems) {
       assert.equal(e, null);
@@ -70,9 +64,7 @@ describe('plugin:retry', function() {
       return cb(null, PROBLEMS);
     };
 
-    session.getUser = function() {
-      return null;
-    };
+    session.getUser = () => null;
 
     plugin.getProblems(function(e, problems) {
       assert.equal(e, null);
@@ -83,9 +75,7 @@ describe('plugin:retry', function() {
 
   it('should fail if other errors', function(done) {
     config.autologin.enable = true;
-    NEXT.getProblems = function(cb) {
-      return cb('unknown error');
-    };
+    NEXT.getProblems = cb => cb('unknown error');
 
     plugin.getProblems(function(e, problems) {
       assert.equal(e, 'unknown error');

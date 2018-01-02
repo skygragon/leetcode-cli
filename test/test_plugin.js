@@ -21,7 +21,7 @@ describe('plugin', function() {
     const core = new Plugin(3, 'Core', '4.0', '');
 
     before(function() {
-      const noop = function() {};
+      const noop = () => {};
       cache.init = noop;
       leetcode.init = noop;
       retry.init = noop;
@@ -91,7 +91,7 @@ describe('plugin', function() {
     function clean() {
       if (fs.existsSync(src)) fs.unlinkSync(src);
       if (fs.existsSync(dst)) fs.unlinkSync(dst);
-      h.getPluginFile = function() { return dst; };
+      h.getPluginFile = () => dst;
     }
 
     beforeEach(clean);

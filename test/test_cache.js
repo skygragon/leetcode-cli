@@ -15,9 +15,7 @@ describe('cache', function() {
     const cachedir = './tmp';
     execSync('rm -rf ' + cachedir);
 
-    h.getCacheDir = function() {
-      return cachedir;
-    };
+    h.getCacheDir = () => cachedir;
     cache.__set__('h', h);
     cache.init();
   });
