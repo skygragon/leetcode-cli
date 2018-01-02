@@ -43,7 +43,7 @@ describe('plugin', function() {
       Plugin.init(core);
       assert.deepEqual(Plugin.plugins.length, 3);
 
-      var names = Plugin.plugins.map(function(p) { return p.name; });
+      var names = Plugin.plugins.map(p => p.name);
       assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode']);
 
       assert.equal(core.next, retry);
