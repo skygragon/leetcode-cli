@@ -28,20 +28,20 @@ describe('log', function() {
   describe('#setLevel', function() {
     it('should ok with known level', function() {
       log.setLevel('TRACE');
-      assert.deepEqual(log.level, log.levels.TRACE);
+      assert.deepEqual(log.level, log.levels.get('TRACE'));
       log.setLevel('DEBUG');
-      assert.deepEqual(log.level, log.levels.DEBUG);
+      assert.deepEqual(log.level, log.levels.get('DEBUG'));
       log.setLevel('INFO');
-      assert.deepEqual(log.level, log.levels.INFO);
+      assert.deepEqual(log.level, log.levels.get('INFO'));
       log.setLevel('WARN');
-      assert.deepEqual(log.level, log.levels.WARN);
+      assert.deepEqual(log.level, log.levels.get('WARN'));
       log.setLevel('ERROR');
-      assert.deepEqual(log.level, log.levels.ERROR);
+      assert.deepEqual(log.level, log.levels.get('ERROR'));
     });
 
     it('should ok with unknown level', function() {
       log.setLevel('');
-      assert.deepEqual(log.level, log.levels.INFO);
+      assert.deepEqual(log.level, log.levels.get('INFO'));
     });
   });
 

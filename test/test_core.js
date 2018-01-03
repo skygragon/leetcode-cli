@@ -62,7 +62,7 @@ describe('core', function() {
         ['Dh',   []]
       ];
       let n = cases.length;
-      cases.forEach(function(x) {
+      for (let x of cases) {
         plugin.filterProblems({query: x[0]}, function(e, problems) {
           assert.equal(e, null);
           assert.equal(problems.length, x[1].length);
@@ -70,7 +70,7 @@ describe('core', function() {
             assert.equal(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
-      });
+      }
     });
 
     it('should filter by tag ok', function(done) {
@@ -82,7 +82,7 @@ describe('core', function() {
         [['apple'],    []],
       ];
       let n = cases.length;
-      cases.forEach(function(x) {
+      for (let x of cases) {
         plugin.filterProblems({tag: x[0]}, function(e, problems) {
           assert.equal(e, null);
           assert.equal(problems.length, x[1].length);
@@ -90,7 +90,7 @@ describe('core', function() {
             assert.equal(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
-      });
+      }
     });
   });
 
