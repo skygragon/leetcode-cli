@@ -1,6 +1,10 @@
 {
-    "gray":    "#C4BE89",
-    "green":   "#E6DB74",
-    "red":     "#ef5939",
-    "yellow":  "#FD971F"
+    "blue":    "#808000",
+    "cyan":    "#b8860b",
+    "gray":    "#deb887",
+    "green":   "#ffa500",
+    "magenta": "#d2691e",
+    "red":     "#ff4500",
+    "white":   "#fdf5eb",
+    "yellow":  "#ffd700"
 }
