@@ -11,6 +11,7 @@ describe('core', function() {
     {
       category: 'algorithms',
       id:       0,
+      fid:      0,
       name:     'name0',
       slug:     'slug0',
       level:    'Hard',
@@ -23,6 +24,7 @@ describe('core', function() {
       category:  'algorithms',
       companies: ['amazon', 'facebook'],
       id:        1,
+      fid:       1,
       name:      'name1',
       slug:      'slug1',
       level:     'Easy',
