@@ -4,5 +4,8 @@
     "like":   "*",
     "unlike": " ",
     "lock":   "$",
-    "none":   " "
+    "empty":  " ",
+    "ac":     "O",
+    "notac":  "X",
+    "none":   "o"
 }
