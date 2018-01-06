@@ -17,11 +17,11 @@ Leetcode.com is restricting only one session alive in the same time, which means
 
 The good news is leetcode-cli will help a lot on this by trying re-login transparently and automatically without interrupting your current work whenever it detects your current session is expired. To enable this feature you could add following in your config then login again:
 
-	{
-		"autologin": {
-			"enable": true
-		}
-	}
+    {
+        "autologin": {
+            "enable": true
+        }
+    }
 
 **NOTE: once enabled, your PASSWORD will be persisted locally for further using, so PLEASE be careful to ONLY enable this on your OWN computer for the sake of security!**
 
@@ -29,12 +29,12 @@ The good news is leetcode-cli will help a lot on this by trying re-login transpa
 
 Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Linux) or .bash_profile (MacOS).
 
-	$ cp .lc-completion.bash ~
-	$ echo "source ~/.lc-completion.bash" >> ~/.bashrc
-	$ source ~/.bashrc
+    $ cp .lc-completion.bash ~
+    $ echo "source ~/.lc-completion.bash" >> ~/.bashrc
+    $ source ~/.bashrc
 
-	$ leetcode list --<tab>
-	--help     --keyword  --query    --stat
+    $ leetcode list --<tab>
+    --help     --keyword  --query    --stat
 
 **NOTE: it might become slower in bash with this enabled, personally I would NOT suggest to use it...**
 
@@ -42,40 +42,43 @@ Copy `.lc-completion.bash` to your home directory, and source it in .bashrc (Lin
 
 The local cache folder (`.lc/`) is in your home directory, e.g.
 
-	$ ls -a1 ~/.lc/
+    $ ls -a1 ~/.lc/
+    cache                        # folder of cached questions
+    config.json                  # user customized config
+    user.json                    # user account info
 
-	.user.json                      # your account info
-	problems.json                   # problems list
-	1.two-sum.algorithms.json       # specific problem info
+    $ ls -a1 ~/.lc/cache/
+    problems.json                # cached questions list
+    1.two-sum.algorithms.json    # cached specific question
 
 **NOTE: Normally you don't need dig into the folder to manipulate those files. Use [cache command](https://skygragon.github.io/leetcode-cli/commands#cache) instead.**
 
 # Configuration
 
-Create a JSON file named `.lcconfig` in your home directory, e.g.
+The config file is saved in `~/.lc/config.json`, here is a full exmaple (includes default configs):
 
-	$ cat ~/.lcconfig
+    $ cat ~/.lc/config.json
 
-	{
-		"auto_login": {
-			"enable": false
-		},
-		"code": {
-			"editor": "vim",
-			"lang": "cpp"
-		},
-		"color": {
-			"enable": true,
-			"theme": "default"
-		},
-		"icon": {
-			"theme": ""
-		},
-		"network": {
-			"concurrency": 10
-		},
-		"plugins": {}
-	}
+    {
+        "auto_login": {
+            "enable": false
+        },
+        "code": {
+            "editor": "vim",
+            "lang": "cpp"
+        },
+        "color": {
+            "enable": true,
+            "theme": "default"
+        },
+        "icon": {
+            "theme": ""
+        },
+        "network": {
+            "concurrency": 10
+        },
+        "plugins": {}
+    }
 
 Here are some useful settings:
 
@@ -93,18 +96,18 @@ Here are some useful settings:
 
 Config for `github.js` and `cpp.lint.js` plugins:
 
-	{
-		"plugins": {
-			"github": {
-				"repo": "https://github.com/skygragon/test",
-				"token": "abcdefghijklmnopqrstuvwxyz"
-			},
-			"cpp.lint": {
-				"bin": "~/bin/cpplibt.py",
-				"flags": []
-			}
-		}
-	}
+    {
+        "plugins": {
+            "github": {
+                "repo": "https://github.com/skygragon/test",
+                "token": "abcdefghijklmnopqrstuvwxyz"
+            },
+            "cpp.lint": {
+                "bin": "~/bin/cpplibt.py",
+                "flags": []
+            }
+        }
+    }
 
 # Color Theme
 
@@ -120,16 +123,19 @@ When color is enabled, you can choose your favor color theme as well, see [color
 Following are available themes:
 
 * `blue`
-* `default`
 * `dark` for night.
+* `default`
+* `molokai`
 * `orange`
 * `pink` for girls.
+* `solarized`
+* `solarized.light`
 
-Of course you can create your own themes if you like, please see `colors` folder in the source code.
+Of course you can create your own themes if you like, look into `colors` folder in the source code for more tips.
 
 *Example*
 
-	$ cat colors/default.json
+    $ cat colors/default.json
     {
         "black":   "#000000",
         "blue":    "#0000ff",
@@ -145,7 +151,7 @@ Of course you can create your own themes if you like, please see `colors` folder
 
 * `-v` to enable debug output.
 * `-vv` to enable trace output.
-	* Will print detailed HTTP requests/responses.
+    * Will print detailed HTTP requests/responses.
 
 # Plugins
 

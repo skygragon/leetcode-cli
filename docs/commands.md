@@ -313,8 +313,8 @@ Mark your favorite questions. The starred question will be shown with a `★`.
 
 Show your personal statistics of the question progress.
 
-* `-g` to show the heatmap graph.
-* `-c` to show AC-ed questions by calendar.
+* `-g` to show the heatmap graph of all the questions.
+* `-c` to show how many AC-ed questions per day by calendar.
 * `-q` to filter questions by query. (same as `list` command)
 * `-t` to filter questions by tags. (same as `list` command)
 * `--no-lock` to exclude lokced questions.
