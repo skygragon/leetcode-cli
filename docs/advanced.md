@@ -3,15 +3,35 @@ layout: default
 title: Advanced Topic
 ---
 
+* [Aliases](#aliases)
 * [Auto Login](#auto-login)
 * [Bash Completion](#bash-completion)
 * [Cache](#cache)
 * [Configuration](#configuration)
-* [Color Theme](#color-theme)
-* [Log Level](#log-level)
+* [Color Themes](#color-themes)
+* [Log Levels](#log-levels)
 * [Plugins](#plugins)
 
-# Auto login
+# Aliases
+
+The commands in leetcode-cli usually has builtin aliases as below:
+
+|Command   |Aliases                |
+|----------|-----------------------|
+|config    |conf, cfg, setting     |
+|list      |ls                     |
+|plugin    |extension, ext         |
+|session   |branch                 |
+|show      |view, pick             |
+|star      |like, favorite         |
+|stat      |stats, progress, report|
+|submission|pull                   |
+|submit    |push, commit           |
+|test      |run                    |
+|user      |account                |
+|version   |info, env              |
+
+# Auto Login
 
 Leetcode.com is restricting only one session alive in the same time, which means if you login same account otherwhere, the existing login session will be expired immediately. This will greatly harm your experience since you have to re-login again and again among different sessions.
 
@@ -82,13 +102,13 @@ The config file is saved in `~/.lc/config.json`, here is a full exmaple (include
 
 Here are some useful settings:
 
-* `autologin:enable` to enable auto login feature, see [Auto Login](#auto-login).
+* `autologin:enable` to enable auto login feature. (see [Auto Login](#auto-login))
 * `code:editor` to set editor used to open generated source file.
 * `code:lang` to set your default language used in coding.
 * `color:enable` to enable colorful output.
-* `color:theme` to set color theme used in output, see [Color Theme](#color-theme).
+* `color:theme` to set color theme used in output. (see [Color Theme](#color-theme))
 * `icon:theme` to set icon them used in output.
-* `plugins` to config each installed plugins, see [Plugins](#plugins).
+* `plugins` to config each installed plugins. (see [Plugins](#plugins))
 
 **NOTE: Normally you don't need dig into the folder to manipulate those files. Use [config command](https://skygragon.github.io/leetcode-cli/commands#config) instead.**
 
@@ -109,16 +129,16 @@ Config for `github.js` and `cpp.lint.js` plugins:
         }
     }
 
-# Color Theme
+# Color Themes
 
 You can choose to use colorful output or not.
 
 * `--color` to enable color.
 * `--no-color` to disable it.
 
-Or use configuration setting to avoid typing it repeatedly, see [color:enable](#configuration).
+Or use configuration setting to avoid typing it repeatedly. (see [color:enable](#configuration))
 
-When color is enabled, you can choose your favor color theme as well, see [color:theme](#configuration).
+When color is enabled, you can choose your favor color theme as well. (see [color:theme](#configuration))
 
 Following are available themes:
 
@@ -147,7 +167,7 @@ Of course you can create your own themes if you like, look into `colors` folder 
         "yellow":  "#ffff00"
     }
 
-# Log Level
+# Log Levels
 
 * `-v` to enable debug output.
 * `-vv` to enable trace output.
