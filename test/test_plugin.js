@@ -29,9 +29,9 @@ describe('plugin', function() {
 
       h.getCodeDirData = function() {
         return [
-          {name: 'cache', data: cache},
-          {name: '.leetcode', data: leetcode},  // disabled
-          {name: 'retry', data: retry},
+          {name: 'cache', data: cache, file: 'cache.js'},
+          {name: 'leetcode', data: leetcode, file: '.leetcode.js'},  // disabled
+          {name: 'retry', data: retry, file: 'retry.js'},
           {name: 'bad', data: null}
         ];
       };
@@ -122,4 +122,33 @@ describe('plugin', function() {
       });
     });
   });
+
+  describe('#enable', function() {
+    const file = path.resolve('./tmp/leetcode.js');
+
+    function clean() {
+      if (fs.existsSync(file)) fs.unlinkSync(file);
+      h.getPluginFile = () => file;
+    }
+
+    beforeEach(clean);
+    after(clean);
+
+    it('should ok', function() {
+      const p = new Plugin(0, 'Leetcode', '2.0', '');
+      assert.equal(p.enabled, true);
+
+      p.setFile('.leetcode.js');
+      fs.writeFileSync(file, '');
+      assert.equal(p.enabled, false);
+      assert.equal(p.file, '.leetcode.js');
+
+      p.enable(false);
+      assert.equal(p.enabled, false);
+      assert.equal(p.file, '.leetcode.js');
+      p.enable(true);
+      assert.equal(p.enabled, true);
+      assert.equal(p.file, 'leetcode.js');
+    });
+  }); // #enable
 });
