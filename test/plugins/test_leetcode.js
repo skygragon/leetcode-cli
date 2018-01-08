@@ -5,6 +5,7 @@ const nock = require('nock');
 const rewire = require('rewire');
 
 const config = require('../../lib/config');
+const chalk = require('../../lib/chalk');
 const log = require('../../lib/log');
 
 const plugin = rewire('../../lib/plugins/leetcode');
@@ -31,6 +32,7 @@ describe('plugin:leetcode', function() {
   before(function() {
     log.init();
     config.init();
+    chalk.init();
     plugin.init();
 
     session.getUser = () => USER;

@@ -2,13 +2,22 @@
 const path = require('path');
 
 const assert = require('chai').assert;
+const rewire = require('rewire');
+const _ = require('underscore');
 
 const chalk = require('../lib/chalk');
-const h = require('../lib/helper');
-
-chalk.init();
 
 describe('helper', function() {
+  let h;
+
+  before(function() {
+    chalk.init();
+  });
+
+  beforeEach(function() {
+    h = rewire('../lib/helper');
+  });
+
   describe('#prettyState', function() {
     it('should ok w/ color', function() {
       chalk.enabled = true;
@@ -172,7 +181,7 @@ describe('helper', function() {
   }); // #langToCommentStyle
 
   describe('#dirAndFiles', function() {
-    const root = path.join(__dirname, '..');
+    const HOME = path.join(__dirname, '..');
 
     it('should ok', function() {
       process.env.HOME = '/home/skygragon';
@@ -190,10 +199,10 @@ describe('helper', function() {
     });
 
     it('should getCodeDir ok', function() {
-      assert.equal(h.getCodeDir(), root);
-      assert.equal(h.getCodeDir('.'), root);
-      assert.equal(h.getCodeDir('icons'), path.join(root, 'icons'));
-      assert.equal(h.getCodeDir('lib/plugins'), path.join(root, 'lib', 'plugins'));
+      assert.equal(h.getCodeDir(), HOME);
+      assert.equal(h.getCodeDir('.'), HOME);
+      assert.equal(h.getCodeDir('icons'), path.join(HOME, 'icons'));
+      assert.equal(h.getCodeDir('lib/plugins'), path.join(HOME, 'lib', 'plugins'));
     });
 
     it('should getCodeDirData ok', function() {
@@ -205,10 +214,14 @@ describe('helper', function() {
     });
 
     it('should getPluginFile ok', function() {
-      const expect = path.join(root, 'lib/plugins/cache.js');
+      const expect = path.join(HOME, 'lib/plugins/cache.js');
       assert.equal(h.getPluginFile('cache.js'), expect);
       assert.equal(h.getPluginFile('./cache.js'), expect);
       assert.equal(h.getPluginFile('https://github.com/skygragon/cache.js'), expect);
+    });
+
+    it('should getFileData ok with missing file', function() {
+      assert.equal(h.getFileData('non-exist'), null);
     });
   }); // #dirAndFiles
 
@@ -283,6 +296,16 @@ describe('helper', function() {
       chalk.enabled = true;
       assert.equal(h.badge('x'), chalk.white.bgBlue(' x '));
       assert.equal(h.badge('x', 'green'), chalk.black.bgGreen(' x '));
+    });
+
+    it('should ok with random', function() {
+      const badges = _.values(h.__get__('COLORS'))
+        .map(function(x) {
+          return chalk[x.fg][x.bg](' random ');
+        });
+
+      const i = badges.indexOf(h.badge('random', 'random'));
+      assert.equal(i >= 0, true);
     });
   }); // #badge
 });

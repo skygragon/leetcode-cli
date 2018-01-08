@@ -1,28 +1,29 @@
 'use strict';
 const assert = require('chai').assert;
+const rewire = require('rewire');
 
 const chalk = require('../lib/chalk');
-const log = require('../lib/log');
 
 describe('log', function() {
-  let _output = null;
-  let result = '';
+  let log;
+  let savedOutput;
+  let expected;
 
   before(function() {
     chalk.init();
-    _output = log.output;
-    log.output = function(s) {
-      result = s;
-    };
-  });
-
-  after(function() {
-    log.output = _output;
   });
 
   beforeEach(function() {
+    log = rewire('../lib/log');
+    savedOutput = log.output;
+    log.output = x => expected = x;
+
     log.init();
-    result = '';
+    expected = '';
+  });
+
+  afterEach(function() {
+    log.output = savedOutput;
   });
 
   describe('#setLevel', function() {
@@ -43,7 +44,7 @@ describe('log', function() {
       log.setLevel('');
       assert.deepEqual(log.level, log.levels.get('INFO'));
     });
-  });
+  }); // #setLevel
 
   describe('#isEnabled', function() {
     it('should ok', function() {
@@ -54,55 +55,55 @@ describe('log', function() {
       assert.equal(log.isEnabled('WARN'), true);
       assert.equal(log.isEnabled('ERROR'), true);
     });
-  });
+  }); // #isEnabled
 
   describe('#levels', function() {
     it('should ok with log.trace', function() {
       log.trace('some error');
-      assert.equal(result, '');
+      assert.equal(expected, '');
 
       log.setLevel('TRACE');
       log.trace('some error');
-      assert.equal(result, chalk.gray('[TRACE] some error'));
+      assert.equal(expected, chalk.gray('[TRACE] some error'));
     });
 
     it('should ok with log.debug', function() {
       log.debug('some error');
-      assert.equal(result, '');
+      assert.equal(expected, '');
 
       log.setLevel('DEBUG');
       log.debug('some error');
-      assert.equal(result, chalk.gray('[DEBUG] some error'));
+      assert.equal(expected, chalk.gray('[DEBUG] some error'));
     });
 
     it('should ok with log.info', function() {
       log.info('some error');
-      assert.equal(result, 'some error');
+      assert.equal(expected, 'some error');
     });
 
     it('should ok with log.warn', function() {
       log.warn('some error');
-      assert.equal(result, chalk.yellow('[WARN] some error'));
+      assert.equal(expected, chalk.yellow('[WARN] some error'));
     });
 
     it('should ok with log.error', function() {
       log.error('some error');
-      assert.equal(result, chalk.red('[ERROR] some error'));
+      assert.equal(expected, chalk.red('[ERROR] some error'));
     });
 
     it('should ok with log.fail', function() {
       log.fail({msg: 'some error', statusCode: 500});
-      assert.equal(result, chalk.red('[ERROR] some error [500]'));
+      assert.equal(expected, chalk.red('[ERROR] some error [500]'));
 
       log.fail('some error');
-      assert.equal(result, chalk.red('[ERROR] some error [0]'));
+      assert.equal(expected, chalk.red('[ERROR] some error [0]'));
     });
-  });
+  }); // #levels
 
   describe('#printf', function() {
     it('should ok', function() {
       log.printf('%s and %d and %%', 'string', 100);
-      assert.equal(result, 'string and 100 and %');
+      assert.equal(expected, 'string and 100 and %');
     });
-  });
+  }); // #printf
 });

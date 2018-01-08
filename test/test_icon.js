@@ -2,29 +2,19 @@
 const assert = require('chai').assert;
 const rewire = require('rewire');
 
-const h = rewire('../lib/helper');
-
 describe('icon', function() {
-  let icon = null;
-
-  before(function() {
-    h.getCodeDirData = function() {
-      return [
-        {
-          name: 'word',
-          data: {
-            yes:    'yes',
-            no:     'no',
-            lock:   'lock',
-            like:   'like',
-            unlike: 'unlike'
-          }
-        }
-      ];
-    };
-  });
+  let icon;
+  let h;
 
   beforeEach(function() {
+    h = rewire('../lib/helper');
+    h.getCodeDirData = function() {
+      return [
+        {name: 'mac', data: {yes: 'yes', no: 'no', lock: 'lock', like: 'like', unlike: 'unlike'}},
+        {name: 'win7', data: {yes: 'YES', no: 'NO', lock: 'LOCK', like: 'LIKE', unlike: 'UNLIKE'}}
+      ];
+    };
+
     icon = rewire('../lib/icon');
     icon.__set__('h', h);
     icon.init();
@@ -32,7 +22,7 @@ describe('icon', function() {
 
   describe('#setTheme', function() {
     it('should ok with known theme', function() {
-      icon.setTheme('word');
+      icon.setTheme('mac');
       assert.equal(icon.yes, 'yes');
       assert.equal(icon.no, 'no');
       assert.equal(icon.lock, 'lock');
@@ -48,5 +38,16 @@ describe('icon', function() {
       assert.equal(icon.like, '★');
       assert.equal(icon.unlike, '☆');
     });
-  });
+
+    it('should ok with unknown theme on windows', function() {
+      h.isWindows = () => true;
+
+      icon.setTheme('non-exist');
+      assert.equal(icon.yes, 'YES');
+      assert.equal(icon.no, 'NO');
+      assert.equal(icon.lock, 'LOCK');
+      assert.equal(icon.like, 'LIKE');
+      assert.equal(icon.unlike, 'UNLIKE');
+    });
+  }); // #setTheme
 });

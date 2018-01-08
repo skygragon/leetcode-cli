@@ -8,42 +8,45 @@ const rewire = require('rewire');
 const chalk = require('../lib/chalk');
 const config = require('../lib/config');
 const log = require('../lib/log');
+const th = require('./helper');
 
 const Plugin = rewire('../lib/plugin');
 
 describe('plugin', function() {
-  const noop = () => {};
+  let h;
+  let cache;
+
+  const NOOP = () => {};
 
   before(function() {
     log.init();
     chalk.init();
     config.init();
 
-    const h = rewire('../lib/helper');
+    h = rewire('../lib/helper');
+    cache = rewire('../lib/cache');
     Plugin.__set__('h', h);
-    Plugin.__set__('cache', {get: noop});
+    Plugin.__set__('cache', cache);
   });
 
-  function clean() {
-    for (let f of fs.readdirSync('./tmp'))
-      fs.unlinkSync('./tmp/' + f);
-  }
-  beforeEach(clean);
-  afterEach(clean);
+  beforeEach(function() {
+    th.clean();
+    cache.get = NOOP;
+  });
 
   describe('#Plugin.init', function() {
-    const leetcode = new Plugin(0, 'Leetcode', '2.0');
-    const cache = new Plugin(1, 'Cache', '1.0');
-    const retry = new Plugin(2, 'Retry', '3.0');
-    const core = new Plugin(3, 'Core', '4.0');
+    const p1 = new Plugin(0, 'Leetcode', '2.0');
+    const p2 = new Plugin(1, 'Cache', '1.0');
+    const p3 = new Plugin(2, 'Retry', '3.0');
+    const p4 = new Plugin(3, 'Core', '4.0');
 
     before(function() {
-      cache.init = leetcode.init = retry.init = core.init = noop;
-      Plugin.__get__('h').getCodeDirData = function() {
+      p1.init = p2.init = p3.init = p4.init = NOOP;
+      h.getCodeDirData = function() {
         return [
-          {name: 'cache', data: cache, file: 'cache.js'},
-          {name: 'leetcode', data: leetcode, file: '.leetcode.js'},  // disabled
-          {name: 'retry', data: retry, file: 'retry.js'},
+          {name: 'cache', data: p2, file: 'cache.js'},
+          {name: 'leetcode', data: p1, file: '.leetcode.js'},  // disabled
+          {name: 'retry', data: p3, file: 'retry.js'},
           {name: 'bad', data: null}
         ];
       };
@@ -51,56 +54,55 @@ describe('plugin', function() {
 
     it('should init ok', function() {
       assert.deepEqual(Plugin.plugins, []);
-      const res = Plugin.init(core);
+
+      const res = Plugin.init(p4);
       assert.equal(res, true);
       assert.deepEqual(Plugin.plugins.length, 3);
 
       const names = Plugin.plugins.map(p => p.name);
       assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode']);
 
-      assert.equal(core.next, retry);
-      assert.equal(retry.next, cache);
-      assert.equal(cache.next, null);
-      assert.equal(leetcode.next, null);
+      assert.equal(p4.next, p3);
+      assert.equal(p3.next, p2);
+      assert.equal(p2.next, null);
+      assert.equal(p1.next, null);
     });
 
     it('should find missing ok', function() {
-      Plugin.__set__('cache', {
-        get: () => {
-          return {company: true, solution: true};
-        }
-      });
+      cache.get = () => {
+        return {company: true, solution: true};
+      };
 
-      const res = Plugin.init(core);
+      const res = Plugin.init(p4);
       assert.equal(res, false);
       assert.deepEqual(Plugin.plugins.length, 5);
 
       const names = Plugin.plugins.map(p => p.name);
       assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode', 'company', 'solution']);
 
-      assert.equal(core.next, retry);
-      assert.equal(retry.next, cache);
-      assert.equal(cache.next, null);
-      assert.equal(leetcode.next, null);
+      assert.equal(p4.next, p3);
+      assert.equal(p3.next, p2);
+      assert.equal(p2.next, null);
+      assert.equal(p1.next, null);
     });
   }); // #Plugin.init
 
   describe('#install', function() {
     let expected;
+
     before(function() {
-      const cp = {
+      Plugin.__set__('cp', {
         exec: function(cmd, opts, cb) {
           expected = cmd;
           return cb();
         }
-      };
-      Plugin.__set__('cp', cp);
+      });
     });
 
     it('should install no deps ok', function(done) {
       expected = '';
-      const plugin = new Plugin(100, 'test', '2017.12.26', 'desc', []);
-      plugin.install(function() {
+      const p = new Plugin(100, 'test', '2017.12.26', 'desc', []);
+      p.install(function() {
         assert.equal(expected, '');
         done();
       });
@@ -108,8 +110,8 @@ describe('plugin', function() {
 
     it('should install deps ok', function(done) {
       const deps = ['a', 'b:linux', 'b:darwin', 'b:win32', 'c:bad', 'd'];
-      const plugin = new Plugin(100, 'test', '2017.12.26', 'desc', deps);
-      plugin.install(function() {
+      const p = new Plugin(100, 'test', '2017.12.26', 'desc', deps);
+      p.install(function() {
         assert.equal(expected, 'npm install --save a b d');
         done();
       });
@@ -117,17 +119,17 @@ describe('plugin', function() {
   }); // #install
 
   describe('#Plugin.copy', function() {
-    const src = path.resolve('./tmp/copy.src.js');
-    const dst = path.resolve('./tmp/copy.test.js');
+    const SRC = path.resolve(th.DIR, 'copy.src.js');
+    const DST = path.resolve(th.DIR, 'copy.test.js');
 
-    beforeEach(function() {
-      Plugin.__get__('h').getPluginFile = () => dst;
+    before(function() {
+      h.getPluginFile = () => DST;
     });
 
     it('should copy from http error', function(done) {
       Plugin.copy('non-exists', function(e, fullpath) {
         assert.equal(e, 'HTTP Error: 404');
-        assert.equal(fs.existsSync(dst), false);
+        assert.equal(fs.existsSync(DST), false);
         done();
       });
     }).timeout(5000);
@@ -139,12 +141,12 @@ describe('plugin', function() {
         '  install: function(cb) { cb(); }',
         '};'
       ];
-      fs.writeFileSync(src, data.join('\n'));
+      fs.writeFileSync(SRC, data.join('\n'));
 
-      Plugin.install(src, function(e, plugin) {
+      Plugin.install(SRC, function(e, p) {
         assert.notExists(e);
-        assert.equal(plugin.x, 123);
-        assert.equal(fs.existsSync(dst), true);
+        assert.equal(p.x, 123);
+        assert.equal(fs.existsSync(DST), true);
         done();
       });
     });
@@ -156,10 +158,11 @@ describe('plugin', function() {
       new Plugin(1, '1', '2018.01.01'),
       new Plugin(2, '2', 'missing'),
     ];
-    let expected = [];
+    let expected;
 
     beforeEach(function() {
-      Plugin.__get__('h').getPluginFile = x => './tmp/' + x;
+      expected = [];
+      h.getPluginFile = x => th.DIR + x;
       Plugin.install = (name, cb) => {
         expected.push(name);
         return cb(null, PLUGINS[+name]);
@@ -168,7 +171,6 @@ describe('plugin', function() {
 
     it('should ok', function(done) {
       Plugin.plugins = PLUGINS;
-      expected = [];
       Plugin.installMissings(function(e) {
         assert.notExists(e);
         assert.deepEqual(expected, ['0', '2']);
@@ -178,9 +180,10 @@ describe('plugin', function() {
   }); // #Plugin.installMissings
 
   describe('#enable', function() {
-    const file = path.resolve('./tmp/leetcode.js');
-    beforeEach(function() {
-      Plugin.__get__('h').getPluginFile = () => file;
+    const FILE = path.resolve(th.DIR, 'leetcode.js');
+
+    before(function() {
+      h.getPluginFile = () => FILE;
     });
 
     it('should ok', function() {
@@ -188,43 +191,45 @@ describe('plugin', function() {
       assert.equal(p.enabled, true);
 
       p.setFile('.leetcode.js');
-      fs.writeFileSync(file, '');
+      fs.writeFileSync(FILE, '');
       assert.equal(p.enabled, false);
       assert.equal(p.file, '.leetcode.js');
-
       p.enable(false);
       assert.equal(p.enabled, false);
       assert.equal(p.file, '.leetcode.js');
       p.enable(true);
       assert.equal(p.enabled, true);
       assert.equal(p.file, 'leetcode.js');
+      p.enable(false);
+      assert.equal(p.enabled, false);
+      assert.equal(p.file, '.leetcode.js');
     });
   }); // #enable
 
   describe('#delete', function() {
     it('should ok', function() {
-      Plugin.__get__('h').getPluginFile = x => './tmp/' + x;
+      h.getPluginFile = x => th.DIR + x;
 
       const p = new Plugin(0, '0', '2018.01.01');
       p.file = '0.js';
       fs.writeFileSync('./tmp/0.js', '');
 
       assert.equal(p.deleted, false);
-      assert.deepEqual(fs.readdirSync('./tmp'), ['0.js']);
+      assert.deepEqual(fs.readdirSync(th.DIR), ['0.js']);
       p.delete();
       assert.equal(p.deleted, true);
-      assert.deepEqual(fs.readdirSync('./tmp'), []);
+      assert.deepEqual(fs.readdirSync(th.DIR), []);
       p.delete();
       assert.equal(p.deleted, true);
-      assert.deepEqual(fs.readdirSync('./tmp'), []);
+      assert.deepEqual(fs.readdirSync(th.DIR), []);
     });
   }); // #delete
 
   describe('#save', function() {
     it('should ok', function() {
       let data = {};
-      Plugin.__get__('cache').get = () => data;
-      Plugin.__get__('cache').set = (k, x) => data = x;
+      cache.get = () => data;
+      cache.set = (k, x) => data = x;
 
       const p = new Plugin(0, '0', '2018.01.01');
       p.save();

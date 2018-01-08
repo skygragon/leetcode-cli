@@ -1,37 +1,36 @@
 'use strict';
-const execSync = require('child_process').execSync;
-
 const assert = require('chai').assert;
 const rewire = require('rewire');
 
-const cache = rewire('../lib/cache');
-const h = rewire('../lib/helper');
+const th = require('./helper');
 
 describe('cache', function() {
-  const k = '.test';
-  const v = {test: 'data'};
+  let cache;
 
-  before(function() {
-    const cachedir = './tmp';
-    execSync('rm -rf ' + cachedir);
+  const K = '.test';
+  const V = {test: 'data'};
 
-    h.getCacheDir = () => cachedir;
+  beforeEach(function() {
+    th.clean();
+
+    const h = rewire('../lib/helper');
+    h.getCacheDir = () => th.DIR;
+
+    cache = rewire('../lib/cache');
     cache.__set__('h', h);
     cache.init();
   });
 
-  it('should ok when not cached', function() {
-    cache.del(k);
-
-    assert.equal(cache.get(k), null);
-    assert.equal(cache.del(k), false);
+  it('should get ok when not cached', function() {
+    cache.del(K);
+    assert.equal(cache.get(K), null);
+    assert.equal(cache.del(K), false);
   });
 
-  it('should ok when cached', function() {
-    assert.equal(cache.set(k, v), true);
-
-    assert.deepEqual(cache.get(k), v);
-    assert.equal(cache.del(k), true);
+  it('should get ok when cached', function() {
+    assert.equal(cache.set(K, V), true);
+    assert.deepEqual(cache.get(K), V);
+    assert.equal(cache.del(K), true);
   });
 
   it('should list ok when no cached', function() {
@@ -40,12 +39,10 @@ describe('cache', function() {
   });
 
   it('should list ok when cached', function() {
-    assert.equal(cache.set(k, v), true);
-
+    assert.equal(cache.set(K, V), true);
     const items = cache.list();
     assert.equal(items.length, 1);
-
-    assert.equal(items[0].name, k);
-    assert.equal(items[0].size, JSON.stringify(v).length);
+    assert.equal(items[0].name, K);
+    assert.equal(items[0].size, JSON.stringify(V).length);
   });
 });

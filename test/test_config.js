@@ -1,28 +1,30 @@
 'use strict';
-const fs = require('fs');
-
 const assert = require('chai').assert;
 const rewire = require('rewire');
 const _ = require('underscore');
 
+const th = require('./helper');
+
 describe('config', function() {
   let config;
-  const f = './tmp/config.json';
+  const FILE = './tmp/config.json';
 
   beforeEach(function() {
-    config = rewire('../lib/config');
+    th.clean();
+
     const h = rewire('../lib/helper');
-    h.getConfigFile = () => f;
+    h.getConfigFile = () => FILE;
+
+    config = rewire('../lib/config');
     config.__set__('h', h);
   });
 
-  afterEach(function() {
-    if (fs.existsSync(f)) fs.unlinkSync(f);
-  });
+  function createConfigFile(data) {
+    const fs = require('fs');
+    fs.writeFileSync(FILE, JSON.stringify(data));
+  }
 
   it('should ok w/o local config', function() {
-    if (fs.existsSync(f)) fs.unlinkSync(f);
-
     const DEFAULT_CONFIG = config.__get__('DEFAULT_CONFIG');
     config.init();
 
@@ -36,29 +38,24 @@ describe('config', function() {
   });
 
   it('should ok w/ local config', function() {
-    const data = {
+    createConfigFile({
       autologin: {enable: false},
       code:      {lang: 'ruby'},
       color:     {enable: false}
-    };
-    fs.writeFileSync(f, JSON.stringify(data));
-
+    });
     config.init();
 
     assert.equal(config.autologin.enable, false);
     assert.equal(config.code.lang, 'ruby');
     assert.equal(config.color.enable, false);
-
     assert.equal(config.code.editor, 'vim');
   });
 
   it('should remove legacy keys', function() {
-    const data = {
+    createConfigFile({
       USE_COLOR: true,
       code:      {lang: 'ruby'}
-    };
-    fs.writeFileSync(f, JSON.stringify(data));
-
+    });
     config.init();
 
     assert.equal(config.USE_COLOR, undefined);

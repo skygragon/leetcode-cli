@@ -2,29 +2,24 @@
 const assert = require('chai').assert;
 const rewire = require('rewire');
 
-const session = rewire('../lib/session');
-
 describe('session', function() {
-  let stats = null;
-  let now = '';
+  let session;
+  let stats;
+  let now;
 
-  before(function() {
+  beforeEach(function() {
+    stats = null;
     const cache = {
       get: (k) => stats,
       set: (k, v) => stats = v
     };
-    session.__set__('cache', cache);
-
     const moment = () => {
-      return {
-        format: () => now
-      }
+      return {format: () => now}
     };
-    session.__set__('moment', moment);
-  });
 
-  beforeEach(function() {
-    stats = null;
+    session = rewire('../lib/session');
+    session.__set__('cache', cache);
+    session.__set__('moment', moment);
   });
 
   describe('#updateStat', function() {
@@ -53,5 +48,5 @@ describe('session', function() {
       session.updateStat('ac.set', 101);
       assert.deepEqual(stats, {'2017.12.13': {'ac.set': [101, 100]}});
     });
-  });
+  }); // #updateStat
 });

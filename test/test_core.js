@@ -2,11 +2,10 @@
 const assert = require('chai').assert;
 const rewire = require('rewire');
 
-const log = require('../lib/log');
-
-const plugin = rewire('../lib/core');
-
 describe('core', function() {
+  let core;
+  let next;
+
   const PROBLEMS = [
     {
       category: 'algorithms',
@@ -33,16 +32,19 @@ describe('core', function() {
       state:     'none'
     }
   ];
-  const NEXT = {};
 
   before(function() {
+    const log = require('../lib/log');
     log.init();
-    plugin.setNext(NEXT);
   });
 
   beforeEach(function() {
-    NEXT.getProblems = cb => cb(null, PROBLEMS);
-    NEXT.getProblem = (problem, cb) => cb(null, problem);
+    next = {};
+    next.getProblems = cb => cb(null, PROBLEMS);
+    next.getProblem = (p, cb) => cb(null, p);
+
+    core = rewire('../lib/core');
+    core.setNext(next);
   });
 
   describe('#filterProblems', function() {
@@ -64,10 +66,12 @@ describe('core', function() {
         ['Dh',   []]
       ];
       let n = cases.length;
+
       for (let x of cases) {
-        plugin.filterProblems({query: x[0]}, function(e, problems) {
-          assert.equal(e, null);
+        core.filterProblems({query: x[0]}, function(e, problems) {
+          assert.notExists(e);
           assert.equal(problems.length, x[1].length);
+
           for (let i = 0; i < problems.length; ++i)
             assert.equal(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
@@ -84,45 +88,53 @@ describe('core', function() {
         [['apple'],    []],
       ];
       let n = cases.length;
+
       for (let x of cases) {
-        plugin.filterProblems({tag: x[0]}, function(e, problems) {
-          assert.equal(e, null);
+        core.filterProblems({tag: x[0]}, function(e, problems) {
+          assert.notExists(e);
           assert.equal(problems.length, x[1].length);
+
           for (let i = 0; i < problems.length; ++i)
             assert.equal(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
       }
     });
-  });
+
+    it('should fail if getProblems error', function(done) {
+      next.getProblems = cb => cb('getProblems error');
+      core.filterProblems({}, function(e) {
+        assert.equal(e, 'getProblems error');
+        done();
+      });
+    });
+  }); // #filterProblems
 
   describe('#starProblem', function() {
-    it('should starProblem ok', function(done) {
-      NEXT.starProblem = function(problem, starred, cb) {
-        return cb(null, starred);
-      };
+    it('should ok', function(done) {
+      next.starProblem = (p, starred, cb) => cb(null, starred);
 
       assert.equal(PROBLEMS[0].starred, false);
-      plugin.starProblem(PROBLEMS[0], true, function(e, starred) {
-        assert.equal(e, null);
+      core.starProblem(PROBLEMS[0], true, function(e, starred) {
+        assert.notExists(e);
         assert.equal(starred, true);
         done();
       });
     });
 
-    it('should starProblem ok if already starred', function(done) {
+    it('should ok if already starred', function(done) {
       assert.equal(PROBLEMS[1].starred, true);
-      plugin.starProblem(PROBLEMS[1], true, function(e, starred) {
-        assert.equal(e, null);
+      core.starProblem(PROBLEMS[1], true, function(e, starred) {
+        assert.notExists(e);
         assert.equal(starred, true);
         done();
       });
     });
 
-    it('should starProblem ok if already unstarred', function(done) {
+    it('should ok if already unstarred', function(done) {
       assert.equal(PROBLEMS[0].starred, false);
-      plugin.starProblem(PROBLEMS[0], false, function(e, starred) {
-        assert.equal(e, null);
+      core.starProblem(PROBLEMS[0], false, function(e, starred) {
+        assert.notExists(e);
         assert.equal(starred, false);
         done();
       });
@@ -155,10 +167,42 @@ describe('core', function() {
         code: problem.templates[0].defaultCode,
         tpl:  'codeonly'
       };
-      assert.equal(plugin.exportProblem(problem, opts), expected);
+      assert.equal(core.exportProblem(problem, opts), expected);
     });
 
-    it('should detailed ok', function() {
+    it('should codeonly ok in windows', function() {
+      const h = rewire('../lib/helper');
+      h.isWindows = () => true;
+      core.__set__('h', h);
+
+      const expected = [
+        '/**',
+        ' * Definition for singly-linked list.',
+        ' * struct ListNode {',
+        ' *     int val;',
+        ' *     ListNode *next;',
+        ' *     ListNode(int x) : val(x), next(NULL) {}',
+        ' * };',
+        ' */',
+        'class Solution {',
+        'public:',
+        '    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {',
+        '        ',
+        '    }',
+        '};',
+        ''
+      ].join('\r\n');
+
+      const problem = require('./mock/add-two-numbers.20161015.json');
+      const opts = {
+        lang: 'cpp',
+        code: problem.templates[0].defaultCode,
+        tpl:  'codeonly'
+      };
+      assert.equal(core.exportProblem(problem, opts), expected);
+    });
+
+    it('should detailed ok with cpp', function() {
       const expected = [
         '/*',
         ' * [2] Add Two Numbers',
@@ -201,10 +245,10 @@ describe('core', function() {
         code: problem.templates[0].defaultCode,
         tpl:  'detailed'
       };
-      assert.equal(plugin.exportProblem(problem, opts), expected);
+      assert.equal(core.exportProblem(problem, opts), expected);
     });
 
-    it('should detailed ok, 2nd', function() {
+    it('should detailed ok with ruby', function() {
       const expected = [
         '#',
         '# [2] Add Two Numbers',
@@ -249,55 +293,55 @@ describe('core', function() {
         code: problem.templates[6].defaultCode,
         tpl:  'detailed'
       };
-      assert.equal(plugin.exportProblem(problem, opts), expected);
+      assert.equal(core.exportProblem(problem, opts), expected);
     });
   }); // #exportProblem
 
   describe('#getProblem', function() {
-    it('should getProblem by id ok', function(done) {
-      plugin.getProblem(0, function(e, problem) {
-        assert.equal(e, null);
+    it('should get by id ok', function(done) {
+      core.getProblem(0, function(e, problem) {
+        assert.notExists(e);
         assert.deepEqual(problem, PROBLEMS[0]);
         done();
       });
     });
 
-    it('should getProblem by key ok', function(done) {
-      plugin.getProblem('slug0', function(e, problem) {
-        assert.equal(e, null);
+    it('should get by key ok', function(done) {
+      core.getProblem('slug0', function(e, problem) {
+        assert.notExists(e);
         assert.deepEqual(problem, PROBLEMS[0]);
         done();
       });
     });
 
-    it('should getProblem error if not found', function(done) {
-      plugin.getProblem(3, function(e, problem) {
+    it('should fail if not found', function(done) {
+      core.getProblem(3, function(e, problem) {
         assert.equal(e, 'Problem not found!');
         done();
       });
     });
 
-    it('should getProblem fail if client error', function(done) {
-      NEXT.getProblem = (problem, cb) => cb('client getProblem error');
+    it('should fail if client error', function(done) {
+      next.getProblem = (problem, cb) => cb('client getProblem error');
 
-      plugin.getProblem(0, function(e, problem) {
+      core.getProblem(0, function(e, problem) {
         assert.equal(e, 'client getProblem error');
         done();
       });
     });
 
-    it('should getProblem ok if problem is already there', function(done) {
-      plugin.getProblem(PROBLEMS[1], function(e, problem) {
-        assert.equal(e, null);
+    it('should ok if problem is already there', function(done) {
+      core.getProblem(PROBLEMS[1], function(e, problem) {
+        assert.notExists(e);
         assert.deepEqual(problem, PROBLEMS[1]);
         done();
       });
     });
 
-    it('should getProblem fail if getProblems error', function(done) {
-      NEXT.getProblems = cb => cb('getProblems error');
+    it('should fail if getProblems error', function(done) {
+      next.getProblems = cb => cb('getProblems error');
 
-      plugin.getProblem(0, function(e, problem) {
+      core.getProblem(0, function(e, problem) {
         assert.equal(e, 'getProblems error');
         done();
       });

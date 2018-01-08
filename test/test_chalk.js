@@ -4,10 +4,15 @@ const rewire = require('rewire');
 
 // refer to https://en.wikipedia.org/wiki/ANSI_escape_code
 describe('chalk', function() {
-  it('should ok w/ 256 colors', function() {
-    const chalk = rewire('../lib/chalk');
+  let chalk;
+
+  beforeEach(function() {
+    chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = true;
+  });
+
+  it('should ok w/ 256 colors', function() {
     chalk.init();
     chalk.setTheme('default');
 
@@ -29,8 +34,6 @@ describe('chalk', function() {
   });
 
   it('should ok w/ 8 colors', function() {
-    const chalk = rewire('../lib/chalk');
-    chalk.enabled = true;
     chalk.use256 = false;
     chalk.init();
     chalk.setTheme('default');
@@ -46,7 +49,6 @@ describe('chalk', function() {
   });
 
   it('should ok w/o colors', function() {
-    const chalk = rewire('../lib/chalk');
     chalk.enabled = false;
     chalk.init();
     chalk.setTheme('default');
@@ -61,36 +63,28 @@ describe('chalk', function() {
     assert.equal(chalk.white(' '),   ' ');
   });
 
-  it('should sprint ok', function() {
-    const chalk = rewire('../lib/chalk');
-    chalk.enabled = true;
-    chalk.use256 = true;
+  it('should sprint w/ 256 colors ok', function() {
     chalk.init();
     chalk.setTheme('default');
-
     assert.equal(chalk.sprint(' ', '#00ff00'), '\u001b[38;5;46m \u001b[39m');
+  });
 
+  it('should sprint w/ 8 colors ok', function() {
     chalk.use256 = false;
+    chalk.init();
+    chalk.setTheme('default');
     assert.equal(chalk.sprint(' ', '#00ff00'), '\u001b[92m \u001b[39m');
   });
 
   it('should set theme ok', function() {
-    const chalk = rewire('../lib/chalk');
-    chalk.enabled = true;
-    chalk.use256 = true;
     chalk.init();
     chalk.setTheme('dark');
-
     assert.equal(chalk.sprint(' ', '#009900'), chalk.green(' '));
   });
 
   it('should set unknown theme ok', function() {
-    const chalk = rewire('../lib/chalk');
-    chalk.enabled = true;
-    chalk.use256 = true;
     chalk.init();
     chalk.setTheme('unknown');
-
     assert.equal(chalk.sprint(' ', '#00ff00'), chalk.green(' '));
   });
 });
