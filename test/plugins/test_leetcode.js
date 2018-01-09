@@ -44,8 +44,7 @@ describe('plugin:leetcode', function() {
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .get('/accounts/login/')
-        .reply(200, '', {
-          'Set-Cookie': [
+        .reply(200, '', { 'Set-Cookie': [
             'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
           ]});
 
@@ -653,4 +652,68 @@ describe('plugin:leetcode', function() {
       });
     });
   }); // #getFavorites
+
+  describe('#session', function() {
+    const DATA = {sessions: []};
+
+    it('should getSessions ok', function(done) {
+      nock('https://leetcode.com')
+        .post('/session/')
+        .reply(200, JSON.stringify(DATA));
+
+      plugin.getSessions(function(e, sessions) {
+        assert.notExists(e);
+        assert.deepEqual(sessions, []);
+        done();
+      });
+    });
+
+    it('should activateSessions ok', function(done) {
+      nock('https://leetcode.com')
+        .put('/session/', {func: 'activate', target: 1})
+        .reply(200, JSON.stringify(DATA));
+
+      plugin.activateSession({id: 1}, function(e, sessions) {
+        assert.notExists(e);
+        assert.deepEqual(sessions, []);
+        done();
+      });
+    });
+
+    it('should createSessions ok', function(done) {
+      nock('https://leetcode.com')
+        .put('/session/', {func: 'create', name: 's1'})
+        .reply(200, JSON.stringify(DATA));
+
+      plugin.createSession('s1', function(e, sessions) {
+        assert.notExists(e);
+        assert.deepEqual(sessions, []);
+        done();
+      });
+    });
+
+    it('should deleteSessions ok', function(done) {
+      nock('https://leetcode.com')
+        .delete('/session/', {target: 1})
+        .reply(200, JSON.stringify(DATA));
+
+      plugin.deleteSession({id: 1}, function(e, sessions) {
+        assert.notExists(e);
+        assert.deepEqual(sessions, []);
+        done();
+      });
+    });
+
+    it('should fail if 302 returned', function(done) {
+      nock('https://leetcode.com')
+        .post('/session/')
+        .reply(302);
+
+      plugin.getSessions(function(e, sessions) {
+        assert.deepEqual(e, session.errors.EXPIRED);
+        assert.notExists(sessions);
+        done();
+      });
+    });
+  }); // #session
 });
