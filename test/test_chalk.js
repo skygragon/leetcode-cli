@@ -10,6 +10,7 @@ describe('chalk', function() {
     chalk = rewire('../lib/chalk');
     chalk.enabled = true;
     chalk.use256 = true;
+    chalk.use16m = false;
   });
 
   it('should ok w/ 256 colors', function() {
