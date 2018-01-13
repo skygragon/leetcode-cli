@@ -30,13 +30,7 @@ Great thanks to leetcode.com, a really awesome website!
 
 ## Showcases
 
-`help`/`user`/`list`/`show`/`test`
-
 ![screenshot1](https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.gif)
-
-`test`/`submit`/`stat`/`submission`
-
-![screenshot2](https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro2.gif)
 
 ## Quick Start
 
