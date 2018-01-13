@@ -1,6 +1,6 @@
-<img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" width="350" align="right">
-
 # leetcode-cli
+
+<img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" align="right">
 
 A cli tool to enjoy leetcode!
 
