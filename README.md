@@ -15,20 +15,19 @@
 [Advanced](https://skygragon.github.io/leetcode-cli/advanced) ⦙
 [Plugins](https://github.com/skygragon/leetcode-cli-plugins) ⦙
 
-A cli tool to enjoy leetcode!
+A productive cli tool to enjoy leetcode!
 
 Great thanks to leetcode.com, a really awesome website!
 
-<br/>
-
-* A very <kbd>[**EFFICIENT**](#quick-start)</kbd> way to fight problems.
-* <kbd>[**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache)</kbd> problems locally thus you can easily navigate & think it offline.
-* Do everything in <kbd>**CLI**</kbd>, no one even knows you are doing leetcode :p
-* <kbd>[**GENERATING**](https://skygragon.github.io/leetcode-cli/commands#show)</kbd> source code template for further coding.
-* Support live <kbd>[**TEST**](https://skygragon.github.io/leetcode-cli/commands#test)</kbd> and <kbd>[**SUBMIT**](https://skygragon.github.io/leetcode-cli/commands#submit)</kbd> againts leetcode.com.
-* <kbd>[**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login)</kbd> among multiple sessions with single leetcode account.
-* Retrieve your previous <kbd>[**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission)</kbd> thus you can easily backup and manage your code.
-* More <kbd>[**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins)</kbd> to enjoy extra useful features!
+* A very <kbd>[**EFFICIENT**](#quick-start)</kbd> way to fight questions.
+* <kbd>[**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache)</kbd> questions to ease offline thinking.
+* <kbd>[**GENERATING**](https://skygragon.github.io/leetcode-cli/commands#show)</kbd> source code for further coding.
+* Live <kbd>[**TEST**](https://skygragon.github.io/leetcode-cli/commands#test)</kbd> and <kbd>[**SUBMIT**](https://skygragon.github.io/leetcode-cli/commands#submit)</kbd> with leetcode server.
+* Download your previous <kbd>[**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission)</kbd> to ease code management.
+* Different ways to trace your coding <kbd>[**STATUS**](https://skygragon.github.io/leetcode-cli/commands#stat)</kbd>.
+* <kbd>[**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login)</kbd> among multiple agents with single account.
+* Multiple <kbd>[**THEMES**](https://skygragon.github.io/leetcode-cli/advanced#color-themes)</kbd> available.
+* More <kbd>[**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins)</kbd> to enjoy extra features!
 
 <kbd><img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.2018.01.13.gif" /></kbd>
 
@@ -36,8 +35,8 @@ Great thanks to leetcode.com, a really awesome website!
 
 	Read help first                         $ leetcode help
 	Login with your leetcode account        $ leetcode user -l
-	Browse all problems                     $ leetcode list
-	Choose one problem                      $ leetcode show 1 -g -l cpp
+	Browse all questions                    $ leetcode list
+	Choose one question                     $ leetcode show 1 -g -l cpp
 	Coding it!
 	Run test(s) and pray...                 $ leetcode test ./two-sum.cpp -t '[3,2,4]\n7'
 	Submit final solution!                  $ leetcode submit ./two-sum.cpp
