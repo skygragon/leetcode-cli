@@ -1,5 +1,11 @@
 # leetcode-cli
 
+<img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" align="right">
+
+A productive cli tool to enjoy leetcode!
+
+Great thanks to leetcode.com, a really awesome website!
+
 [![npm version](https://img.shields.io/npm/v/leetcode-cli.svg?style=flat)](https://www.npmjs.com/package/leetcode-cli)
 [![Releases](https://img.shields.io/github/release/skygragon/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/releases)
 [![license](https://img.shields.io/npm/l/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/blob/master/LICENSE)
@@ -13,12 +19,6 @@
 [Advanced](https://skygragon.github.io/leetcode-cli/advanced) ⦙
 [Plugins](https://github.com/skygragon/leetcode-cli-plugins) ⦙
 
-<img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" align="right">
-
-A productive cli tool to enjoy leetcode!
-
-Great thanks to leetcode.com, a really awesome website!
-
 <br/>
 
 * A very <kbd>[**EFFICIENT**](#quick-start)</kbd> way to fight questions.
@@ -30,6 +30,8 @@ Great thanks to leetcode.com, a really awesome website!
 * <kbd>[**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login)</kbd> among multiple agents with single account.
 * Multiple <kbd>[**THEMES**](https://skygragon.github.io/leetcode-cli/advanced#color-themes)</kbd> support.
 * More <kbd>[**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins)</kbd> to enjoy extra features!
+
+## Screenshot
 
 <kbd><img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.2018.01.13.gif" /></kbd>
 
