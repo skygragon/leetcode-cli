@@ -28,9 +28,7 @@ Great thanks to leetcode.com, a really awesome website!
 * Retrieve your previous [**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission) thus you can easily backup and manage your code.
 * More [**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins) to enjoy extra useful features!
 
-## Showcases
-
-![screenshot1](https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.2018.01.13.gif)
+<kbd><img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.2018.01.13.gif" /></kbd>
 
 ## Quick Start
 
