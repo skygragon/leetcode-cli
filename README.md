@@ -19,14 +19,14 @@ Great thanks to leetcode.com, a really awesome website!
 [Advanced](https://skygragon.github.io/leetcode-cli/advanced) ⦙
 [Plugins](https://github.com/skygragon/leetcode-cli-plugins) ⦙
 
-* A very [**EFFICIENT**](#quick-start) way to fight problems.
-* [**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache) problems locally thus you can easily navigate & think it offline.
-* Do everything in **CLI**, no one even knows you are doing leetcode :p
-* [**GENERATING**](https://skygragon.github.io/leetcode-cli/commands#show) source code template for further coding.
-* Support live [**TEST**](https://skygragon.github.io/leetcode-cli/commands#test) and [**SUBMIT**](https://skygragon.github.io/leetcode-cli/commands#submit) againts leetcode.com.
-* [**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login) among multiple sessions with single leetcode account.
-* Retrieve your previous [**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission) thus you can easily backup and manage your code.
-* More [**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins) to enjoy extra useful features!
+* A very <kbd>[**EFFICIENT**](#quick-start)</kbd> way to fight problems.
+* <kbd>[**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache)</kbd> problems locally thus you can easily navigate & think it offline.
+* Do everything in <kbd>**CLI**</kbd>, no one even knows you are doing leetcode :p
+* <kbd>[**GENERATING**](https://skygragon.github.io/leetcode-cli/commands#show)</kbd> source code template for further coding.
+* Support live <kbd>[**TEST**](https://skygragon.github.io/leetcode-cli/commands#test)</kbd> and <kbd>[**SUBMIT**](https://skygragon.github.io/leetcode-cli/commands#submit)</kbd> againts leetcode.com.
+* <kbd>[**AUTO LOGIN**](https://skygragon.github.io/leetcode-cli/advanced#auto-login)</kbd> among multiple sessions with single leetcode account.
+* Retrieve your previous <kbd>[**SUBMISSION**](https://skygragon.github.io/leetcode-cli/commands#submission)</kbd> thus you can easily backup and manage your code.
+* More <kbd>[**PLUGINS**](https://skygragon.github.io/leetcode-cli/advanced#plugins)</kbd> to enjoy extra useful features!
 
 <kbd><img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/screenshots/intro.2018.01.13.gif" /></kbd>
 
