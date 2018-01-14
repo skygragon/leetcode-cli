@@ -1,3 +1,9 @@
+[![npm version](https://img.shields.io/npm/v/leetcode-cli.svg?style=flat)](https://www.npmjs.com/package/leetcode-cli)
+[![Releases](https://img.shields.io/github/release/skygragon/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/releases)
+[![license](https://img.shields.io/npm/l/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/blob/master/LICENSE)
+[![Build](https://img.shields.io/travis/skygragon/leetcode-cli.svg?style=flat)](https://travis-ci.org/skygragon/leetcode-cli)
+[![Join chat at https://gitter.im/skygragon/leetcode-cli](https://img.shields.io/gitter/room/skygragon/leetcode-cli.svg?style=flat)](https://gitter.im/skygragon/leetcode-cli)
+
 # leetcode-cli
 
 <img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" align="right">
@@ -6,20 +12,12 @@ A productive cli tool to enjoy leetcode!
 
 Great thanks to leetcode.com, a really awesome website!
 
-[![npm version](https://img.shields.io/npm/v/leetcode-cli.svg?style=flat)](https://www.npmjs.com/package/leetcode-cli)
-[![Releases](https://img.shields.io/github/release/skygragon/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/releases)
-[![license](https://img.shields.io/npm/l/leetcode-cli.svg?style=flat)](https://github.com/skygragon/leetcode-cli/blob/master/LICENSE)
-[![Build](https://img.shields.io/travis/skygragon/leetcode-cli.svg?style=flat)](https://travis-ci.org/skygragon/leetcode-cli)
-[![Join chat at https://gitter.im/skygragon/leetcode-cli](https://img.shields.io/gitter/room/skygragon/leetcode-cli.svg?style=flat)](https://gitter.im/skygragon/leetcode-cli)
-
 ⦙ [Releases](https://skygragon.github.io/leetcode-cli/releases) ⦙
 [Install](https://skygragon.github.io/leetcode-cli/install) ⦙
 [Docs](https://skygragon.github.io/leetcode-cli/) ⦙
 [Commands](https://skygragon.github.io/leetcode-cli/commands) ⦙
 [Advanced](https://skygragon.github.io/leetcode-cli/advanced) ⦙
 [Plugins](https://github.com/skygragon/leetcode-cli-plugins) ⦙
-
-<br/>
 
 * A very <kbd>[**EFFICIENT**](#quick-start)</kbd> way to fight questions.
 * <kbd>[**CACHING**](https://skygragon.github.io/leetcode-cli/advanced#cache)</kbd> questions to ease offline thinking.
