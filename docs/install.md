@@ -51,7 +51,7 @@ Similar with above, while you can introduce your own changes as you wish.
 
 ### From docker
 
-NOTE: This is just a tiny taste to let you feel that leetcode-cli is. Please use other ways above to install leetcode-cli if you like it.
+NOTE: This is just a tiny taste to let you feel what leetcode-cli is. Please use other ways above to install leetcode-cli if you like it.
 
 	$ alias leetcode='docker run -it --rm skygragon/leetcode-cli'
 	$ leetcode version
