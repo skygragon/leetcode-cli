@@ -2,6 +2,18 @@
 layout: default
 title: Release Notes
 ---
+# 2.5.1
+
+* auto install missing plugins after upgrade.
+* use 16m colors if possible.
+* enhance color output on windows.
+* `cache`
+	* fix issue that can't delete cache by name.
+* `session`
+	* fix issue if session name is a number.
+* `stat`
+	* use level weight in calendar view.
+
 # 2.5.0
 
 * add `session` command to manage coding sessions on leetcode.com.
