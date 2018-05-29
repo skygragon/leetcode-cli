@@ -2,6 +2,12 @@
 layout: default
 title: Release Notes
 ---
+# 2.5.2
+
+* `show`
+    * fixes 400 error
+    * support translated content for leetcode-cn
+
 # 2.5.1
 
 * auto install missing plugins after upgrade.
