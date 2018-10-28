@@ -188,10 +188,10 @@ describe('helper', function() {
 
       assert.equal(h.getUserHomeDir(), '/home/skygragon');
       assert.equal(h.getHomeDir(), '/home/skygragon/.lc');
-      assert.equal(h.getCacheDir(), '/home/skygragon/.lc/cache');
-      assert.equal(h.getCacheFile('xxx'), '/home/skygragon/.lc/cache/xxx.json');
+      assert.equal(h.getCacheDir(), '/home/skygragon/.lc/leetcode/cache');
+      assert.equal(h.getCacheFile('xxx'), '/home/skygragon/.lc/leetcode/cache/xxx.json');
       assert.equal(h.getConfigFile(), '/home/skygragon/.lc/config.json');
-      assert.equal(h.getFilename('/home/skygragon/.lc/cache/xxx.json'), 'xxx');
+      assert.equal(h.getFilename('/home/skygragon/.lc/leetcode/cache/xxx.json'), 'xxx');
 
       process.env.HOME = '';
       process.env.USERPROFILE = 'C:\\Users\\skygragon';
