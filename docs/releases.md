@@ -2,6 +2,14 @@
 layout: default
 title: Release Notes
 ---
+# 2.5.3
+
+* fixes "Failed to load locked problem" issue.
+* move plugin's data into separate folders:
+  * login info
+  * problems list
+  * problem cache
+
 # 2.5.2
 
 * `show`
