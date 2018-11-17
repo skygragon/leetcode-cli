@@ -13,7 +13,7 @@ const th = require('./helper');
 const Plugin = rewire('../lib/plugin');
 
 describe('plugin', function() {
-  let h;
+  let file;
   let cache;
 
   const NOOP = () => {};
@@ -23,9 +23,9 @@ describe('plugin', function() {
     chalk.init();
     config.init();
 
-    h = rewire('../lib/helper');
+    file = rewire('../lib/file');
     cache = rewire('../lib/cache');
-    Plugin.__set__('h', h);
+    Plugin.__set__('file', file);
     Plugin.__set__('cache', cache);
   });
 
@@ -42,7 +42,7 @@ describe('plugin', function() {
 
     before(function() {
       p1.init = p2.init = p3.init = p4.init = NOOP;
-      h.getCodeDirData = function() {
+      file.listCodeDir = function() {
         return [
           {name: 'cache', data: p2, file: 'cache.js'},
           {name: 'leetcode', data: p1, file: '.leetcode.js'},  // disabled
@@ -123,7 +123,7 @@ describe('plugin', function() {
     const DST = path.resolve(th.DIR, 'copy.test.js');
 
     before(function() {
-      h.getPluginFile = () => DST;
+      file.pluginFile = () => DST;
     });
 
     it('should copy from http error', function(done) {
@@ -162,7 +162,7 @@ describe('plugin', function() {
 
     beforeEach(function() {
       expected = [];
-      h.getPluginFile = x => th.DIR + x;
+      file.pluginFile = x => th.DIR + x;
       Plugin.install = (name, cb) => {
         expected.push(name);
         return cb(null, PLUGINS[+name]);
@@ -183,7 +183,7 @@ describe('plugin', function() {
     const FILE = path.resolve(th.DIR, 'leetcode.js');
 
     before(function() {
-      h.getPluginFile = () => FILE;
+      file.pluginFile = () => FILE;
     });
 
     it('should ok', function() {
@@ -208,7 +208,7 @@ describe('plugin', function() {
 
   describe('#delete', function() {
     it('should ok', function() {
-      h.getPluginFile = x => th.DIR + x;
+      file.pluginFile = x => th.DIR + x;
 
       const p = new Plugin(0, '0', '2018.01.01');
       p.file = '0.js';

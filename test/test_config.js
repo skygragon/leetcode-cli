@@ -12,11 +12,11 @@ describe('config', function() {
   beforeEach(function() {
     th.clean();
 
-    const h = rewire('../lib/helper');
-    h.getConfigFile = () => FILE;
+    const file = rewire('../lib/file');
+    file.configFile = () => FILE;
 
     config = rewire('../lib/config');
-    config.__set__('h', h);
+    config.__set__('file', file);
   });
 
   function createConfigFile(data) {

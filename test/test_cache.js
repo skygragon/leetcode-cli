@@ -13,11 +13,11 @@ describe('cache', function() {
   beforeEach(function() {
     th.clean();
 
-    const h = rewire('../lib/helper');
-    h.getCacheDir = () => th.DIR;
+    const file = rewire('../lib/file');
+    file.cacheDir = () => th.DIR;
 
     cache = rewire('../lib/cache');
-    cache.__set__('h', h);
+    cache.__set__('file', file);
     cache.init();
   });
 

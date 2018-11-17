@@ -3,6 +3,7 @@ const _ = require('underscore');
 const assert = require('chai').assert;
 const rewire = require('rewire');
 
+const h = require('../../lib/helper');
 const log = require('../../lib/log');
 const config = require('../../lib/config');
 const th = require('../helper');
@@ -11,7 +12,7 @@ describe('plugin:cache', function() {
   let plugin;
   let next;
   let cache;
-  let h;
+  let file;
   let session;
 
   const PROBLEMS = [
@@ -29,11 +30,11 @@ describe('plugin:cache', function() {
     th.clean();
     next = {};
 
-    h = rewire('../../lib/helper');
-    h.getCacheDir = () => th.DIR;
+    file = rewire('../../lib/file');
+    file.cacheDir = () => th.DIR;
 
     cache = rewire('../../lib/cache');
-    cache.__set__('h', h);
+    cache.__set__('file', file);
     cache.init();
 
     session = rewire('../../lib/session');

@@ -171,9 +171,9 @@ describe('core', function() {
     });
 
     it('should codeonly ok in windows', function() {
-      const h = rewire('../lib/helper');
-      h.isWindows = () => true;
-      core.__set__('h', h);
+      const file = rewire('../lib/file');
+      file.isWindows = () => true;
+      core.__set__('file', file);
 
       const expected = [
         '/**',

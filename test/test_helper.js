@@ -1,6 +1,4 @@
 'use strict';
-const path = require('path');
-
 const assert = require('chai').assert;
 const rewire = require('rewire');
 const _ = require('underscore');
@@ -179,51 +177,6 @@ describe('helper', function() {
       assert.deepEqual(h.langToCommentStyle('swift'), C_STYLE);
     });
   }); // #langToCommentStyle
-
-  describe('#dirAndFiles', function() {
-    const HOME = path.join(__dirname, '..');
-
-    it('should ok', function() {
-      process.env.HOME = '/home/skygragon';
-
-      assert.equal(h.getUserHomeDir(), '/home/skygragon');
-      assert.equal(h.getHomeDir(), '/home/skygragon/.lc');
-      assert.equal(h.getCacheDir(), '/home/skygragon/.lc/leetcode/cache');
-      assert.equal(h.getCacheFile('xxx'), '/home/skygragon/.lc/leetcode/cache/xxx.json');
-      assert.equal(h.getConfigFile(), '/home/skygragon/.lc/config.json');
-      assert.equal(h.getFilename('/home/skygragon/.lc/leetcode/cache/xxx.json'), 'xxx');
-
-      process.env.HOME = '';
-      process.env.USERPROFILE = 'C:\\Users\\skygragon';
-      assert.equal(h.getUserHomeDir(), 'C:\\Users\\skygragon');
-    });
-
-    it('should getCodeDir ok', function() {
-      assert.equal(h.getCodeDir(), HOME);
-      assert.equal(h.getCodeDir('.'), HOME);
-      assert.equal(h.getCodeDir('icons'), path.join(HOME, 'icons'));
-      assert.equal(h.getCodeDir('lib/plugins'), path.join(HOME, 'lib', 'plugins'));
-    });
-
-    it('should getCodeDirData ok', function() {
-      const files = h.getCodeDirData('lib/plugins');
-      assert.equal(files.length, 3);
-      assert.equal(files[0].name, 'cache');
-      assert.equal(files[1].name, 'leetcode');
-      assert.equal(files[2].name, 'retry');
-    });
-
-    it('should getPluginFile ok', function() {
-      const expect = path.join(HOME, 'lib/plugins/cache.js');
-      assert.equal(h.getPluginFile('cache.js'), expect);
-      assert.equal(h.getPluginFile('./cache.js'), expect);
-      assert.equal(h.getPluginFile('https://github.com/skygragon/cache.js'), expect);
-    });
-
-    it('should getFileData ok with missing file', function() {
-      assert.equal(h.getFileData('non-exist'), null);
-    });
-  }); // #dirAndFiles
 
   describe('#getSetCookieValue', function() {
     it('should ok', function() {
