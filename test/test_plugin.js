@@ -35,17 +35,17 @@ describe('plugin', function() {
   });
 
   describe('#Plugin.init', function() {
-    const p1 = new Plugin(0, 'Leetcode', '2.0');
-    const p2 = new Plugin(1, 'Cache', '1.0');
-    const p3 = new Plugin(2, 'Retry', '3.0');
-    const p4 = new Plugin(3, 'Core', '4.0');
+    const p1 = new Plugin(0, 'leetcode', '2.0');
+    const p2 = new Plugin(1, 'cache', '1.0');
+    const p3 = new Plugin(2, 'retry', '3.0');
+    const p4 = new Plugin(3, 'core', '4.0');
 
     before(function() {
       p1.init = p2.init = p3.init = p4.init = NOOP;
       file.listCodeDir = function() {
         return [
           {name: 'cache', data: p2, file: 'cache.js'},
-          {name: 'leetcode', data: p1, file: '.leetcode.js'},  // disabled
+          {name: 'leetcode', data: p1, file: 'leetcode.js'},
           {name: 'retry', data: p3, file: 'retry.js'},
           {name: 'bad', data: null}
         ];
@@ -53,6 +53,9 @@ describe('plugin', function() {
     });
 
     it('should init ok', function() {
+      cache.get = () => {
+        return {cache: true, leetcode: false, retry: true};
+      };
       assert.deepEqual(Plugin.plugins, []);
 
       const res = Plugin.init(p4);
@@ -60,7 +63,7 @@ describe('plugin', function() {
       assert.deepEqual(Plugin.plugins.length, 3);
 
       const names = Plugin.plugins.map(p => p.name);
-      assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode']);
+      assert.deepEqual(names, ['retry', 'cache', 'leetcode']);
 
       assert.equal(p4.next, p3);
       assert.equal(p3.next, p2);
@@ -70,7 +73,7 @@ describe('plugin', function() {
 
     it('should find missing ok', function() {
       cache.get = () => {
-        return {company: true, solution: true};
+        return {company: true, leetcode: false, solution: true};
       };
 
       const res = Plugin.init(p4);
@@ -78,7 +81,7 @@ describe('plugin', function() {
       assert.deepEqual(Plugin.plugins.length, 5);
 
       const names = Plugin.plugins.map(p => p.name);
-      assert.deepEqual(names, ['Retry', 'Cache', 'Leetcode', 'company', 'solution']);
+      assert.deepEqual(names, ['retry', 'cache', 'leetcode', 'company', 'solution']);
 
       assert.equal(p4.next, p3);
       assert.equal(p3.next, p2);
@@ -178,33 +181,6 @@ describe('plugin', function() {
       });
     });
   }); // #Plugin.installMissings
-
-  describe('#enable', function() {
-    const FILE = path.resolve(th.DIR, 'leetcode.js');
-
-    before(function() {
-      file.pluginFile = () => FILE;
-    });
-
-    it('should ok', function() {
-      const p = new Plugin(0, 'Leetcode', '2.0', '');
-      assert.equal(p.enabled, true);
-
-      p.setFile('.leetcode.js');
-      fs.writeFileSync(FILE, '');
-      assert.equal(p.enabled, false);
-      assert.equal(p.file, '.leetcode.js');
-      p.enable(false);
-      assert.equal(p.enabled, false);
-      assert.equal(p.file, '.leetcode.js');
-      p.enable(true);
-      assert.equal(p.enabled, true);
-      assert.equal(p.file, 'leetcode.js');
-      p.enable(false);
-      assert.equal(p.enabled, false);
-      assert.equal(p.file, '.leetcode.js');
-    });
-  }); // #enable
 
   describe('#delete', function() {
     it('should ok', function() {

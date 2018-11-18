@@ -36,6 +36,7 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+dist/
 tmp/
 *.swp
 .DS_Store
