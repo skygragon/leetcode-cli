@@ -2,6 +2,11 @@
 layout: default
 title: Release Notes
 ---
+# 2.5.4
+* fixes error in fresh env without .lc existed.
+* embed meta in file content instead of file name.
+* update dependencies.
+
 # 2.5.3
 
 * fixes "Failed to load locked problem" issue.
