@@ -142,6 +142,14 @@ describe('core', function() {
   }); // #starProblem
 
   describe('#exportProblem', function() {
+    let file;
+
+    beforeEach(function() {
+      file = rewire('../lib/file');
+      file.init();
+      core.__set__('file', file);
+    });
+
     it('should codeonly ok', function() {
       const expected = [
         '/**',
@@ -171,9 +179,7 @@ describe('core', function() {
     });
 
     it('should codeonly ok in windows', function() {
-      const file = rewire('../lib/file');
       file.isWindows = () => true;
-      core.__set__('file', file);
 
       const expected = [
         '/**',
