@@ -159,6 +159,7 @@ describe('helper', function() {
     it('should ok', function() {
       const C_STYLE = {start: '/*', line: ' *', end: ' */'};
       const RUBY_STYLE = {start: '#', line: '#', end: '#'};
+      const SQL_STYLE = {start: '--', line: '--', end: '--'};
 
       assert.deepEqual(h.langToCommentStyle('bash'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('c'), C_STYLE);
@@ -167,7 +168,7 @@ describe('helper', function() {
       assert.deepEqual(h.langToCommentStyle('golang'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('java'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('javascript'), C_STYLE);
-      assert.deepEqual(h.langToCommentStyle('mysql'), RUBY_STYLE);
+      assert.deepEqual(h.langToCommentStyle('mysql'), SQL_STYLE);
       assert.deepEqual(h.langToCommentStyle('python'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('python3'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('ruby'), RUBY_STYLE);
