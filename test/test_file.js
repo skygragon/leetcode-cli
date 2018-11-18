@@ -55,4 +55,48 @@ describe('file', function() {
       assert.equal(file.data('non-exist'), null);
     });
   }); // #dirAndFiles
+
+  describe('#meta', function() {
+    it('should meta ok within file content', function() {
+      file.data = x => [
+        '/ *',
+        '  * @lc app=leetcode id=123 lang=javascript',
+        '  * /'
+      ].join('\n');
+      const meta = file.meta('dummy');
+      assert.equal(meta.app, 'leetcode')
+      assert.equal(meta.id, '123');
+      assert.equal(meta.lang, 'javascript');
+    });
+
+    it('should meta ok within file name', function() {
+      file.data = x => [
+        '/ *',
+        '  * no meta app=leetcode id=123 lang=javascript',
+        '  * /'
+      ].join('\n');
+      const meta = file.meta('321.dummy.py');
+      assert(!meta.app)
+      assert.equal(meta.id, '321');
+      assert.equal(meta.lang, 'python');
+    });
+
+    it('should meta ok within deprecated file name', function() {
+      file.data = x => [
+        '/ *',
+        '  * no meta app=leetcode id=123 lang=javascript',
+        '  * /'
+      ].join('\n');
+
+      var meta = file.meta('111.dummy.py3');
+      assert(!meta.app)
+      assert.equal(meta.id, '111');
+      assert.equal(meta.lang, 'python3');
+
+      meta = file.meta('222.dummy.python3.py');
+      assert(!meta.app)
+      assert.equal(meta.id, '222');
+      assert.equal(meta.lang, 'python3');
+    });
+  }); // #meta
 });

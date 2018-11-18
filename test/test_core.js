@@ -205,6 +205,8 @@ describe('core', function() {
     it('should detailed ok with cpp', function() {
       const expected = [
         '/*',
+        ' * @lc app=leetcode id=2 lang=cpp',
+        ' *',
         ' * [2] Add Two Numbers',
         ' *',
         ' * https://leetcode.com/problems/add-two-numbers',
@@ -250,6 +252,8 @@ describe('core', function() {
 
     it('should detailed ok with ruby', function() {
       const expected = [
+        '#',
+        '# @lc app=leetcode id=2 lang=ruby',
         '#',
         '# [2] Add Two Numbers',
         '#',

@@ -1,5 +1,7 @@
 <%= comment.start %>
-<%= comment.line %> [<%= id %>] <%= name %>
+<%= comment.line %> @lc app=<%= app %> id=<%= fid %> lang=<%= lang %>
+<%= comment.line %>
+<%= comment.line %> [<%= fid %>] <%= name %>
 <%= comment.line %>
 <%= comment.line %> <%= link %>
 <%= comment.line %>
