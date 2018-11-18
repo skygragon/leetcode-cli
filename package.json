@@ -11,7 +11,23 @@
   },
   "scripts": {
     "lint": "eslint lib/ test/",
-    "test": "npm run lint && nyc mocha test/** && nyc report --reporter=lcov"
+    "test": "npm run lint && nyc mocha test/** && nyc report --reporter=lcov",
+    "pkg": "pkg . --out-path=dist/"
+  },
+  "pkg": {
+    "scripts": [
+      "lib"
+    ],
+    "assets": [
+      "colors",
+      "icons",
+      "templates"
+    ],
+    "targets": [
+      "node10-linux-x64",
+      "node10-macos-x64",
+      "node10-win-x64"
+    ]
   },
   "repository": {
     "type": "git",

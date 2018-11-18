@@ -1,10 +1,14 @@
 .git
+.github
 .npm
 .nyc_output
 .DS_Store
+
 coverage
+dist
 node_modules
 npm-debug.log*
 tmp
+
 *.log
 *.swp
