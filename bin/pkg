@@ -1,0 +1,25 @@
+#!/bin/bash
+
+plugins="company cookie.chrome cookie.firefox cpp.lint cpp.run github leetcode.cn lintcode solution.discuss"
+
+for plugin in $plugins; do
+  echo "[$plugin]"
+  ./bin/leetcode ext -i $plugin
+done
+
+ver=`node -v | sed 's/^v//' | awk -F. '{print $1}'`
+case `uname` in
+  Linux)  os=linux ;;
+  Darwin) os=macos ;;
+  *) echo "OS not supported!" && exit 1
+esac
+case `uname -m` in
+  x86_64) arch=x64 ;;
+  i?86)   arch=x32 ;;
+  *) echo "Arch not supported!" && exit 1
+esac
+
+rm -rf dist/*
+find node_modules -name "*.node" -exec cp {} dist/ \;
+npm run pkg -- node$ver-$os-$arch
+tar zcvf leetcode-cli.$os.tar.gz dist/
