@@ -4,6 +4,7 @@
     "like":   "♥",
     "unlike": " ",
     "lock":   "$",
+    "nolock": " ",
     "empty":  " ",
     "ac":     "O",
     "notac":  "X",

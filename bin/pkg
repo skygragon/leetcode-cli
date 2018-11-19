@@ -19,6 +19,7 @@ case `uname -m` in
   *) echo "Arch not supported!" && exit 1
 esac
 
+mkdir -p dist/
 rm -rf dist/*
 find node_modules -name "*.node" -exec cp {} dist/ \;
 npm run pkg -- node$ver-$os-$arch
