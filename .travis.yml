@@ -1,5 +1,11 @@
 language: node_js
 node_js:
-  - stable
+  - "node"
+os:
+  - linux
+  - osx
+  - windows
 install:
   - npm install
+script:
+  - npm test
