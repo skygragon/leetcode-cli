@@ -11,7 +11,7 @@
   },
   "scripts": {
     "lint": "eslint lib/ test/",
-    "test": "npm run lint && nyc mocha test/** && nyc report --reporter=lcov",
+    "test": "npm run lint && nyc mocha test test/plugins && nyc report --reporter=lcov",
     "pkg": "pkg . --out-path=dist/ --targets"
   },
   "pkg": {

@@ -151,6 +151,8 @@ describe('core', function() {
     });
 
     it('should codeonly ok', function() {
+      file.isWindows = () => false;
+
       const expected = [
         '/**',
         ' * Definition for singly-linked list.',
@@ -209,6 +211,8 @@ describe('core', function() {
     });
 
     it('should detailed ok with cpp', function() {
+      file.isWindows = () => false;
+
       const expected = [
         '/*',
         ' * @lc app=leetcode id=2 lang=cpp',
@@ -257,6 +261,8 @@ describe('core', function() {
     });
 
     it('should detailed ok with ruby', function() {
+      file.isWindows = () => false;
+
       const expected = [
         '#',
         '# @lc app=leetcode id=2 lang=ruby',

@@ -146,9 +146,9 @@ describe('plugin', function() {
       ];
       fs.writeFileSync(SRC, data.join('\n'));
 
-      Plugin.install(SRC, function(e, p) {
+      Plugin.copy(SRC, function(e, fullpath) {
         assert.notExists(e);
-        assert.equal(p.x, 123);
+        assert.equal(fullpath, DST);
         assert.equal(fs.existsSync(DST), true);
         done();
       });

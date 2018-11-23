@@ -30,7 +30,9 @@ describe('icon', function() {
       assert.equal(icon.unlike, 'unlike');
     });
 
-    it('should ok with unknown theme', function() {
+    it('should ok with unknown theme on linux', function() {
+      file.isWindows = () => false;
+
       icon.setTheme('non-exist');
       assert.equal(icon.yes, '✔');
       assert.equal(icon.no, '✘');
