@@ -93,10 +93,10 @@ describe('log', function() {
 
     it('should ok with log.fail', function() {
       log.fail({msg: 'some error', statusCode: 500});
-      assert.equal(expected, chalk.red('[ERROR] some error [500]'));
+      assert.equal(expected, chalk.red('[ERROR] some error [code=500]'));
 
       log.fail('some error');
-      assert.equal(expected, chalk.red('[ERROR] some error [0]'));
+      assert.equal(expected, chalk.red('[ERROR] some error'));
     });
   }); // #levels
 
