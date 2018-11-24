@@ -1,26 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env node
 
-plugins="company cookie.chrome cookie.firefox cpp.lint cpp.run github leetcode.cn lintcode solution.discuss"
+const arch = require('os').arch();
+var os = process.platform;
+const ver = process.versions.node.split('.')[0];
 
-for plugin in $plugins; do
-  echo "[$plugin]"
-  ./bin/leetcode ext -i $plugin
-done
+var bin = './bin/pkg.sh';
+var args = [arch, os, ver];
 
-ver=`node -v | sed 's/^v//' | awk -F. '{print $1}'`
-case `uname` in
-  Linux)  os=linux ;;
-  Darwin) os=macos ;;
-  *) echo "OS not supported!" && exit 1
-esac
-case `uname -m` in
-  x86_64) arch=x64 ;;
-  i?86)   arch=x32 ;;
-  *) echo "Arch not supported!" && exit 1
-esac
+if (os === 'darwin') {
+  args[1] = 'macos';
+} else if (os === 'win32') {
+  bin = 'cmd.exe';
+  args = ['/c', 'pkg.bat'].concat(args);
+}
 
-mkdir -p dist/
-rm -rf dist/*
-find node_modules -name "*.node" -exec cp {} dist/ \;
-npm run pkg -- node$ver-$os-$arch
-tar zcvf leetcode-cli.$os.tar.gz dist/
+var proc = require('child_process').spawn(bin, args);
+proc.stdout.on('data', x => console.log(x.toString().trimRight('\n')));
+proc.stderr.on('data', x => console.log(x.toString().trimRight('\n')));
