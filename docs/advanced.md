@@ -9,6 +9,7 @@ title: Advanced Topic
 * [Cache](#cache)
 * [Configuration](#configuration)
 * [Color Themes](#color-themes)
+* [File Name](#file-name)
 * [Log Levels](#log-levels)
 * [Plugins](#plugins)
 
@@ -91,6 +92,10 @@ The config file is saved in `~/.lc/config.json`, here is a full exmaple (include
             "enable": true,
             "theme": "default"
         },
+        "file": {
+            "show": "${fid}.${slug}",
+            "submission": "${fid}.${slug}.${sid}.${ac}"
+        },
         "icon": {
             "theme": ""
         },
@@ -107,6 +112,7 @@ Here are some useful settings:
 * `code:lang` to set your default language used in coding.
 * `color:enable` to enable colorful output.
 * `color:theme` to set color theme used in output. (see [Color Theme](#color-theme))
+* `file.show` to set filename pattern for generated code file. (see [File Name](#file-name))
 * `icon:theme` to set icon them used in output.
 * `plugins` to config each installed plugins. (see [Plugins](#plugins))
 
@@ -166,6 +172,23 @@ Of course you can create your own themes if you like, look into `colors` folder 
         "white":   "#ffffff",
         "yellow":  "#ffff00"
     }
+
+# File Name
+
+You could configure file name pattern in code generation.
+
+* config `file.show` for generated file in `show`.
+* config `file.submission` for downloaded file in `submission`.
+
+Followings are some variables you could used in the pattern:
+
+* `${fid}` for question id. (e.g. `123`)
+* `${slug}` for dash-separated question name. (e.g. `add-two`)
+* `${name}` for space-separated questions name. (e.g. `Add Two`)
+* `${level}` for question level. (e.g. `Hard`)
+* `${category}` for question category. (e.g. `algorithms`)
+* `${sid}` for submission id.
+* `${ac}` for accept status of existing submission.
 
 # Log Levels
 

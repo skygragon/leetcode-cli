@@ -3,6 +3,12 @@ layout: default
 title: Installation
 ---
 
+# All in One (beta)
+
+No need to install node.js. Now available on 64bits linux, mac, and windows.
+
+[Download](https://github.com/skygragon/leetcode-cli/releases)
+
 # Prerequisites
 
 Install the latest LTS version of `node.js` (`npm` included):
@@ -48,6 +54,11 @@ Similar with above, while you can introduce your own changes as you wish.
     $ git clone http://github.com/skygragon/leetcode-cli
     $ cd leetcode-cli && ./bin/install
     $ leetcode version
+
+### From source (all-in-one)
+
+	$ git clone http://github.com/skygragon/leetcode-cli
+	$ cd leetcode-cli && node ./bin/pkg
 
 ### From docker
 
