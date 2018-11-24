@@ -17,3 +17,4 @@ if (os === 'darwin') {
 var proc = require('child_process').spawn(bin, args);
 proc.stdout.on('data', x => console.log(x.toString().trimRight('\n')));
 proc.stderr.on('data', x => console.log(x.toString().trimRight('\n')));
+proc.on('close', process.exit);
