@@ -11,7 +11,7 @@ if (os === 'darwin') {
   args[1] = 'macos';
 } else if (os === 'win32') {
   bin = 'cmd.exe';
-  args = ['/c', 'pkg.bat'].concat(args);
+  args = ['/c', 'bin\\pkg.bat'].concat(args);
 }
 
 var proc = require('child_process').spawn(bin, args);

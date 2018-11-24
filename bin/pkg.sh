@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 arch=$1
 os=$2
@@ -8,7 +8,7 @@ plugins="company cookie.chrome cookie.firefox cpp.lint cpp.run github leetcode.c
 
 for plugin in $plugins; do
   echo "[$plugin]"
-  #./bin/leetcode ext -i $plugin
+  ./bin/leetcode ext -i $plugin
 done
 
 DIST=./dist
