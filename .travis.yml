@@ -1,11 +1,26 @@
 language: node_js
 node_js:
-  - "node"
+  - 10
+
 os:
   - linux
   - osx
   - windows
+
 install:
   - npm install
+
 script:
   - npm test
+  - if [ -n "$TRAVIS_TAG" ]; then npm run travis; fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "ayYe6HlYFrFposeIh2xX1DbdF3CRFnAHM5VvdtfVh/TtpcEvg4GRCanvzaSvsVajLjFZOZhGVgm+uZ1H6ba6jQuoOUvFJ667EVwQk7c8KDJrvZIMvzMxCgvSHb6N8VBh/5svWYa+7Kbd++3WP7XmkLpWli/DXvOSu6I6M7w+m/OI157mWPp0a7iy+Q+o1vSl/3INNIrd/vMT5F+ae1iBLFn3aHndtezhdQr+HrQCHaVP8OiK96rtjzaiRp+dyoMf4U71LoJGRpGZURv9imyXholoQutlT+bhRaumPqrqiwFRGMaL+xhfBZMySMND8wcO9rQnabiQf5Wo9J5aJMnixWjEIg9gGhJ8E96j9VwdUBA7yfHAbVhLrQ0h2TkZuUdqU1EnOWIbnPtjC9exv8R5X2WRs1fMz9j+XpNYclB4YdLclQ662nfsquccqfksDG1rS249WkSl1RIxr9fcD+60xYXgkG78wrTN8cr9NMGk5/AyMyHcvYjA+rGg1V8DZhzC3WZn9Q0NRJoc3b+xx9pxkaO7epBck5sAsNPO8b/bMGGKmgmR5tKSZUN+lTUKLI2znJcUC1dMKKpRCqr1To94ZYVe0G7SFbe+MH4guQXkd7sB6GnsR8/7g8OsVcAtV4DoEWfHwJQIE0bg/UzqubyBPSGPs1JBZm8nks/zTpOJ65o="
+  file: leetcode-cli.*
+  file_glob: true
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
