@@ -9,6 +9,7 @@ describe('sprintf', function() {
     assert.equal(sprintf('%%'), '%');
     assert.equal(sprintf('%s', 123), '123');
     assert.equal(sprintf('%6s', 123), '   123');
+    assert.equal(sprintf('%06s', 123), '000123');
     assert.equal(sprintf('%-6s', 123), '123   ');
     assert.equal(sprintf('%=6s', 123), '  123 ');
 
@@ -26,8 +27,7 @@ describe('sprintf', function() {
   it('should color ok', function() {
     const chalk = rewire('../lib/chalk');
     chalk.init();
-    chalk.setTheme('default');
 
-    assert.equal(sprintf('%=3s', chalk.red('X')), ' \u001b[38;5;196mX\u001b[39m ');
+    assert.equal(sprintf('%=3s', chalk.red('X')), ' ' + chalk.red('X') + ' ');
   });
 });
