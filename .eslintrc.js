@@ -17,6 +17,7 @@ module.exports = {
       "curly": 0,
       "key-spacing": [2, {align: "value"}],
       "max-len": [1, 120],
+      "no-control-regex": 0,
       "no-console": 1,
       "no-empty": [2, { "allowEmptyCatch": true }],
       "no-eval": 1, // we use it on purpose

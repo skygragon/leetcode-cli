@@ -102,7 +102,7 @@ describe('log', function() {
 
   describe('#printf', function() {
     it('should ok', function() {
-      log.printf('%s and %d and %%', 'string', 100);
+      log.printf('%s and %s and %%', 'string', 100);
       assert.equal(expected, 'string and 100 and %');
     });
   }); // #printf
