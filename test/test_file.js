@@ -81,6 +81,18 @@ describe('file', function() {
       assert.equal(meta.lang, 'javascript');
     });
 
+    it('should meta ok with white space', function() {
+      file.data = x => [
+        '/ *',
+        '  * @lc app=leetcode id=123\t  \t  lang=javascript\r',
+        '  * /'
+      ].join('\n');
+      const meta = file.meta('dummy');
+      assert.equal(meta.app, 'leetcode')
+      assert.equal(meta.id, '123');
+      assert.equal(meta.lang, 'javascript');
+    });
+
     it('should meta ok within file name', function() {
       file.data = x => [
         '/ *',
