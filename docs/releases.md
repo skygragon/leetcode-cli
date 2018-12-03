@@ -2,6 +2,10 @@
 layout: default
 title: Release Notes
 ---
+# 2.6.1
+* `submit`
+    * fixes 500 error on windows.
+
 # 2.6.0
 * build all-in-one binary for linux/macos/windows.
 * `show`
