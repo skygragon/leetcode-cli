@@ -133,7 +133,7 @@ describe('helper', function() {
       assert.equal(h.langToExt('ruby'), '.rb');
       assert.equal(h.langToExt('scala'), '.scala');
       assert.equal(h.langToExt('swift'), '.swift');
-      assert.equal(h.langToExt('rust'), '.raw');
+      assert.equal(h.langToExt('rust'), '.rs');
     });
   }); // #langToExt
 
@@ -152,6 +152,7 @@ describe('helper', function() {
       assert.equal(h.extToLang('~/leetcode/file.swift'), 'swift');
       assert.equal(h.extToLang('~/leetcode/../file.sql'), 'mysql');
       assert.equal(h.extToLang('/home/skygragon/file.dat'), 'unknown');
+      assert.equal(h.extToLang('~/leetcode/file.rs'), 'rust');
     });
   }); // #extToLang
 
