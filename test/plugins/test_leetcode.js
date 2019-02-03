@@ -211,7 +211,7 @@ describe('plugin:leetcode', function() {
             ''
           ].join('\r\n'));
 
-        assert.equal(problem.templates.length, 12);
+        assert.equal(problem.templates.length, 13);
 
         assert.equal(problem.templates[0].value, 'cpp');
         assert.equal(problem.templates[0].text, 'C++');
@@ -347,6 +347,17 @@ describe('plugin:leetcode', function() {
           [
             'class Solution {',
             '    fun findTheDifference(s: String, t: String): Char {',
+            '        ',
+            '    }',
+            '}'
+          ].join('\n'));
+
+        assert.equal(problem.templates[12].value, 'rust');
+        assert.equal(problem.templates[12].text, 'Rust');
+        assert.equal(problem.templates[12].defaultCode,
+          [
+            'impl Solution {',
+            '    pub fn find_the_difference(s: String, t:String) -> char {',
             '        ',
             '    }',
             '}'

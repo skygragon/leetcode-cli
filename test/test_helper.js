@@ -131,6 +131,7 @@ describe('helper', function() {
       assert.equal(h.langToExt('python'), '.py');
       assert.equal(h.langToExt('python3'), '.py');
       assert.equal(h.langToExt('ruby'), '.rb');
+      assert.equal(h.langToExt('rust'), '.rs');
       assert.equal(h.langToExt('scala'), '.scala');
       assert.equal(h.langToExt('swift'), '.swift');
       assert.equal(h.langToExt('rust'), '.rs');
@@ -148,6 +149,7 @@ describe('helper', function() {
       assert.equal(h.extToLang('c:/file.js'), 'javascript');
       assert.equal(h.extToLang('c:/Users/skygragon/file.py'), 'python');
       assert.equal(h.extToLang('~/file.rb'), 'ruby');
+      assert.equal(h.extToLang('/home/skygragon/file.rust'), 'rust');
       assert.equal(h.extToLang('/tmp/file.scala'), 'scala');
       assert.equal(h.extToLang('~/leetcode/file.swift'), 'swift');
       assert.equal(h.extToLang('~/leetcode/../file.sql'), 'mysql');
@@ -173,6 +175,7 @@ describe('helper', function() {
       assert.deepEqual(h.langToCommentStyle('python'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('python3'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('ruby'), RUBY_STYLE);
+      assert.deepEqual(h.langToCommentStyle('rust'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('scala'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('swift'), C_STYLE);
     });
