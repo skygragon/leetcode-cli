@@ -234,6 +234,7 @@ Display question details. With `-g`/`-l`/`-x`, the code template would be auto g
     * golang
     * java
     * javascript
+    * kotlin
     * mysql
     * python
     * python3
