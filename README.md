@@ -6,6 +6,8 @@
 
 # leetcode-cli
 
+> Note: This repository is forked from [leetcode-cli](https://github.com/skygragon/leetcode-cli) for temporary usage. 
+
 <img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" align="right">
 
 A productive cli tool to enjoy leetcode!
