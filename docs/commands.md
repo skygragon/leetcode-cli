@@ -3,20 +3,20 @@ layout: default
 title: Commands Help
 ---
 
-* [help](#help)
-* [cache](#cache)
-* [config](#config)
-* [list](#list)
-* [plugin](#plugin)
-* [show](#show)
-* [star](#star)
-* [stat](#stat)
-* [session](#session)
-* [submission](#submission)
-* [submit](#submit)
-* [test](#test)
-* [user](#user)
-* [version](#version)
+- [help](#help)
+- [cache](#cache)
+- [config](#config)
+- [list](#list)
+- [plugin](#plugin)
+- [session](#session)
+- [show](#show)
+- [star](#star)
+- [stat](#stat)
+- [submission](#submission)
+- [submit](#submit)
+- [test](#test)
+- [user](#user)
+- [version](#version)
 
 # help
 
@@ -235,6 +235,7 @@ Display question details. With `-g`/`-l`/`-x`, the code template would be auto g
     * java
     * javascript
     * mysql
+    * php
     * python
     * python3
     * ruby
