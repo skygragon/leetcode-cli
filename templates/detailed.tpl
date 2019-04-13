@@ -7,6 +7,8 @@ ${comment.line} ${link}
 ${comment.line}
 ${comment.line} ${category}
 ${comment.line} ${level} (${percent}%)
+${comment.line} Likes:    ${likes}
+${comment.line} Dislikes: ${dislikes}
 ${comment.line} Total Accepted:    ${totalAC}
 ${comment.line} Total Submissions: ${totalSubmit}
 ${comment.line} Testcase Example:  ${testcase}
