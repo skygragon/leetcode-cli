@@ -154,6 +154,11 @@ describe('core', function() {
       file.isWindows = () => false;
 
       const expected = [
+        '/*',
+        ' * @lc app=leetcode id=2 lang=cpp',
+        ' *',
+        ' * [2] Add Two Numbers',
+        ' */',
         '/**',
         ' * Definition for singly-linked list.',
         ' * struct ListNode {',
@@ -184,6 +189,11 @@ describe('core', function() {
       file.isWindows = () => true;
 
       const expected = [
+        '/*',
+        ' * @lc app=leetcode id=2 lang=cpp',
+        ' *',
+        ' * [2] Add Two Numbers',
+        ' */',
         '/**',
         ' * Definition for singly-linked list.',
         ' * struct ListNode {',
@@ -223,6 +233,8 @@ describe('core', function() {
         ' *',
         ' * algorithms',
         ' * Medium (25.37%)',
+        ' * Likes:    1',
+        ' * Dislikes: 1',
         ' * Total Accepted:    195263',
         ' * Total Submissions: 769711',
         ' * Testcase Example:  \'[2,4,3]\\n[5,6,4]\'',
@@ -273,6 +285,8 @@ describe('core', function() {
         '#',
         '# algorithms',
         '# Medium (25.37%)',
+        '# Likes:    1',
+        '# Dislikes: 1',
         '# Total Accepted:    195263',
         '# Total Submissions: 769711',
         '# Testcase Example:  \'\'',

@@ -16,8 +16,8 @@ describe('plugin:cache', function() {
   let session;
 
   const PROBLEMS = [
-    {id: 0, fid: 0, name: 'name0', slug: 'slug0', starred: false, category: 'algorithms'},
-    {id: 1, fid: 1, name: 'name1', slug: 'slug1', starred: true, category: 'algorithms'}
+    {id: 0, fid: 0, name: 'name0', slug: 'slug0', starred: false, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'},
+    {id: 1, fid: 1, name: 'name1', slug: 'slug1', starred: true, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'}
   ];
   const PROBLEM = {id: 0, fid: 0, slug: 'slug0', category: 'algorithms'};
 
@@ -128,7 +128,7 @@ describe('plugin:cache', function() {
       const ret = plugin.saveProblem(problem);
       assert.equal(ret, true);
       assert.deepEqual(cache.get('0.slug0.algorithms'),
-          {id: 0, fid: 0, slug: 'slug0', name: 'name0', category: 'algorithms'});
+          {id: 0, fid: 0, slug: 'slug0', name: 'name0', desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'});
     });
   }); // #saveProblem
 
@@ -143,8 +143,8 @@ describe('plugin:cache', function() {
       plugin.getProblems(function(e, problems) {
         assert.equal(e, null);
         assert.deepEqual(problems, [
-            {id: 0, fid: 0, name: 'name0', slug: 'slug0', value: 'value00', starred: false, category: 'algorithms'},
-            {id: 1, fid: 1, name: 'name1', slug: 'slug1', starred: true, category: 'algorithms'}
+            {id: 0, fid: 0, name: 'name0', slug: 'slug0', value: 'value00', starred: false, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'},
+            {id: 1, fid: 1, name: 'name1', slug: 'slug1', starred: true, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'}
         ]);
         done();
       });

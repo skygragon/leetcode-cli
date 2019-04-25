@@ -50,10 +50,13 @@ describe('file', function() {
 
     it('should listCodeDir ok', function() {
       const files = file.listCodeDir('lib/plugins');
-      assert.equal(files.length, 3);
+      assert.equal(files.length, 6);
       assert.equal(files[0].name, 'cache');
-      assert.equal(files[1].name, 'leetcode');
-      assert.equal(files[2].name, 'retry');
+      assert.equal(files[1].name, 'company');
+      assert.equal(files[2].name, 'leetcode.cn');
+      assert.equal(files[3].name, 'leetcode');
+      assert.equal(files[4].name, 'retry');
+      assert.equal(files[5].name, 'solution.discuss');
     });
 
     it('should pluginFile ok', function() {
