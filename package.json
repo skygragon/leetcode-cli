@@ -1,6 +1,6 @@
 {
   "name": "vsc-leetcode-cli",
-  "version": "2.6.7",
+  "version": "2.6.8",
   "description": "A cli tool to enjoy leetcode!",
   "preferGlobal": "true",
   "engines": {
