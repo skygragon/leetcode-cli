@@ -163,9 +163,9 @@ describe('helper', function() {
 
   describe('#langToCommentStyle', function() {
     it('should ok', function() {
-      const C_STYLE = {start: '/*', line: ' *', end: ' */'};
-      const RUBY_STYLE = {start: '#', line: '#', end: '#'};
-      const SQL_STYLE = {start: '--', line: '--', end: '--'};
+      const C_STYLE = {start: '/*', line: ' *', end: ' */', singleLine: '//'};
+      const RUBY_STYLE = {start: '#', line: '#', end: '#', singleLine: '#'};
+      const SQL_STYLE = {start: '--', line: '--', end: '--', singleLine: '--'};
 
       assert.deepEqual(h.langToCommentStyle('bash'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('c'), C_STYLE);

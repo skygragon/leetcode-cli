@@ -15,4 +15,7 @@ ${comment.line} Testcase Example:  ${testcase}
 ${comment.line}
 {{ desc.forEach(function(x) { }}${comment.line} ${x}
 {{ }) }}${comment.end}
+
+${comment.singleLine} @lc code=start
 ${code}
+${comment.singleLine} @lc code=end
