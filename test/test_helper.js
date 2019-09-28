@@ -128,12 +128,13 @@ describe('helper', function() {
       assert.equal(h.langToExt('java'), '.java');
       assert.equal(h.langToExt('javascript'), '.js');
       assert.equal(h.langToExt('mysql'), '.sql');
+      assert.equal(h.langToExt('php'), '.php');
       assert.equal(h.langToExt('python'), '.py');
       assert.equal(h.langToExt('python3'), '.py');
       assert.equal(h.langToExt('ruby'), '.rb');
+      assert.equal(h.langToExt('rust'), '.rs');
       assert.equal(h.langToExt('scala'), '.scala');
       assert.equal(h.langToExt('swift'), '.swift');
-      assert.equal(h.langToExt('rust'), '.rs');
     });
   }); // #langToExt
 
@@ -146,13 +147,14 @@ describe('helper', function() {
       assert.equal(h.extToLang('../file.go'), 'golang');
       assert.equal(h.extToLang('file.java'), 'java');
       assert.equal(h.extToLang('c:/file.js'), 'javascript');
+      assert.equal(h.extToLang('~/leetcode/../file.sql'), 'mysql');
+      assert.equal(h.extToLang('~/leetcode/hello.php'), 'php');
       assert.equal(h.extToLang('c:/Users/skygragon/file.py'), 'python');
       assert.equal(h.extToLang('~/file.rb'), 'ruby');
+      assert.equal(h.extToLang('~/leetcode/file.rs'), 'rust');
       assert.equal(h.extToLang('/tmp/file.scala'), 'scala');
       assert.equal(h.extToLang('~/leetcode/file.swift'), 'swift');
-      assert.equal(h.extToLang('~/leetcode/../file.sql'), 'mysql');
       assert.equal(h.extToLang('/home/skygragon/file.dat'), 'unknown');
-      assert.equal(h.extToLang('~/leetcode/file.rs'), 'rust');
     });
   }); // #extToLang
 
@@ -170,9 +172,11 @@ describe('helper', function() {
       assert.deepEqual(h.langToCommentStyle('java'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('javascript'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('mysql'), SQL_STYLE);
+      assert.deepEqual(h.langToCommentStyle('php'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('python'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('python3'), RUBY_STYLE);
       assert.deepEqual(h.langToCommentStyle('ruby'), RUBY_STYLE);
+      assert.deepEqual(h.langToCommentStyle('rust'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('scala'), C_STYLE);
       assert.deepEqual(h.langToCommentStyle('swift'), C_STYLE);
     });
