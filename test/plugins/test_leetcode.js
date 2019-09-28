@@ -401,11 +401,11 @@ describe('plugin:leetcode', function() {
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
+        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_msg": "Accepted", "submission_id": "interpret_expected_id1"}');
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id2/check/')
-        .reply(200, '{"state": "SUCCESS", "run_success": false, "status_code": 15}');
+        .reply(200, '{"state": "SUCCESS", "run_success": false, "status_msg": "Runtime Error", "submission_id": "interpret_id2"}');
 
       plugin.testProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
@@ -437,7 +437,7 @@ describe('plugin:leetcode', function() {
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
+        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_msg": "Accepted", "submission_id": "id1"}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
@@ -460,7 +460,7 @@ describe('plugin:leetcode', function() {
         .reply(200, '{"state": "STARTED"}');
       nock('https://leetcode.com')
         .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
+        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_msg": "Accepted", "submission_id": "id1"}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
         assert.equal(e, null);
