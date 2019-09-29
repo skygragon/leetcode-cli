@@ -2,6 +2,10 @@
 layout: default
 title: Release Notes
 ---
+# 2.6.2
+* `submit`
+	* fixes beta ratio issue
+
 # 2.6.1
 * `submit`
     * fixes 500 error on windows.
