@@ -7,6 +7,7 @@
 # leetcode-cli
 
 > Note: This repository is forked from [leetcode-cli](https://github.com/skygragon/leetcode-cli) for temporary usage. 
+> Note: Copy cookie from webbrowser and Using **leetcode user -c** can temporary fix can't [login problem](https://github.com/jdneo/vscode-leetcode/issues/478).
 
 <img src="https://github.com/skygragon/leetcode-cli/raw/master/docs/logo.png" align="right">
 
@@ -39,6 +40,7 @@ Great thanks to leetcode.com, a really awesome website!
 
 	Read help first                         $ leetcode help
 	Login with your leetcode account        $ leetcode user -l
+	Cookie login with cookie				$ leetcode user -c
 	Browse all questions                    $ leetcode list
 	Choose one question                     $ leetcode show 1 -g -l cpp
 	Coding it!
