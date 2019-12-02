@@ -44,7 +44,7 @@ Display help message. It also shows examples of the commands.
       leetcode test <filename>       Test code                               [aliases: run]
       leetcode user                  Manage account                      [aliases: account]
       leetcode version               Show version info                 [aliases: info, env]
-      leetcode completion            generate bash completion script
+      leetcode completion            Generate bash completion script
 
     Options:
       -h, --help  Show help                                                       [boolean]

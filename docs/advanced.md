@@ -15,7 +15,7 @@ title: Advanced Topic
 
 # Aliases
 
-The commands in leetcode-cli usually has builtin aliases as below:
+The commands in leetcode-cli usually have builtin aliases as below:
 
 |Command   |Aliases                |
 |----------|-----------------------|
@@ -34,9 +34,9 @@ The commands in leetcode-cli usually has builtin aliases as below:
 
 # Auto Login
 
-Leetcode.com is restricting only one session alive in the same time, which means if you login same account otherwhere, the existing login session will be expired immediately. This will greatly harm your experience since you have to re-login again and again among different sessions.
+Leetcode.com is restricting only one session alive at the same time, which means if you log in the same account elsewhere, the existing login session will be expired immediately. This will greatly harm your experience since you have to log in again and again among different sessions.
 
-The good news is leetcode-cli will help a lot on this by trying re-login transparently and automatically without interrupting your current work whenever it detects your current session is expired. To enable this feature you could add following in your config then login again:
+The good news is leetcode-cli will help a lot with this by trying re-authenticate transparently and automatically without interrupting your current work whenever it detects your current session is expired. To enable this feature you could add following in your config then log in again:
 
     {
         "autologin": {
