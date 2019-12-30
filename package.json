@@ -2,7 +2,6 @@
   "name": "vsc-leetcode-cli",
   "version": "2.6.20",
   "description": "A cli tool to enjoy leetcode!",
-  "preferGlobal": "true",
   "engines": {
     "node": ">=4"
   },
@@ -46,9 +45,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jdneo/leetcode-cli/issues"
+    "url": "https://github.com/leetcode-tools/leetcode-cli/issues"
   },
-  "homepage": "https://github.com/jdneo/leetcode-cli#readme",
+  "homepage": "https://github.com/leetcode-tools/leetcode-cli#readme",
   "dependencies": {
     "ansi-styles": "3.2.1",
     "cheerio": "0.20.0",

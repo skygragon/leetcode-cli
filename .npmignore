@@ -5,3 +5,5 @@ test/
 .travis.yml
 Dockerfile
 .dockerignore
+.nyc_output/
+coverage/
