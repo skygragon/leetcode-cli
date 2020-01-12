@@ -2,8 +2,10 @@
 docs/
 test/
 .eslintrc.js
+.gitignore
 .travis.yml
 Dockerfile
 .dockerignore
 .nyc_output/
+.vscode/
 coverage/

@@ -1,6 +1,6 @@
 {
   "name": "vsc-leetcode-cli",
-  "version": "2.6.21",
+  "version": "2.6.22",
   "description": "A cli tool to enjoy leetcode!",
   "engines": {
     "node": ">=4"
