@@ -141,6 +141,7 @@ Navigate the quations.
         * `algorithms`
         * `database`
         * `shell`
+        * `concurrency`
     * by company (require plugin)
     * by topic (require plugin)
 * `-s` to show statistic counters of the output list.
