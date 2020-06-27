@@ -1,6 +1,6 @@
 {
   "name": "vsc-leetcode-cli",
-  "version": "2.6.23",
+  "version": "2.7.0",
   "description": "A cli tool to enjoy leetcode!",
   "engines": {
     "node": ">=4"
@@ -52,7 +52,7 @@
     "ansi-styles": "3.2.1",
     "cheerio": "0.20.0",
     "he": "1.2.0",
-    "mkdirp": "0.5.1",
+    "mkdirp": "^1.0.4",
     "moment": "^2.20.1",
     "nconf": "0.10.0",
     "ora": "3.0.0",
@@ -61,15 +61,15 @@
     "supports-color": "5.5.0",
     "underscore": "1.9.1",
     "wordwrap": "1.0.0",
-    "yargs": "12.0.4"
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "chai": "4.2.0",
     "eslint": "5.9.0",
     "eslint-config-google": "0.11.0",
-    "mocha": "5.2.0",
+    "mocha": "^8.0.1",
     "nock": "10.0.2",
-    "nyc": "^13.3.0",
+    "nyc": "^15.1.0",
     "pkg": "^4.4.7",
     "rewire": "4.0.1"
   }
