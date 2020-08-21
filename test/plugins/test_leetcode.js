@@ -508,8 +508,8 @@ describe('plugin:leetcode', function() {
   describe('#starProblem', function() {
     it('should star ok', function(done) {
       nock('https://leetcode.com')
-        .post('/list/api/questions')
-        .reply(204, '');
+        .post('/graphql')
+        .replyWithFile(200, './test/mock/find-the-difference-star.json.20200821'); 
 
       plugin.starProblem(PROBLEM, true, function(e, starred) {
         assert.equal(e, null);
@@ -520,8 +520,8 @@ describe('plugin:leetcode', function() {
 
     it('should unstar ok', function(done) {
       nock('https://leetcode.com')
-        .delete('/list/api/questions/abcdef/389')
-        .reply(204, '');
+        .post('/graphql')
+        .replyWithFile(200, './test/mock/find-the-difference-unstar.json.20200821'); 
 
       plugin.starProblem(PROBLEM, false, function(e, starred) {
         assert.equal(e, null);
@@ -532,7 +532,7 @@ describe('plugin:leetcode', function() {
 
     it('should star fail if http error', function(done) {
       nock('https://leetcode.com')
-        .post('/list/api/questions')
+        .post('/graphql')
         .replyWithError('unknown error!');
 
       plugin.starProblem(PROBLEM, true, function(e, starred) {
