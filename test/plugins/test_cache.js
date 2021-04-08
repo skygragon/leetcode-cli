@@ -19,6 +19,7 @@ describe('plugin:cache', function() {
     {id: 0, fid: 0, name: 'name0', slug: 'slug0', starred: false, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'},
     {id: 1, fid: 1, name: 'name1', slug: 'slug1', starred: true, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'}
   ];
+  const TRANSLATION_CONFIGS = { useEndpointTranslation: false };
   const PROBLEM = {id: 0, fid: 0, slug: 'slug0', category: 'algorithms'};
 
   before(function() {
@@ -51,8 +52,9 @@ describe('plugin:cache', function() {
   describe('#getProblems', function() {
     it('should getProblems w/ cache ok', function(done) {
       cache.set('problems', PROBLEMS);
+      cache.set(h.KEYS.translation, TRANSLATION_CONFIGS);
 
-      plugin.getProblems(function(e, problems) {
+      plugin.getProblems(false, function(e, problems) {
         assert.equal(e, null);
         assert.deepEqual(problems, PROBLEMS);
         done();
@@ -61,9 +63,9 @@ describe('plugin:cache', function() {
 
     it('should getProblems w/o cache ok', function(done) {
       cache.del('problems');
-      next.getProblems = cb => cb(null, PROBLEMS);
+      next.getProblems = (needT, cb) => cb(null, PROBLEMS);
 
-      plugin.getProblems(function(e, problems) {
+      plugin.getProblems(false, function(e, problems) {
         assert.equal(e, null);
         assert.deepEqual(problems, PROBLEMS);
         done();
@@ -72,9 +74,9 @@ describe('plugin:cache', function() {
 
     it('should getProblems w/o cache fail if client error', function(done) {
       cache.del('problems');
-      next.getProblems = cb => cb('client getProblems error');
+      next.getProblems = (needT, cb) => cb('client getProblems error');
 
-      plugin.getProblems(function(e, problems) {
+      plugin.getProblems(false, function(e, problems) {
         assert.equal(e, 'client getProblems error');
         done();
       });
@@ -84,9 +86,10 @@ describe('plugin:cache', function() {
   describe('#getProblem', function() {
     it('should getProblem w/ cache ok', function(done) {
       cache.set('problems', PROBLEMS);
+      cache.set(h.KEYS.translation, TRANSLATION_CONFIGS);
       cache.set('0.slug0.algorithms', PROBLEMS[0]);
 
-      plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
+      plugin.getProblem(_.clone(PROBLEM), false, function(e, problem) {
         assert.equal(e, null);
         assert.deepEqual(problem, PROBLEMS[0]);
         done();
@@ -96,9 +99,9 @@ describe('plugin:cache', function() {
     it('should getProblem w/o cache ok', function(done) {
       cache.set('problems', PROBLEMS);
       cache.del('0.slug0.algorithms');
-      next.getProblem = (problem, cb) => cb(null, PROBLEMS[0]);
+      next.getProblem = (problem, needT, cb) => cb(null, PROBLEMS[0]);
 
-      plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
+      plugin.getProblem(_.clone(PROBLEM), false, function(e, problem) {
         assert.equal(e, null);
         assert.deepEqual(problem, PROBLEMS[0]);
         done();
@@ -108,9 +111,9 @@ describe('plugin:cache', function() {
     it('should getProblem fail if client error', function(done) {
       cache.set('problems', PROBLEMS);
       cache.del('0.slug0.algorithms');
-      next.getProblem = (problem, cb) => cb('client getProblem error');
+      next.getProblem = (problem, needT, cb) => cb('client getProblem error');
 
-      plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
+      plugin.getProblem(_.clone(PROBLEM), false, function(e, problem) {
         assert.equal(e, 'client getProblem error');
         done();
       });
@@ -135,12 +138,13 @@ describe('plugin:cache', function() {
   describe('#updateProblem', function() {
     it('should updateProblem ok', function(done) {
       cache.set('problems', PROBLEMS);
+      cache.set(h.KEYS.translation, TRANSLATION_CONFIGS);
 
       const kv = {value: 'value00'};
       const ret = plugin.updateProblem(PROBLEMS[0], kv);
       assert.equal(ret, true);
 
-      plugin.getProblems(function(e, problems) {
+      plugin.getProblems(false, function(e, problems) {
         assert.equal(e, null);
         assert.deepEqual(problems, [
             {id: 0, fid: 0, name: 'name0', slug: 'slug0', value: 'value00', starred: false, desc: '<pre></pre>', likes: '1', dislikes: '1', category: 'algorithms'},

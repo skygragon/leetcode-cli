@@ -125,7 +125,7 @@ describe('plugin:leetcode', function() {
         .get('/api/problems/concurrency/')
         .replyWithFile(200, './test/mock/problems.json.20160911');
 
-      plugin.getProblems(function(e, problems) {
+      plugin.getProblems(false, function(e, problems) {
         assert.equal(e, null);
         assert.equal(problems.length, 377 * 4);
         done();
@@ -149,7 +149,7 @@ describe('plugin:leetcode', function() {
         .get('/api/problems/concurrency/')
         .replyWithFile(200, './test/mock/problems.json.20160911');
 
-      plugin.getProblems(function(e, problems) {
+      plugin.getProblems(false, function(e, problems) {
         assert.equal(e.message, 'unknown error');
         done();
       });
@@ -192,7 +192,7 @@ describe('plugin:leetcode', function() {
         .post('/graphql')
         .replyWithFile(200, './test/mock/find-the-difference.json.20171216');
 
-      plugin.getProblem(PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, false, function(e, problem) {
         assert.equal(e, null);
         assert.equal(problem.totalAC, '89.7K');
         assert.equal(problem.totalSubmit, '175.7K');
@@ -367,7 +367,7 @@ describe('plugin:leetcode', function() {
     it('should fail if no permission for locked', function(done) {
       PROBLEM.locked = true;
 
-      plugin.getProblem(PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, false, function(e, problem) {
         assert.equal(e, 'failed to load locked problem!');
         done();
       });
@@ -376,7 +376,7 @@ describe('plugin:leetcode', function() {
     it('should fail if session expired', function(done) {
       nock('https://leetcode.com').post('/graphql').reply(403);
 
-      plugin.getProblem(PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, false, function(e, problem) {
         assert.equal(e, session.errors.EXPIRED);
         done();
       });
@@ -385,7 +385,7 @@ describe('plugin:leetcode', function() {
     it('should fail if http error', function(done) {
       nock('https://leetcode.com').post('/graphql').reply(500);
 
-      plugin.getProblem(PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, false, function(e, problem) {
         assert.deepEqual(e, {msg: 'http error', statusCode: 500});
         done();
       });
@@ -394,7 +394,7 @@ describe('plugin:leetcode', function() {
     it('should fail if unknown error', function(done) {
       nock('https://leetcode.com').post('/graphql').replyWithError('unknown error!');
 
-      plugin.getProblem(PROBLEM, function(e, problem) {
+      plugin.getProblem(PROBLEM, false, function(e, problem) {
         assert.equal(e.message, 'unknown error!');
         done();
       });

@@ -40,8 +40,8 @@ describe('core', function() {
 
   beforeEach(function() {
     next = {};
-    next.getProblems = cb => cb(null, PROBLEMS);
-    next.getProblem = (p, cb) => cb(null, p);
+    next.getProblems = (needTrans, cb) => cb(null, PROBLEMS);
+    next.getProblem = (p, needTrans, cb) => cb(null, p);
 
     core = rewire('../lib/core');
     core.setNext(next);
@@ -68,7 +68,7 @@ describe('core', function() {
       let n = cases.length;
 
       for (let x of cases) {
-        core.filterProblems({query: x[0]}, function(e, problems) {
+        core.filterProblems({query: x[0], dontTranslate: false}, function(e, problems) {
           assert.notExists(e);
           assert.equal(problems.length, x[1].length);
 
@@ -90,7 +90,7 @@ describe('core', function() {
       let n = cases.length;
 
       for (let x of cases) {
-        core.filterProblems({tag: x[0]}, function(e, problems) {
+        core.filterProblems({ tag: x[0], dontTranslate: false}, function(e, problems) {
           assert.notExists(e);
           assert.equal(problems.length, x[1].length);
 
@@ -102,7 +102,7 @@ describe('core', function() {
     });
 
     it('should fail if getProblems error', function(done) {
-      next.getProblems = cb => cb('getProblems error');
+      next.getProblems = (needT, cb) => cb('getProblems error');
       core.filterProblems({}, function(e) {
         assert.equal(e, 'getProblems error');
         done();
@@ -340,8 +340,9 @@ describe('core', function() {
   }); // #exportProblem
 
   describe('#getProblem', function() {
-    it('should get by id ok', function(done) {
-      core.getProblem(0, function(e, problem) {
+    it('should get by id ok', function (done) {
+      // set needTranslate to false here because it's not used anyways
+      core.getProblem(0, false, function(e, problem) {
         assert.notExists(e);
         assert.deepEqual(problem, PROBLEMS[0]);
         done();
@@ -349,7 +350,7 @@ describe('core', function() {
     });
 
     it('should get by key ok', function(done) {
-      core.getProblem('slug0', function(e, problem) {
+      core.getProblem('slug0', false, function(e, problem) {
         assert.notExists(e);
         assert.deepEqual(problem, PROBLEMS[0]);
         done();
@@ -357,23 +358,23 @@ describe('core', function() {
     });
 
     it('should fail if not found', function(done) {
-      core.getProblem(3, function(e, problem) {
+      core.getProblem(3, false, function(e, problem) {
         assert.equal(e, 'Problem not found!');
         done();
       });
     });
 
     it('should fail if client error', function(done) {
-      next.getProblem = (problem, cb) => cb('client getProblem error');
+      next.getProblem = (problem, needT, cb) => cb('client getProblem error');
 
-      core.getProblem(0, function(e, problem) {
+      core.getProblem(0, false, function(e, problem) {
         assert.equal(e, 'client getProblem error');
         done();
       });
     });
 
     it('should ok if problem is already there', function(done) {
-      core.getProblem(PROBLEMS[1], function(e, problem) {
+      core.getProblem(PROBLEMS[1], false, function(e, problem) {
         assert.notExists(e);
         assert.deepEqual(problem, PROBLEMS[1]);
         done();
@@ -381,9 +382,9 @@ describe('core', function() {
     });
 
     it('should fail if getProblems error', function(done) {
-      next.getProblems = cb => cb('getProblems error');
+      next.getProblems = (needT, cb) => cb('getProblems error');
 
-      core.getProblem(0, function(e, problem) {
+      core.getProblem(0, false, function(e, problem) {
         assert.equal(e, 'getProblems error');
         done();
       });
