@@ -53,24 +53,24 @@
     "cheerio": "0.20.0",
     "he": "1.2.0",
     "mkdirp": "^1.0.4",
-    "moment": "^2.20.1",
-    "nconf": "0.10.0",
+    "moment": "^2.29.1",
+    "nconf": "^0.11.2",
     "ora": "3.0.0",
     "prompt": "1.0.0",
     "request": "2.88.0",
     "supports-color": "5.5.0",
     "underscore": "1.9.1",
     "wordwrap": "1.0.0",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "chai": "4.2.0",
     "eslint": "5.9.0",
     "eslint-config-google": "0.11.0",
-    "mocha": "^8.0.1",
+    "mocha": "^8.3.2",
     "nock": "10.0.2",
     "nyc": "^15.1.0",
-    "pkg": "^4.4.7",
+    "pkg": "^4.5.1",
     "rewire": "4.0.1"
   }
 }
