@@ -4,14 +4,14 @@
   "description": "A cli tool to enjoy leetcode!",
   "preferGlobal": "true",
   "engines": {
-    "node": ">=4"
+    "node": ">=12"
   },
   "bin": {
     "leetcode": "./bin/leetcode"
   },
   "scripts": {
     "lint": "eslint lib/ test/",
-    "test": "npm run lint && nyc mocha test test/plugins && nyc report --reporter=lcov",
+    "test": "pnpm run lint && nyc mocha test test/plugins && nyc report --reporter=lcov",
     "travis": "node bin/pkg",
     "pkg": "pkg . --out-path=dist/ --targets"
   },
@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/skygragon/leetcode-cli#readme",
   "dependencies": {
-    "ansi-styles": "5.0.0",
+    "ansi-styles": "6.2.3",
     "cheerio": "0.20.0",
     "color-convert": "^2.0.1",
     "he": "1.2.0",

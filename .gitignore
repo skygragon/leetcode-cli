@@ -48,3 +48,6 @@ lib/plugins/solution.discuss.js
 
 # vs code configs
 .vscode/launch.json
+
+# Temporary directory for storing files
+my_tmp/
