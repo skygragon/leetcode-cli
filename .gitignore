@@ -40,3 +40,8 @@ dist/
 tmp/
 *.swp
 .DS_Store
+
+# TODO: remove those ignores 
+lib/plugins/company.js
+lib/plugins/leetcode.cn.js
+lib/plugins/solution.discuss.js
