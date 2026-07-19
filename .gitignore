@@ -45,3 +45,6 @@ tmp/
 lib/plugins/company.js
 lib/plugins/leetcode.cn.js
 lib/plugins/solution.discuss.js
+
+# vs code configs
+.vscode/launch.json

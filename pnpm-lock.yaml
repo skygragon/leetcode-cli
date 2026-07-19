@@ -9,11 +9,14 @@ importers:
   .:
     dependencies:
       ansi-styles:
-        specifier: 3.2.1
-        version: 3.2.1
+        specifier: 5.0.0
+        version: 5.0.0
       cheerio:
         specifier: 0.20.0
         version: 0.20.0
+      color-convert:
+        specifier: ^2.0.1
+        version: 2.0.1
       he:
         specifier: 1.2.0
         version: 1.2.0
@@ -223,9 +226,13 @@ packages:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
     engines: {node: '>=4'}
 
-  ansi-styles@4.3.0:
-    resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
+  ansi-styles@4.1.0:
+    resolution: {integrity: sha512-Qts4KCLKG+waHc9C4m07weIY8qyeixoS0h6RnbsNVD6Fw+pEZGW3vTyObL3WXpE09Mq4Oi7/lBEyLmOiLtlYWQ==}
     engines: {node: '>=8'}
+
+  ansi-styles@5.0.0:
+    resolution: {integrity: sha512-6564t0m0fuQMnockqBv7wJxo9T5C2V9JpYXyNScfRDPVLusOQQhkpMGrFC17QbiolraQ1sMXX+Y5nJpjqozL4g==}
+    engines: {node: '>=10'}
 
   aproba@1.2.0:
     resolution: {integrity: sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==}
@@ -1981,9 +1988,11 @@ snapshots:
     dependencies:
       color-convert: 1.9.3
 
-  ansi-styles@4.3.0:
+  ansi-styles@4.1.0:
     dependencies:
       color-convert: 2.0.1
+
+  ansi-styles@5.0.0: {}
 
   aproba@1.2.0: {}
 
@@ -2112,7 +2121,7 @@ snapshots:
 
   chalk@3.0.0:
     dependencies:
-      ansi-styles: 4.3.0
+      ansi-styles: 4.1.0
       supports-color: 7.2.0
 
   chardet@0.4.2: {}
@@ -3714,7 +3723,7 @@ snapshots:
 
   wrap-ansi@7.0.0:
     dependencies:
-      ansi-styles: 4.3.0
+      ansi-styles: 4.1.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
 

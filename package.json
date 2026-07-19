@@ -50,8 +50,9 @@
   },
   "homepage": "https://github.com/skygragon/leetcode-cli#readme",
   "dependencies": {
-    "ansi-styles": "3.2.1",
+    "ansi-styles": "5.0.0",
     "cheerio": "0.20.0",
+    "color-convert": "^2.0.1",
     "he": "1.2.0",
     "mkdirp": "0.5.1",
     "moment": "^2.20.1",
