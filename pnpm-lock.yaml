@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  winston@2.1.1: e8c1b9e3b2eb156c89b00af3f76aa3a4183fa09318cbdc0c2daab904ea16fa76
+
 importers:
 
   .:
@@ -3468,7 +3471,7 @@ snapshots:
       async: 3.2.3
       read: 1.0.7
       revalidator: 0.1.8
-      winston: 2.1.1
+      winston: 2.1.1(patch_hash=e8c1b9e3b2eb156c89b00af3f76aa3a4183fa09318cbdc0c2daab904ea16fa76)
 
   propagate@1.0.0: {}
 
@@ -3970,7 +3973,7 @@ snapshots:
     dependencies:
       string-width: 4.2.3
 
-  winston@2.1.1:
+  winston@2.1.1(patch_hash=e8c1b9e3b2eb156c89b00af3f76aa3a4183fa09318cbdc0c2daab904ea16fa76):
     dependencies:
       async: 1.0.0
       colors: 1.0.3
