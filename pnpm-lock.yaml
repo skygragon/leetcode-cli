@@ -42,8 +42,8 @@ importers:
         specifier: 2.88.2
         version: 2.88.2
       supports-color:
-        specifier: 5.5.0
-        version: 5.5.0
+        specifier: 10.2.2
+        version: 10.2.2
       underscore:
         specifier: 1.13.8
         version: 1.13.8
@@ -62,22 +62,22 @@ importers:
         version: 4.2.0
       eslint:
         specifier: 5.9.0
-        version: 5.9.0(supports-color@5.5.0)
+        version: 5.9.0(supports-color@10.2.2)
       eslint-config-google:
         specifier: 0.14.0
-        version: 0.14.0(eslint@5.9.0(supports-color@5.5.0))
+        version: 0.14.0(eslint@5.9.0(supports-color@10.2.2))
       mocha:
         specifier: 5.2.0
         version: 5.2.0
       nock:
         specifier: 10.0.2
-        version: 10.0.2(supports-color@5.5.0)
+        version: 10.0.2(supports-color@10.2.2)
       pkg:
         specifier: ^4.3.4
         version: 4.5.1
       rewire:
         specifier: 4.0.1
-        version: 4.0.1(supports-color@5.5.0)
+        version: 4.0.1(supports-color@10.2.2)
 
 packages:
 
@@ -1779,6 +1779,10 @@ packages:
     resolution: {integrity: sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==}
     engines: {node: '>=0.10.0'}
 
+  supports-color@10.2.2:
+    resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
+    engines: {node: '>=18'}
+
   supports-color@2.0.0:
     resolution: {integrity: sha512-KKNVtd6pCYgPIKU4cp2733HWYCpplQhddZLBUryaAHou723x+FRzQ5Df824Fj+IyyuiQTRoub4SnIFfIcrp70g==}
     engines: {node: '>=0.8.0'}
@@ -1791,8 +1795,8 @@ packages:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
 
-  supports-color@7.2.0:
-    resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
+  supports-color@7.1.0:
+    resolution: {integrity: sha512-oRSIpR8pxT1Wr2FquTNnGet79b3BWljqOuoW/h4oBhxJ/HUbX5nX6JSruTkvXDCFMwDPvsaTTbvMLKZWSy0R5g==}
     engines: {node: '>=8'}
 
   supports-preserve-symlinks-flag@1.0.0:
@@ -2268,7 +2272,7 @@ snapshots:
   chalk@3.0.0:
     dependencies:
       ansi-styles: 4.1.0
-      supports-color: 7.2.0
+      supports-color: 7.1.0
 
   chalk@5.6.2: {}
 
@@ -2420,17 +2424,17 @@ snapshots:
     optionalDependencies:
       supports-color: 5.4.0
 
-  debug@3.2.7(supports-color@5.5.0):
+  debug@3.2.7(supports-color@10.2.2):
     dependencies:
       ms: 2.1.3
     optionalDependencies:
-      supports-color: 5.5.0
+      supports-color: 10.2.2
 
-  debug@4.4.3(supports-color@5.5.0):
+  debug@4.4.3(supports-color@10.2.2):
     dependencies:
       ms: 2.1.3
     optionalDependencies:
-      supports-color: 5.5.0
+      supports-color: 10.2.2
 
   decamelize@1.2.0: {}
 
@@ -2545,9 +2549,9 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-google@0.14.0(eslint@5.9.0(supports-color@5.5.0)):
+  eslint-config-google@0.14.0(eslint@5.9.0(supports-color@10.2.2)):
     dependencies:
-      eslint: 5.9.0(supports-color@5.5.0)
+      eslint: 5.9.0(supports-color@10.2.2)
 
   eslint-scope@3.7.3:
     dependencies:
@@ -2565,14 +2569,14 @@ snapshots:
 
   eslint-visitor-keys@1.3.0: {}
 
-  eslint@4.19.1(supports-color@5.5.0):
+  eslint@4.19.1(supports-color@10.2.2):
     dependencies:
       ajv: 5.5.2
       babel-code-frame: 6.26.0
       chalk: 2.4.2
       concat-stream: 1.6.2
       cross-spawn: 5.1.0
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@10.2.2)
       doctrine: 2.1.0
       eslint-scope: 3.7.3
       eslint-visitor-keys: 1.3.0
@@ -2608,13 +2612,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint@5.9.0(supports-color@5.5.0):
+  eslint@5.9.0(supports-color@10.2.2):
     dependencies:
       '@babel/code-frame': 7.29.7
       ajv: 6.15.0
       chalk: 2.4.2
       cross-spawn: 6.0.6
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@10.2.2)
       doctrine: 2.1.0
       eslint-scope: 4.0.3
       eslint-utils: 1.4.3
@@ -3060,7 +3064,7 @@ snapshots:
     dependencies:
       istanbul-lib-coverage: 3.2.2
       make-dir: 4.0.0
-      supports-color: 7.2.0
+      supports-color: 7.1.0
 
   istanbul-reports@3.2.0:
     dependencies:
@@ -3255,10 +3259,10 @@ snapshots:
 
   nice-try@1.0.5: {}
 
-  nock@10.0.2(supports-color@5.5.0):
+  nock@10.0.2(supports-color@10.2.2):
     dependencies:
       chai: 4.2.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@10.2.2)
       deep-equal: 1.1.2
       json-stringify-safe: 5.0.1
       lodash: 4.18.1
@@ -3605,9 +3609,9 @@ snapshots:
 
   revalidator@0.1.8: {}
 
-  rewire@4.0.1(supports-color@5.5.0):
+  rewire@4.0.1(supports-color@10.2.2):
     dependencies:
-      eslint: 4.19.1(supports-color@5.5.0)
+      eslint: 4.19.1(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -3823,6 +3827,8 @@ snapshots:
 
   strip-json-comments@2.0.1: {}
 
+  supports-color@10.2.2: {}
+
   supports-color@2.0.0: {}
 
   supports-color@5.4.0:
@@ -3833,7 +3839,7 @@ snapshots:
     dependencies:
       has-flag: 3.0.0
 
-  supports-color@7.2.0:
+  supports-color@7.1.0:
     dependencies:
       has-flag: 4.0.0
 
