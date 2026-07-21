@@ -1,6 +1,6 @@
 'use strict';
 const _ = require('underscore');
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 const h = require('../../lib/helper');
@@ -53,8 +53,8 @@ describe('plugin:cache', function() {
       cache.set('problems', PROBLEMS);
 
       plugin.getProblems(function(e, problems) {
-        assert.equal(e, null);
-        assert.deepEqual(problems, PROBLEMS);
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(problems, PROBLEMS);
         done();
       });
     });
@@ -64,8 +64,8 @@ describe('plugin:cache', function() {
       next.getProblems = cb => cb(null, PROBLEMS);
 
       plugin.getProblems(function(e, problems) {
-        assert.equal(e, null);
-        assert.deepEqual(problems, PROBLEMS);
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(problems, PROBLEMS);
         done();
       });
     });
@@ -75,7 +75,7 @@ describe('plugin:cache', function() {
       next.getProblems = cb => cb('client getProblems error');
 
       plugin.getProblems(function(e, problems) {
-        assert.equal(e, 'client getProblems error');
+        assert.strictEqual(e, 'client getProblems error');
         done();
       });
     });
@@ -87,8 +87,8 @@ describe('plugin:cache', function() {
       cache.set('0.slug0.algorithms', PROBLEMS[0]);
 
       plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem, PROBLEMS[0]);
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(problem, PROBLEMS[0]);
         done();
       });
     });
@@ -99,8 +99,8 @@ describe('plugin:cache', function() {
       next.getProblem = (problem, cb) => cb(null, PROBLEMS[0]);
 
       plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
-        assert.equal(e, null);
-        assert.deepEqual(problem, PROBLEMS[0]);
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(problem, PROBLEMS[0]);
         done();
       });
     });
@@ -111,7 +111,7 @@ describe('plugin:cache', function() {
       next.getProblem = (problem, cb) => cb('client getProblem error');
 
       plugin.getProblem(_.clone(PROBLEM), function(e, problem) {
-        assert.equal(e, 'client getProblem error');
+        assert.strictEqual(e, 'client getProblem error');
         done();
       });
     });
@@ -126,8 +126,8 @@ describe('plugin:cache', function() {
       problem.state = 'ac';
 
       const ret = plugin.saveProblem(problem);
-      assert.equal(ret, true);
-      assert.deepEqual(cache.get('0.slug0.algorithms'),
+      assert.strictEqual(ret, true);
+      assert.deepStrictEqual(cache.get('0.slug0.algorithms'),
           {id: 0, fid: 0, slug: 'slug0', name: 'name0', category: 'algorithms'});
     });
   }); // #saveProblem
@@ -138,11 +138,11 @@ describe('plugin:cache', function() {
 
       const kv = {value: 'value00'};
       const ret = plugin.updateProblem(PROBLEMS[0], kv);
-      assert.equal(ret, true);
+      assert.strictEqual(ret, true);
 
       plugin.getProblems(function(e, problems) {
-        assert.equal(e, null);
-        assert.deepEqual(problems, [
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(problems, [
             {id: 0, fid: 0, name: 'name0', slug: 'slug0', value: 'value00', starred: false, category: 'algorithms'},
             {id: 1, fid: 1, name: 'name1', slug: 'slug1', starred: true, category: 'algorithms'}
         ]);
@@ -153,13 +153,13 @@ describe('plugin:cache', function() {
     it('should updateProblem fail if no problems found', function() {
       cache.del('problems');
       const ret = plugin.updateProblem(PROBLEMS[0], {});
-      assert.equal(ret, false);
+      assert.strictEqual(ret, false);
     });
 
     it('should updateProblem fail if unknown problem', function() {
       cache.set('problems', [PROBLEMS[1]]);
       const ret = plugin.updateProblem(PROBLEMS[0], {});
-      assert.equal(ret, false);
+      assert.strictEqual(ret, false);
     });
   }); // #updateProblem
 
@@ -171,18 +171,18 @@ describe('plugin:cache', function() {
       config.autologin.enable = true;
       // before login
       cache.del(h.KEYS.user);
-      assert.equal(session.getUser(), null);
-      assert.equal(session.isLogin(), false);
+      assert.strictEqual(session.getUser(), null);
+      assert.strictEqual(session.isLogin(), false);
 
       next.login = (user, cb) => cb(null, user);
 
       plugin.login(USER, function(e, user) {
-        assert.equal(e, null);
-        assert.deepEqual(user, USER);
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(user, USER);
 
         // after login
-        assert.deepEqual(session.getUser(), USER);
-        assert.equal(session.isLogin(), true);
+        assert.deepStrictEqual(session.getUser(), USER);
+        assert.strictEqual(session.isLogin(), true);
         done();
       });
     });
@@ -194,10 +194,10 @@ describe('plugin:cache', function() {
       next.login = (user, cb) => cb(null, user);
 
       plugin.login(USER, function(e, user) {
-        assert.equal(e, null);
-        assert.deepEqual(user, USER);
-        assert.deepEqual(session.getUser(), USER_SAFE);
-        assert.equal(session.isLogin(), true);
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(user, USER);
+        assert.deepStrictEqual(session.getUser(), USER_SAFE);
+        assert.strictEqual(session.isLogin(), true);
         done();
       });
     });
@@ -206,7 +206,7 @@ describe('plugin:cache', function() {
       next.login = (user, cb) => cb('client login error');
 
       plugin.login(USER, function(e, user) {
-        assert.equal(e, 'client login error');
+        assert.strictEqual(e, 'client login error');
         done();
       });
     });
@@ -214,26 +214,26 @@ describe('plugin:cache', function() {
     it('should logout ok', function(done) {
       // before logout
       cache.set(h.KEYS.user, USER);
-      assert.deepEqual(session.getUser(), USER);
-      assert.equal(session.isLogin(), true);
+      assert.deepStrictEqual(session.getUser(), USER);
+      assert.strictEqual(session.isLogin(), true);
 
       // after logout
       plugin.logout(USER, true);
-      assert.equal(session.getUser(), null);
-      assert.equal(session.isLogin(), false);
+      assert.strictEqual(session.getUser(), null);
+      assert.strictEqual(session.isLogin(), false);
       done();
     });
 
     it('should logout ok', function(done) {
       // before logout
       cache.set(h.KEYS.user, USER);
-      assert.deepEqual(session.getUser(), USER);
-      assert.equal(session.isLogin(), true);
+      assert.deepStrictEqual(session.getUser(), USER);
+      assert.strictEqual(session.isLogin(), true);
 
       // after logout
       plugin.logout(null, true);
-      assert.equal(session.getUser(), null);
-      assert.equal(session.isLogin(), false);
+      assert.strictEqual(session.getUser(), null);
+      assert.strictEqual(session.isLogin(), false);
       done();
     });
   }); // #user

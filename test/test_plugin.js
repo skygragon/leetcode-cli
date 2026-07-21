@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 const chalk = require('../lib/chalk');
@@ -56,19 +56,19 @@ describe('plugin', function() {
       cache.get = () => {
         return {cache: true, leetcode: false, retry: true};
       };
-      assert.deepEqual(Plugin.plugins, []);
+      assert.deepStrictEqual(Plugin.plugins, []);
 
       const res = Plugin.init(p4);
-      assert.equal(res, true);
-      assert.deepEqual(Plugin.plugins.length, 3);
+      assert.strictEqual(res, true);
+      assert.deepStrictEqual(Plugin.plugins.length, 3);
 
       const names = Plugin.plugins.map(p => p.name);
-      assert.deepEqual(names, ['retry', 'cache', 'leetcode']);
+      assert.deepStrictEqual(names, ['retry', 'cache', 'leetcode']);
 
-      assert.equal(p4.next, p3);
-      assert.equal(p3.next, p2);
-      assert.equal(p2.next, null);
-      assert.equal(p1.next, null);
+      assert.strictEqual(p4.next, p3);
+      assert.strictEqual(p3.next, p2);
+      assert.strictEqual(p2.next, undefined);
+      assert.strictEqual(p1.next, undefined);
     });
 
     it('should find missing ok', function() {
@@ -77,16 +77,16 @@ describe('plugin', function() {
       };
 
       const res = Plugin.init(p4);
-      assert.equal(res, false);
-      assert.deepEqual(Plugin.plugins.length, 5);
+      assert.strictEqual(res, false);
+      assert.deepStrictEqual(Plugin.plugins.length, 5);
 
       const names = Plugin.plugins.map(p => p.name);
-      assert.deepEqual(names, ['retry', 'cache', 'leetcode', 'company', 'solution']);
+      assert.deepStrictEqual(names, ['retry', 'cache', 'leetcode', 'company', 'solution']);
 
-      assert.equal(p4.next, p3);
-      assert.equal(p3.next, p2);
-      assert.equal(p2.next, null);
-      assert.equal(p1.next, null);
+      assert.strictEqual(p4.next, p3);
+      assert.strictEqual(p3.next, p2);
+      assert.strictEqual(p2.next, undefined);
+      assert.strictEqual(p1.next, undefined);
     });
   }); // #Plugin.init
 
@@ -106,7 +106,7 @@ describe('plugin', function() {
       expected = '';
       const p = new Plugin(100, 'test', '2017.12.26', 'desc', []);
       p.install(function() {
-        assert.equal(expected, '');
+        assert.strictEqual(expected, '');
         done();
       });
     });
@@ -115,7 +115,7 @@ describe('plugin', function() {
       const deps = ['a', 'b:linux', 'b:darwin', 'b:win32', 'c:bad', 'd'];
       const p = new Plugin(100, 'test', '2017.12.26', 'desc', deps);
       p.install(function() {
-        assert.equal(expected, 'npm install --save a b d');
+        assert.strictEqual(expected, 'npm install --save a b d');
         done();
       });
     });
@@ -131,8 +131,8 @@ describe('plugin', function() {
 
     it('should copy from http error', function(done) {
       Plugin.copy('non-exists', function(e, fullpath) {
-        assert.equal(e, 'HTTP Error: 404');
-        assert.equal(fs.existsSync(DST), false);
+        assert.strictEqual(e, 'HTTP Error: 404');
+        assert.strictEqual(fs.existsSync(DST), false);
         done();
       });
     }).timeout(5000);
@@ -147,9 +147,9 @@ describe('plugin', function() {
       fs.writeFileSync(SRC, data.join('\n'));
 
       Plugin.copy(SRC, function(e, fullpath) {
-        assert.notExists(e);
-        assert.equal(fullpath, DST);
-        assert.equal(fs.existsSync(DST), true);
+        assert.ok(!e);
+        assert.strictEqual(fullpath, DST);
+        assert.strictEqual(fs.existsSync(DST), true);
         done();
       });
     });
@@ -175,8 +175,8 @@ describe('plugin', function() {
     it('should ok', function(done) {
       Plugin.plugins = PLUGINS;
       Plugin.installMissings(function(e) {
-        assert.notExists(e);
-        assert.deepEqual(expected, ['0', '2']);
+        assert.ok(!e);
+        assert.deepStrictEqual(expected, ['0', '2']);
         done();
       });
     });
@@ -190,14 +190,14 @@ describe('plugin', function() {
       p.file = '0.js';
       fs.writeFileSync('./tmp/0.js', '');
 
-      assert.equal(p.deleted, false);
-      assert.deepEqual(fs.readdirSync(th.DIR), ['0.js']);
+      assert.strictEqual(p.deleted, false);
+      assert.deepStrictEqual(fs.readdirSync(th.DIR), ['0.js']);
       p.delete();
-      assert.equal(p.deleted, true);
-      assert.deepEqual(fs.readdirSync(th.DIR), []);
+      assert.strictEqual(p.deleted, true);
+      assert.deepStrictEqual(fs.readdirSync(th.DIR), []);
       p.delete();
-      assert.equal(p.deleted, true);
-      assert.deepEqual(fs.readdirSync(th.DIR), []);
+      assert.strictEqual(p.deleted, true);
+      assert.deepStrictEqual(fs.readdirSync(th.DIR), []);
     });
   }); // #delete
 
@@ -209,15 +209,15 @@ describe('plugin', function() {
 
       const p = new Plugin(0, '0', '2018.01.01');
       p.save();
-      assert.deepEqual(data, {'0': true});
+      assert.deepStrictEqual(data, {'0': true});
 
       p.enabled = false;
       p.save();
-      assert.deepEqual(data, {'0': false});
+      assert.deepStrictEqual(data, {'0': false});
 
       p.deleted = true;
       p.save();
-      assert.deepEqual(data, {});
+      assert.deepStrictEqual(data, {});
     });
   }); // #save
 });

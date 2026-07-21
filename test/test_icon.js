@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 describe('icon', function() {
@@ -23,33 +23,33 @@ describe('icon', function() {
   describe('#setTheme', function() {
     it('should ok with known theme', function() {
       icon.setTheme('mac');
-      assert.equal(icon.yes, 'yes');
-      assert.equal(icon.no, 'no');
-      assert.equal(icon.lock, 'lock');
-      assert.equal(icon.like, 'like');
-      assert.equal(icon.unlike, 'unlike');
+      assert.strictEqual(icon.yes, 'yes');
+      assert.strictEqual(icon.no, 'no');
+      assert.strictEqual(icon.lock, 'lock');
+      assert.strictEqual(icon.like, 'like');
+      assert.strictEqual(icon.unlike, 'unlike');
     });
 
     it('should ok with unknown theme on linux', function() {
       file.isWindows = () => false;
 
       icon.setTheme('non-exist');
-      assert.equal(icon.yes, '✔');
-      assert.equal(icon.no, '✘');
-      assert.equal(icon.lock, '🔒');
-      assert.equal(icon.like, '★');
-      assert.equal(icon.unlike, '☆');
+      assert.strictEqual(icon.yes, '✔');
+      assert.strictEqual(icon.no, '✘');
+      assert.strictEqual(icon.lock, '🔒');
+      assert.strictEqual(icon.like, '★');
+      assert.strictEqual(icon.unlike, '☆');
     });
 
     it('should ok with unknown theme on windows', function() {
       file.isWindows = () => true;
 
       icon.setTheme('non-exist');
-      assert.equal(icon.yes, 'YES');
-      assert.equal(icon.no, 'NO');
-      assert.equal(icon.lock, 'LOCK');
-      assert.equal(icon.like, 'LIKE');
-      assert.equal(icon.unlike, 'UNLIKE');
+      assert.strictEqual(icon.yes, 'YES');
+      assert.strictEqual(icon.no, 'NO');
+      assert.strictEqual(icon.lock, 'LOCK');
+      assert.strictEqual(icon.like, 'LIKE');
+      assert.strictEqual(icon.unlike, 'UNLIKE');
     });
   }); // #setTheme
 });

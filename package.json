@@ -67,7 +67,6 @@
   },
   "devDependencies": {
     "c8": "^12.0.0",
-    "chai": "4.2.0",
     "eslint": "5.9.0",
     "eslint-config-google": "0.14.0",
     "mocha": "5.2.0",

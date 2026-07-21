@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 
@@ -26,9 +26,9 @@ describe('queue', function() {
     q.addTasks([3, 4, 5]);
 
     q.run(5, function(e, ctx) {
-      assert.notExists(e);
-      assert.equal(ctx.n, 5);
-      assert.equal(ctx.sum, 15);
+      assert.ok(!e);
+      assert.strictEqual(ctx.n, 5);
+      assert.strictEqual(ctx.sum, 15);
       done();
     });
   });
@@ -50,8 +50,8 @@ describe('queue', function() {
     q.addTask(5);
 
     q.run(null, function(e, ctx) {
-      assert.notExists(e);
-      assert.deepEqual(ctx.list, [1, 2, 3, 4, 5]);
+      assert.ok(!e);
+      assert.deepStrictEqual(ctx.list, [1, 2, 3, 4, 5]);
       done();
     });
   });

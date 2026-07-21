@@ -1,6 +1,6 @@
 'use strict';
 const _ = require('underscore');
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const nock = require('nock');
 const rewire = require('rewire');
 
@@ -66,13 +66,13 @@ describe('plugin:leetcode', function() {
         }));
 
       plugin.login({}, function(e, user) {
-        assert.equal(e, null);
+        assert.strictEqual(e, null);
 
-        assert.equal(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
-        assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
-        assert.equal(user.sessionId, 'SESSION_ID');
-        assert.equal(user.name, 'Eric');
-        assert.equal(user.hash, 'abcdef');
+        assert.strictEqual(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
+        assert.strictEqual(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
+        assert.strictEqual(user.sessionId, 'SESSION_ID');
+        assert.strictEqual(user.name, 'Eric');
+        assert.strictEqual(user.hash, 'abcdef');
         done();
       });
     });
@@ -90,7 +90,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.login({}, function(e, user) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -101,7 +101,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.login({}, function(e, user) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -122,8 +122,8 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/problems.json.20160911');
 
       plugin.getProblems(function(e, problems) {
-        assert.equal(e, null);
-        assert.equal(problems.length, 377 * 3);
+        assert.strictEqual(e, null);
+        assert.strictEqual(problems.length, 377 * 3);
         done();
       });
     });
@@ -142,7 +142,7 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/problems.json.20160911');
 
       plugin.getProblems(function(e, problems) {
-        assert.equal(e.message, 'unknown error');
+        assert.strictEqual(e.message, 'unknown error');
         done();
       });
     });
@@ -155,8 +155,8 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/problems.json.20160911');
 
       plugin.getCategoryProblems('algorithms', function(e, problems) {
-        assert.equal(e, null);
-        assert.equal(problems.length, 377);
+        assert.strictEqual(e, null);
+        assert.strictEqual(problems.length, 377);
         done();
       });
     });
@@ -168,7 +168,7 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/problems.nologin.json.20161015');
 
       plugin.getCategoryProblems('algorithms', function(e, problems) {
-        assert.deepEqual(e, session.errors.EXPIRED);
+        assert.deepStrictEqual(e, session.errors.EXPIRED);
         done();
       });
     });
@@ -185,10 +185,10 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/find-the-difference.json.20171216');
 
       plugin.getProblem(PROBLEM, function(e, problem) {
-        assert.equal(e, null);
-        assert.equal(problem.totalAC, '89.7K');
-        assert.equal(problem.totalSubmit, '175.7K');
-        assert.equal(problem.desc,
+        assert.strictEqual(e, null);
+        assert.strictEqual(problem.totalAC, '89.7K');
+        assert.strictEqual(problem.totalSubmit, '175.7K');
+        assert.strictEqual(problem.desc,
           [
             '',
             'Given two strings s and t which consist of only lowercase letters.',
@@ -210,11 +210,11 @@ describe('plugin:leetcode', function() {
             ''
           ].join('\n'));
 
-        assert.equal(problem.templates.length, 12);
+        assert.strictEqual(problem.templates.length, 12);
 
-        assert.equal(problem.templates[0].value, 'cpp');
-        assert.equal(problem.templates[0].text, 'C++');
-        assert.equal(problem.templates[0].defaultCode,
+        assert.strictEqual(problem.templates[0].value, 'cpp');
+        assert.strictEqual(problem.templates[0].text, 'C++');
+        assert.strictEqual(problem.templates[0].defaultCode,
           [
             'class Solution {',
             'public:',
@@ -224,9 +224,9 @@ describe('plugin:leetcode', function() {
             '};'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[1].value, 'java');
-        assert.equal(problem.templates[1].text, 'Java');
-        assert.equal(problem.templates[1].defaultCode,
+        assert.strictEqual(problem.templates[1].value, 'java');
+        assert.strictEqual(problem.templates[1].text, 'Java');
+        assert.strictEqual(problem.templates[1].defaultCode,
           [
             'class Solution {',
             '    public char findTheDifference(String s, String t) {',
@@ -235,9 +235,9 @@ describe('plugin:leetcode', function() {
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[2].value, 'python');
-        assert.equal(problem.templates[2].text, 'Python');
-        assert.equal(problem.templates[2].defaultCode,
+        assert.strictEqual(problem.templates[2].value, 'python');
+        assert.strictEqual(problem.templates[2].text, 'Python');
+        assert.strictEqual(problem.templates[2].defaultCode,
           [
             'class Solution(object):',
             '    def findTheDifference(self, s, t):',
@@ -249,9 +249,9 @@ describe('plugin:leetcode', function() {
             '        '
           ].join('\r\n'));
 
-        assert.equal(problem.templates[3].value, 'python3');
-        assert.equal(problem.templates[3].text, 'Python3');
-        assert.equal(problem.templates[3].defaultCode,
+        assert.strictEqual(problem.templates[3].value, 'python3');
+        assert.strictEqual(problem.templates[3].text, 'Python3');
+        assert.strictEqual(problem.templates[3].defaultCode,
           [
             'class Solution:',
             '    def findTheDifference(self, s, t):',
@@ -263,18 +263,18 @@ describe('plugin:leetcode', function() {
             '        '
           ].join('\r\n'));
 
-        assert.equal(problem.templates[4].value, 'c');
-        assert.equal(problem.templates[4].text, 'C');
-        assert.equal(problem.templates[4].defaultCode,
+        assert.strictEqual(problem.templates[4].value, 'c');
+        assert.strictEqual(problem.templates[4].text, 'C');
+        assert.strictEqual(problem.templates[4].defaultCode,
           [
             'char findTheDifference(char* s, char* t) {',
             '    ',
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[5].value, 'csharp');
-        assert.equal(problem.templates[5].text, 'C#');
-        assert.equal(problem.templates[5].defaultCode,
+        assert.strictEqual(problem.templates[5].value, 'csharp');
+        assert.strictEqual(problem.templates[5].text, 'C#');
+        assert.strictEqual(problem.templates[5].defaultCode,
           [
             'public class Solution {',
             '    public char FindTheDifference(string s, string t) {',
@@ -283,9 +283,9 @@ describe('plugin:leetcode', function() {
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[6].value, 'javascript');
-        assert.equal(problem.templates[6].text, 'JavaScript');
-        assert.equal(problem.templates[6].defaultCode,
+        assert.strictEqual(problem.templates[6].value, 'javascript');
+        assert.strictEqual(problem.templates[6].text, 'JavaScript');
+        assert.strictEqual(problem.templates[6].defaultCode,
           [
             '/**',
             ' * @param {string} s',
@@ -297,9 +297,9 @@ describe('plugin:leetcode', function() {
             '};'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[7].value, 'ruby');
-        assert.equal(problem.templates[7].text, 'Ruby');
-        assert.equal(problem.templates[7].defaultCode,
+        assert.strictEqual(problem.templates[7].value, 'ruby');
+        assert.strictEqual(problem.templates[7].text, 'Ruby');
+        assert.strictEqual(problem.templates[7].defaultCode,
           [
             '# @param {String} s',
             '# @param {String} t',
@@ -309,9 +309,9 @@ describe('plugin:leetcode', function() {
             'end'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[8].value, 'swift');
-        assert.equal(problem.templates[8].text, 'Swift');
-        assert.equal(problem.templates[8].defaultCode,
+        assert.strictEqual(problem.templates[8].value, 'swift');
+        assert.strictEqual(problem.templates[8].text, 'Swift');
+        assert.strictEqual(problem.templates[8].defaultCode,
           [
             'class Solution {',
             '    func findTheDifference(_ s: String, _ t: String) -> Character {',
@@ -320,18 +320,18 @@ describe('plugin:leetcode', function() {
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[9].value, 'golang');
-        assert.equal(problem.templates[9].text, 'Go');
-        assert.equal(problem.templates[9].defaultCode,
+        assert.strictEqual(problem.templates[9].value, 'golang');
+        assert.strictEqual(problem.templates[9].text, 'Go');
+        assert.strictEqual(problem.templates[9].defaultCode,
           [
             'func findTheDifference(s string, t string) byte {',
             '    ',
             '}'
           ].join('\r\n'));
 
-        assert.equal(problem.templates[10].value, 'scala');
-        assert.equal(problem.templates[10].text, 'Scala');
-        assert.equal(problem.templates[10].defaultCode,
+        assert.strictEqual(problem.templates[10].value, 'scala');
+        assert.strictEqual(problem.templates[10].text, 'Scala');
+        assert.strictEqual(problem.templates[10].defaultCode,
           [
             'object Solution {',
             '    def findTheDifference(s: String, t: String): Char = {',
@@ -340,9 +340,9 @@ describe('plugin:leetcode', function() {
             '}'
           ].join('\n'));
 
-        assert.equal(problem.templates[11].value, 'kotlin');
-        assert.equal(problem.templates[11].text, 'Kotlin');
-        assert.equal(problem.templates[11].defaultCode,
+        assert.strictEqual(problem.templates[11].value, 'kotlin');
+        assert.strictEqual(problem.templates[11].text, 'Kotlin');
+        assert.strictEqual(problem.templates[11].defaultCode,
           [
             'class Solution {',
             '    fun findTheDifference(s: String, t: String): Char {',
@@ -359,7 +359,7 @@ describe('plugin:leetcode', function() {
       PROBLEM.locked = true;
 
       plugin.getProblem(PROBLEM, function(e, problem) {
-        assert.equal(e, 'failed to load locked problem!');
+        assert.strictEqual(e, 'failed to load locked problem!');
         done();
       });
     });
@@ -368,7 +368,7 @@ describe('plugin:leetcode', function() {
       nock('https://leetcode.com').post('/graphql').reply(403);
 
       plugin.getProblem(PROBLEM, function(e, problem) {
-        assert.equal(e, session.errors.EXPIRED);
+        assert.strictEqual(e, session.errors.EXPIRED);
         done();
       });
     });
@@ -377,7 +377,7 @@ describe('plugin:leetcode', function() {
       nock('https://leetcode.com').post('/graphql').reply(500);
 
       plugin.getProblem(PROBLEM, function(e, problem) {
-        assert.deepEqual(e, {msg: 'http error', statusCode: 500});
+        assert.deepStrictEqual(e, {msg: 'http error', statusCode: 500});
         done();
       });
     });
@@ -386,7 +386,7 @@ describe('plugin:leetcode', function() {
       nock('https://leetcode.com').post('/graphql').replyWithError('unknown error!');
 
       plugin.getProblem(PROBLEM, function(e, problem) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -407,11 +407,11 @@ describe('plugin:leetcode', function() {
         .reply(200, '{"state": "SUCCESS", "run_success": false, "status_code": 15}');
 
       plugin.testProblem(PROBLEM, function(e, results) {
-        assert.equal(e, null);
-        assert.equal(results[0].id, 'id2');
-        assert.equal(results[0].ok, false);
-        assert.equal(results[1].id, 'id1');
-        assert.equal(results[1].ok, true);
+        assert.strictEqual(e, null);
+        assert.strictEqual(results[0].id, 'id2');
+        assert.strictEqual(results[0].ok, false);
+        assert.strictEqual(results[1].id, 'id1');
+        assert.strictEqual(results[1].ok, true);
         done();
       });
     });
@@ -422,7 +422,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.testProblem(PROBLEM, function(e, results) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -439,9 +439,9 @@ describe('plugin:leetcode', function() {
         .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
-        assert.equal(e, null);
-        assert.equal(results[0].id, 'id1');
-        assert.equal(results[0].ok, true);
+        assert.strictEqual(e, null);
+        assert.strictEqual(results[0].id, 'id1');
+        assert.strictEqual(results[0].ok, true);
         done();
       });
     });
@@ -462,9 +462,9 @@ describe('plugin:leetcode', function() {
         .reply(200, '{"state": "SUCCESS", "run_success": true, "status_code": 10}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
-        assert.equal(e, null);
-        assert.equal(results[0].id, 'id1');
-        assert.equal(results[0].ok, true);
+        assert.strictEqual(e, null);
+        assert.strictEqual(results[0].id, 'id1');
+        assert.strictEqual(results[0].ok, true);
         done();
       });
     }).timeout(5000);
@@ -475,7 +475,7 @@ describe('plugin:leetcode', function() {
         .reply(200, '{"error": "maybe internal error?"}');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
-        assert.equal(e, 'maybe internal error?');
+        assert.strictEqual(e, 'maybe internal error?');
         done();
       });
     });
@@ -490,7 +490,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.submitProblem(PROBLEM, function(e, results) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -503,8 +503,8 @@ describe('plugin:leetcode', function() {
         .reply(204, '');
 
       plugin.starProblem(PROBLEM, true, function(e, starred) {
-        assert.equal(e, null);
-        assert.equal(starred, true);
+        assert.strictEqual(e, null);
+        assert.strictEqual(starred, true);
         done();
       });
     });
@@ -515,8 +515,8 @@ describe('plugin:leetcode', function() {
         .reply(204, '');
 
       plugin.starProblem(PROBLEM, false, function(e, starred) {
-        assert.equal(e, null);
-        assert.equal(starred, false);
+        assert.strictEqual(e, null);
+        assert.strictEqual(starred, false);
         done();
       });
     });
@@ -527,7 +527,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.starProblem(PROBLEM, true, function(e, starred) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -548,10 +548,10 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/two-sum.submissions.json.20170425');
 
       plugin.getSubmissions(problem, function(e, submissions) {
-        assert.equal(e, null);
-        assert.equal(submissions.length, 20);
+        assert.strictEqual(e, null);
+        assert.strictEqual(submissions.length, 20);
 
-        assert.deepEqual(submissions[0], {
+        assert.deepStrictEqual(submissions[0], {
           id:             '95464136',
           title:          'Two Sum',
           is_pending:     false,
@@ -562,7 +562,7 @@ describe('plugin:leetcode', function() {
           status_display: 'Accepted'
         });
 
-        assert.deepEqual(submissions[1], {
+        assert.deepStrictEqual(submissions[1], {
           id:             '78502271',
           title:          'Two Sum',
           is_pending:     false,
@@ -582,7 +582,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.getSubmissions(PROBLEM, function(e, submissions) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -595,8 +595,8 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/two-sum.submission.73790064.html.20161006');
 
       plugin.getSubmission(_.clone(SUBMISSION), function(e, submission) {
-        assert.equal(e, null);
-        assert.deepEqual(submission.code,
+        assert.strictEqual(e, null);
+        assert.deepStrictEqual(submission.code,
           [
             'class Solution {',
             'public:',
@@ -616,7 +616,7 @@ describe('plugin:leetcode', function() {
         .replyWithError('unknown error!');
 
       plugin.getSubmission(_.clone(SUBMISSION), function(e, submission) {
-        assert.equal(e.message, 'unknown error!');
+        assert.strictEqual(e.message, 'unknown error!');
         done();
       });
     });
@@ -627,8 +627,8 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/locked.html.20161015');
 
       plugin.getSubmission(_.clone(SUBMISSION), function(e, submission) {
-        assert.equal(e, null);
-        assert.equal(submission.code, null);
+        assert.strictEqual(e, null);
+        assert.strictEqual(submission.code, undefined);
         done();
       });
     });
@@ -641,12 +641,12 @@ describe('plugin:leetcode', function() {
         .replyWithFile(200, './test/mock/favorites.json.20170716');
 
       plugin.getFavorites(function(e, favorites) {
-        assert.equal(e, null);
+        assert.strictEqual(e, null);
 
         const my = favorites.favorites.private_favorites;
-        assert.equal(my.length, 1);
-        assert.equal(my[0].name, 'Favorite');
-        assert.equal(my[0].id_hash, 'abcdefg');
+        assert.strictEqual(my.length, 1);
+        assert.strictEqual(my[0].name, 'Favorite');
+        assert.strictEqual(my[0].id_hash, 'abcdefg');
         done();
       });
     });
@@ -661,8 +661,8 @@ describe('plugin:leetcode', function() {
         .reply(200, JSON.stringify(DATA));
 
       plugin.getSessions(function(e, sessions) {
-        assert.notExists(e);
-        assert.deepEqual(sessions, []);
+        assert.ok(!e);
+        assert.deepStrictEqual(sessions, []);
         done();
       });
     });
@@ -673,8 +673,8 @@ describe('plugin:leetcode', function() {
         .reply(200, JSON.stringify(DATA));
 
       plugin.activateSession({id: 1}, function(e, sessions) {
-        assert.notExists(e);
-        assert.deepEqual(sessions, []);
+        assert.ok(!e);
+        assert.deepStrictEqual(sessions, []);
         done();
       });
     });
@@ -685,8 +685,8 @@ describe('plugin:leetcode', function() {
         .reply(200, JSON.stringify(DATA));
 
       plugin.createSession('s1', function(e, sessions) {
-        assert.notExists(e);
-        assert.deepEqual(sessions, []);
+        assert.ok(!e);
+        assert.deepStrictEqual(sessions, []);
         done();
       });
     });
@@ -697,8 +697,8 @@ describe('plugin:leetcode', function() {
         .reply(200, JSON.stringify(DATA));
 
       plugin.deleteSession({id: 1}, function(e, sessions) {
-        assert.notExists(e);
-        assert.deepEqual(sessions, []);
+        assert.ok(!e);
+        assert.deepStrictEqual(sessions, []);
         done();
       });
     });
@@ -709,8 +709,8 @@ describe('plugin:leetcode', function() {
         .reply(302);
 
       plugin.getSessions(function(e, sessions) {
-        assert.deepEqual(e, session.errors.EXPIRED);
-        assert.notExists(sessions);
+        assert.deepStrictEqual(e, session.errors.EXPIRED);
+        assert.ok(!sessions);
         done();
       });
     });

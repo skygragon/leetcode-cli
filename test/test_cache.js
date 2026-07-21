@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 const th = require('./helper');
@@ -23,26 +23,26 @@ describe('cache', function() {
 
   it('should get ok when not cached', function() {
     cache.del(K);
-    assert.equal(cache.get(K), null);
-    assert.equal(cache.del(K), false);
+    assert.strictEqual(cache.get(K), null);
+    assert.strictEqual(cache.del(K), false);
   });
 
   it('should get ok when cached', function() {
-    assert.equal(cache.set(K, V), true);
-    assert.deepEqual(cache.get(K), V);
-    assert.equal(cache.del(K), true);
+    assert.strictEqual(cache.set(K, V), true);
+    assert.deepStrictEqual(cache.get(K), V);
+    assert.strictEqual(cache.del(K), true);
   });
 
   it('should list ok when no cached', function() {
     const items = cache.list();
-    assert.equal(items.length, 0);
+    assert.strictEqual(items.length, 0);
   });
 
   it('should list ok when cached', function() {
-    assert.equal(cache.set(K, V), true);
+    assert.strictEqual(cache.set(K, V), true);
     const items = cache.list();
-    assert.equal(items.length, 1);
-    assert.equal(items[0].name, K);
-    assert.equal(items[0].size, JSON.stringify(V).length);
+    assert.strictEqual(items.length, 1);
+    assert.strictEqual(items[0].name, K);
+    assert.strictEqual(items[0].size, JSON.stringify(V).length);
   });
 });
