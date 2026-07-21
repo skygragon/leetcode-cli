@@ -198,7 +198,6 @@ describe('plugin:leetcode', function() {
             'Find the letter that was added in t.',
             '',
             'Example:',
-            '',
             'Input:',
             's = "abcd"',
             't = "abcde"',
@@ -209,7 +208,7 @@ describe('plugin:leetcode', function() {
             'Explanation:',
             "'e' is the letter that was added.",
             ''
-          ].join('\r\n'));
+          ].join('\n'));
 
         assert.equal(problem.templates.length, 12);
 
