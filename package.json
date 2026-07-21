@@ -66,9 +66,12 @@
     "yargs": "18.0.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^2.1.0",
+    "@eslint/js": "^10.0.1",
     "c8": "^12.0.0",
-    "eslint": "5.9.0",
+    "eslint": "10.7.0",
     "eslint-config-google": "0.14.0",
+    "globals": "^17.7.0",
     "mocha": "5.2.0",
     "nock": "10.0.2",
     "pkg": "^4.3.4",
