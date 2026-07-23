@@ -1,0 +1,61 @@
+const js = require('@eslint/js');
+const globals = require('globals');
+const compat = require('@eslint/compat');
+const google = require('eslint-config-google');
+
+module.exports = [
+  js.configs.recommended,
+  ...compat.fixupConfigRules([google]),
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.mocha,
+      },
+      ecmaVersion: 2015,
+      sourceType: 'commonjs',
+    },
+    rules: {
+      'valid-jsdoc': 0,
+      'indent': 0,
+      'arrow-parens': 0,
+      'prefer-const': 0,
+      'semi': 0,
+      'spaced-comment': 0,
+      'no-multiple-empty-lines': 0,
+      'object-curly-spacing': 0,
+      'no-prototype-builtins': 0,
+      'no-invalid-this': 0,
+      'no-useless-assignment': 0,
+      'no-trailing-spaces': 0,
+      'space-before-function-paren': 0,
+      'operator-linebreak': 0,
+      'keyword-spacing': 0,
+      'comma-spacing': 0,
+      'one-var': 0,
+      'block-spacing': [2, 'always'],
+      'brace-style': [2, '1tbs', {allowSingleLine: true}],
+      'camelcase': [2, {properties: 'never'}],
+      'comma-dangle': 0,
+      'curly': 0,
+      'key-spacing': [2, {align: 'value'}],
+      'max-len': [1, 120],
+      'no-control-regex': 0,
+      'no-console': 1,
+      'no-empty': [2, {allowEmptyCatch: true}],
+      'no-eval': 1,
+      'no-loop-func': 1,
+      'no-multi-spaces': 0,
+      'no-proto': 1,
+      'no-unused-expressions': 1,
+      'no-unused-vars': 1,
+      'no-var': 0,
+      'no-warning-comments': 0,
+      'prefer-rest-params': 0,
+      'prefer-spread': 0,
+      'quote-props': 1,
+      'quotes': [2, 'single', {avoidEscape: true}],
+      'require-jsdoc': 0,
+    },
+  },
+];

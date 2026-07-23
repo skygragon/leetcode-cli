@@ -1,0 +1,15 @@
+diff --git a/lib/winston/common.js b/lib/winston/common.js
+index 29dfec0058e7d72448ce2bd5ad9d47cd67eae292..cc56711d4eb3968c0f1203231f1d9d6139270c74 100644
+--- a/lib/winston/common.js
++++ b/lib/winston/common.js
+@@ -32,7 +32,9 @@ exports.setLevels = function (target, past, current, isDefault) {
+   }
+ 
+   target.levels = current || config.npm.levels;
+-  if (target.padLevels) {
++  // Guard against Node.js v26+ warning: accessing non-existent property
++  // 'padLevels' on module.exports inside circular dependency.
++  if (Object.prototype.hasOwnProperty.call(target, 'padLevels') && target.padLevels) {
+     target.levelLength = exports.longestElement(Object.keys(target.levels));
+   }
+ 

@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 const log = require('../../lib/log');
@@ -30,7 +30,7 @@ describe('plugin:retry', function() {
     NEXT.getProblems = cb => cb(session.errors.EXPIRED);
 
     plugin.getProblems(function(e, problems) {
-      assert.equal(e, session.errors.EXPIRED);
+      assert.strictEqual(e, session.errors.EXPIRED);
       done();
     });
   });
@@ -46,8 +46,8 @@ describe('plugin:retry', function() {
     NEXT.login = (user, cb) => cb(null, user);
 
     plugin.getProblems(function(e, problems) {
-      assert.notExists(e);
-      assert.equal(problems, PROBLEMS);
+      assert.ok(!e);
+      assert.strictEqual(problems, PROBLEMS);
       done();
     });
   });
@@ -65,7 +65,7 @@ describe('plugin:retry', function() {
     }
 
     plugin.getProblems(function(e) {
-      assert.deepEqual(e, session.errors.EXPIRED);
+      assert.deepStrictEqual(e, session.errors.EXPIRED);
       done();
     });
   });
@@ -80,8 +80,8 @@ describe('plugin:retry', function() {
     session.getUser = () => null;
 
     plugin.getProblems(function(e, problems) {
-      assert.notExists(e);
-      assert.equal(problems, PROBLEMS);
+      assert.ok(!e);
+      assert.strictEqual(problems, PROBLEMS);
       done();
     });
   });
@@ -91,7 +91,7 @@ describe('plugin:retry', function() {
     NEXT.getProblems = cb => cb('unknown error');
 
     plugin.getProblems(function(e, problems) {
-      assert.equal(e, 'unknown error');
+      assert.strictEqual(e, 'unknown error');
       done();
     });
   });

@@ -2,16 +2,15 @@
   "name": "leetcode-cli",
   "version": "2.6.2",
   "description": "A cli tool to enjoy leetcode!",
-  "preferGlobal": "true",
   "engines": {
-    "node": ">=4"
+    "node": ">=22"
   },
   "bin": {
     "leetcode": "./bin/leetcode"
   },
   "scripts": {
     "lint": "eslint lib/ test/",
-    "test": "npm run lint && nyc mocha test test/plugins && nyc report --reporter=lcov",
+    "test": "pnpm run lint && c8 mocha test test/plugins && c8 report --reporter=lcov",
     "travis": "node bin/pkg",
     "pkg": "pkg . --out-path=dist/ --targets"
   },
@@ -50,27 +49,30 @@
   },
   "homepage": "https://github.com/skygragon/leetcode-cli#readme",
   "dependencies": {
-    "ansi-styles": "3.2.1",
-    "cheerio": "0.20.0",
+    "ansi-styles": "6.2.3",
+    "cheerio": "1.2.0",
+    "color-convert": "^3.1.3",
     "he": "1.2.0",
-    "mkdirp": "0.5.1",
+    "mkdirp": "3.0.1",
     "moment": "^2.20.1",
-    "nconf": "0.10.0",
-    "ora": "3.0.0",
-    "prompt": "1.0.0",
-    "request": "2.88.0",
-    "supports-color": "5.5.0",
-    "underscore": "1.9.1",
+    "nconf": "0.13.0",
+    "ora": "9.4.1",
+    "prompt": "1.3.0",
+    "request": "2.88.2",
+    "supports-color": "10.2.2",
+    "underscore": "1.13.8",
     "wordwrap": "1.0.0",
-    "yargs": "12.0.4"
+    "yargs": "18.0.0"
   },
   "devDependencies": {
-    "chai": "4.2.0",
-    "eslint": "5.9.0",
-    "eslint-config-google": "0.11.0",
+    "@eslint/compat": "^2.1.0",
+    "@eslint/js": "^10.0.1",
+    "c8": "^12.0.0",
+    "eslint": "10.7.0",
+    "eslint-config-google": "0.14.0",
+    "globals": "^17.7.0",
     "mocha": "5.2.0",
     "nock": "10.0.2",
-    "nyc": "13.1.0",
     "pkg": "^4.3.4",
     "rewire": "4.0.1"
   }

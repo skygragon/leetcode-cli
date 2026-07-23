@@ -1,0 +1,4 @@
+allowBuilds:
+  es5-ext: true
+patchedDependencies:
+  winston@2.1.1: patches/winston@2.1.1.patch

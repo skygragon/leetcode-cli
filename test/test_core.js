@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 
 describe('core', function() {
@@ -69,11 +69,11 @@ describe('core', function() {
 
       for (let x of cases) {
         core.filterProblems({query: x[0]}, function(e, problems) {
-          assert.notExists(e);
-          assert.equal(problems.length, x[1].length);
+          assert.ok(!e);
+          assert.strictEqual(problems.length, x[1].length);
 
           for (let i = 0; i < problems.length; ++i)
-            assert.equal(problems[i], PROBLEMS[x[1][i]]);
+            assert.strictEqual(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
       }
@@ -91,11 +91,11 @@ describe('core', function() {
 
       for (let x of cases) {
         core.filterProblems({tag: x[0]}, function(e, problems) {
-          assert.notExists(e);
-          assert.equal(problems.length, x[1].length);
+          assert.ok(!e);
+          assert.strictEqual(problems.length, x[1].length);
 
           for (let i = 0; i < problems.length; ++i)
-            assert.equal(problems[i], PROBLEMS[x[1][i]]);
+            assert.strictEqual(problems[i], PROBLEMS[x[1][i]]);
           if (--n === 0) done();
         });
       }
@@ -104,7 +104,7 @@ describe('core', function() {
     it('should fail if getProblems error', function(done) {
       next.getProblems = cb => cb('getProblems error');
       core.filterProblems({}, function(e) {
-        assert.equal(e, 'getProblems error');
+        assert.strictEqual(e, 'getProblems error');
         done();
       });
     });
@@ -114,28 +114,28 @@ describe('core', function() {
     it('should ok', function(done) {
       next.starProblem = (p, starred, cb) => cb(null, starred);
 
-      assert.equal(PROBLEMS[0].starred, false);
+      assert.strictEqual(PROBLEMS[0].starred, false);
       core.starProblem(PROBLEMS[0], true, function(e, starred) {
-        assert.notExists(e);
-        assert.equal(starred, true);
+        assert.ok(!e);
+        assert.strictEqual(starred, true);
         done();
       });
     });
 
     it('should ok if already starred', function(done) {
-      assert.equal(PROBLEMS[1].starred, true);
+      assert.strictEqual(PROBLEMS[1].starred, true);
       core.starProblem(PROBLEMS[1], true, function(e, starred) {
-        assert.notExists(e);
-        assert.equal(starred, true);
+        assert.ok(!e);
+        assert.strictEqual(starred, true);
         done();
       });
     });
 
     it('should ok if already unstarred', function(done) {
-      assert.equal(PROBLEMS[0].starred, false);
+      assert.strictEqual(PROBLEMS[0].starred, false);
       core.starProblem(PROBLEMS[0], false, function(e, starred) {
-        assert.notExists(e);
-        assert.equal(starred, false);
+        assert.ok(!e);
+        assert.strictEqual(starred, false);
         done();
       });
     });
@@ -177,7 +177,7 @@ describe('core', function() {
         code: problem.templates[0].defaultCode,
         tpl:  'codeonly'
       };
-      assert.equal(core.exportProblem(problem, opts), expected);
+      assert.strictEqual(core.exportProblem(problem, opts), expected);
     });
 
     it('should codeonly ok in windows', function() {
@@ -207,7 +207,7 @@ describe('core', function() {
         code: problem.templates[0].defaultCode,
         tpl:  'codeonly'
       };
-      assert.equal(core.exportProblem(problem, opts), expected);
+      assert.strictEqual(core.exportProblem(problem, opts), expected);
     });
 
     it('should detailed ok with cpp', function() {
@@ -257,7 +257,7 @@ describe('core', function() {
         code: problem.templates[0].defaultCode,
         tpl:  'detailed'
       };
-      assert.equal(core.exportProblem(problem, opts), expected);
+      assert.strictEqual(core.exportProblem(problem, opts), expected);
     });
 
     it('should detailed ok with ruby', function() {
@@ -309,30 +309,30 @@ describe('core', function() {
         code: problem.templates[6].defaultCode,
         tpl:  'detailed'
       };
-      assert.equal(core.exportProblem(problem, opts), expected);
+      assert.strictEqual(core.exportProblem(problem, opts), expected);
     });
   }); // #exportProblem
 
   describe('#getProblem', function() {
     it('should get by id ok', function(done) {
       core.getProblem(0, function(e, problem) {
-        assert.notExists(e);
-        assert.deepEqual(problem, PROBLEMS[0]);
+        assert.ok(!e);
+        assert.deepStrictEqual(problem, PROBLEMS[0]);
         done();
       });
     });
 
     it('should get by key ok', function(done) {
       core.getProblem('slug0', function(e, problem) {
-        assert.notExists(e);
-        assert.deepEqual(problem, PROBLEMS[0]);
+        assert.ok(!e);
+        assert.deepStrictEqual(problem, PROBLEMS[0]);
         done();
       });
     });
 
     it('should fail if not found', function(done) {
       core.getProblem(3, function(e, problem) {
-        assert.equal(e, 'Problem not found!');
+        assert.strictEqual(e, 'Problem not found!');
         done();
       });
     });
@@ -341,15 +341,15 @@ describe('core', function() {
       next.getProblem = (problem, cb) => cb('client getProblem error');
 
       core.getProblem(0, function(e, problem) {
-        assert.equal(e, 'client getProblem error');
+        assert.strictEqual(e, 'client getProblem error');
         done();
       });
     });
 
     it('should ok if problem is already there', function(done) {
       core.getProblem(PROBLEMS[1], function(e, problem) {
-        assert.notExists(e);
-        assert.deepEqual(problem, PROBLEMS[1]);
+        assert.ok(!e);
+        assert.deepStrictEqual(problem, PROBLEMS[1]);
         done();
       });
     });
@@ -358,7 +358,7 @@ describe('core', function() {
       next.getProblems = cb => cb('getProblems error');
 
       core.getProblem(0, function(e, problem) {
-        assert.equal(e, 'getProblems error');
+        assert.strictEqual(e, 'getProblems error');
         done();
       });
     });

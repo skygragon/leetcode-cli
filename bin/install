@@ -21,16 +21,16 @@ create() {
     "short": "`git rev-parse --short HEAD`"
   },
   "node": "`node -v`",
-  "npm": "`npm -v`"
+  "pnpm": "`pnpm -v`"
 }
 EOF
 }
 
 check git
 check node
-check npm
+check pnpm
 
 create $ENVFILE
 
-npm install -g .
+pnpm install .
 echo "leetcode-cli successfully installed."

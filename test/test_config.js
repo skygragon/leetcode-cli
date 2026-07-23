@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('chai').assert;
+const assert = require('assert').strict;
 const rewire = require('rewire');
 const _ = require('underscore');
 
@@ -30,11 +30,11 @@ describe('config', function() {
 
     let actual = config.getAll();
     let expect = DEFAULT_CONFIG;
-    assert.deepEqual(actual, expect);
+    assert.deepStrictEqual(actual, expect);
 
     actual = config.getAll(true);
     expect = _.omit(expect, 'sys');
-    assert.deepEqual(actual, expect);
+    assert.deepStrictEqual(actual, expect);
   });
 
   it('should ok w/ local config', function() {
@@ -45,10 +45,10 @@ describe('config', function() {
     });
     config.init();
 
-    assert.equal(config.autologin.enable, false);
-    assert.equal(config.code.lang, 'ruby');
-    assert.equal(config.color.enable, false);
-    assert.equal(config.code.editor, 'vim');
+    assert.strictEqual(config.autologin.enable, false);
+    assert.strictEqual(config.code.lang, 'ruby');
+    assert.strictEqual(config.color.enable, false);
+    assert.strictEqual(config.code.editor, 'vim');
   });
 
   it('should remove legacy keys', function() {
@@ -58,7 +58,7 @@ describe('config', function() {
     });
     config.init();
 
-    assert.equal(config.USE_COLOR, undefined);
-    assert.equal(config.code.lang, 'ruby');
+    assert.strictEqual(config.USE_COLOR, undefined);
+    assert.strictEqual(config.code.lang, 'ruby');
   });
 });
